@@ -8,7 +8,6 @@
                 <user-dashboard-component></user-dashboard-component>
             </div>
         </div>
-        <button @click.prevent="logout">Logout</button>
     </div>
 </template>
 

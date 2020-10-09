@@ -1921,7 +1921,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2143,10 +2142,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      user: null
+      user: null,
+      drawer: true,
+      group: null
     };
   },
   computed: {},
@@ -20479,20 +20532,7 @@ var render = function() {
             ? _c("div", [_c("user-dashboard-component")], 1)
             : _vm._e()
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.logout($event)
-          }
-        }
-      },
-      [_vm._v("Logout")]
-    )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -20861,16 +20901,181 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.user
-      ? _c("div", [
-          _vm._v("\n        Name: " + _vm._s(_vm.user.name) + " "),
-          _c("br"),
-          _vm._v("\n        Username: " + _vm._s(_vm.user.username)),
-          _c("br")
-        ])
-      : _vm._e()
-  ])
+  return _vm.user
+    ? _c(
+        "div",
+        [
+          _c(
+            "v-navigation-drawer",
+            {
+              attrs: { app: "" },
+              scopedSlots: _vm._u(
+                [
+                  {
+                    key: "prepend",
+                    fn: function() {
+                      return [
+                        _c(
+                          "v-list-item",
+                          { attrs: { "two-line": "" } },
+                          [
+                            _c("v-list-item-avatar", [
+                              _c("img", {
+                                attrs: {
+                                  src:
+                                    "https://randomuser.me/api/portraits/women/81.jpg"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [
+                                _c("v-list-item-title", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.user.first_name +
+                                        " " +
+                                        _vm.user.last_name
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-list-item-subtitle", [
+                                  _vm._v(_vm._s(_vm.user.username))
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "append",
+                    fn: function() {
+                      return [
+                        _c(
+                          "div",
+                          { staticClass: "pa-2" },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { block: "" },
+                                on: {
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    _vm.drawer = !_vm.drawer
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    Close\n                "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  }
+                ],
+                null,
+                false,
+                3093904154
+              ),
+              model: {
+                value: _vm.drawer,
+                callback: function($$v) {
+                  _vm.drawer = $$v
+                },
+                expression: "drawer"
+              }
+            },
+            [
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                [
+                  _c(
+                    "v-list-item",
+                    { attrs: { link: "" } },
+                    [
+                      _c(
+                        "v-list-item-icon",
+                        [_c("v-icon", [_vm._v("fas fa-home")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v("Dashboard")])],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item",
+                    { attrs: { link: "" } },
+                    [
+                      _c(
+                        "v-list-item-icon",
+                        [_c("v-icon", [_vm._v("fas fa-sign-out-alt")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v("Logout")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-app-bar",
+            { attrs: { app: "", color: "blue darken-3", dark: "" } },
+            [
+              _c(
+                "v-app-bar-nav-icon",
+                {
+                  staticClass: "d.none .d-sm-flex",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      _vm.drawer = !_vm.drawer
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-bars" })]
+              ),
+              _vm._v(" "),
+              _c("v-toolbar-title", [_vm._v("Logo")])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
