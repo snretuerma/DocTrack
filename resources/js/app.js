@@ -23,8 +23,8 @@ Vue.use(VueRouter);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('welcome-component', require('./components/Welcome.vue').default);
-Vue.component('admin-dashboard-component', require('./components/admin/AdminDashboard.vue').default);
-Vue.component('user-dashboard-component', require('./components/user/UserDashboard.vue').default);
+Vue.component('login-component', require('./components/Login.vue').default);
+Vue.component('user-home-component', require('./components/user/Home.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
