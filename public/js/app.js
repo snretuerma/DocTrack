@@ -2420,6 +2420,139 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -2433,6 +2566,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -24026,7 +24161,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { staticClass: "mx-auto", attrs: { "max-width": "90%" } },
+    { staticClass: "mx-auto", attrs: { flat: "" } },
     [
       _c(
         "v-card-title",
@@ -24828,7 +24963,256 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Document Records")])
+  return _c(
+    "v-row",
+    [
+      _c(
+        "v-col",
+        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+        [
+          _c(
+            "v-card",
+            { staticClass: "mx-auto", attrs: { color: "#E3F2FD" } },
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "title font-weight-bold" }, [
+                  _vm._v("New Document")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-divider", { staticClass: "mx-4" }),
+              _vm._v(" "),
+              _c("v-card-text", { staticClass: "font-weight-light" }, [
+                _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                  _vm._v("Create a new document for routing")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-list-item",
+                    { staticClass: "grow" },
+                    [
+                      _c(
+                        "v-row",
+                        { attrs: { align: "center", justify: "end" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { fab: "", color: "#0D47A1", dark: "" }
+                            },
+                            [
+                              _c("v-icon", [
+                                _vm._v("mdi-file-document-multiple-outline")
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+        [
+          _c(
+            "v-card",
+            {
+              staticClass: "mx-auto",
+              attrs: { color: "#E3F2FD", "max-width": "100%" }
+            },
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "title font-weight-bold" }, [
+                  _vm._v("Receive Document")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-divider", { staticClass: "mx-4" }),
+              _vm._v(" "),
+              _c("v-card-text", { staticClass: "font-weight-light" }, [
+                _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                  _vm._v("Receive an existing document routed to your office")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-list-item",
+                    { staticClass: "grow" },
+                    [
+                      _c(
+                        "v-row",
+                        { attrs: { align: "center", justify: "end" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { fab: "", color: "#0D47A1", dark: "" }
+                            },
+                            [_c("v-icon", [_vm._v("mdi-email-open-outline")])],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+        [
+          _c(
+            "v-card",
+            {
+              staticClass: "mx-auto",
+              attrs: { color: "#E3F2FD", "max-width": "100%" }
+            },
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "title font-weight-bold" }, [
+                  _vm._v("Forward Document")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-divider", { staticClass: "mx-4" }),
+              _vm._v(" "),
+              _c("v-card-text", { staticClass: "font-weight-light" }, [
+                _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                  _vm._v("Forward an existing document to another office")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-list-item",
+                    { staticClass: "grow" },
+                    [
+                      _c(
+                        "v-row",
+                        { attrs: { align: "center", justify: "end" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { fab: "", color: "#0D47A1", dark: "" }
+                            },
+                            [_c("v-icon", [_vm._v("mdi-email-send-outline")])],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+        [
+          _c(
+            "v-card",
+            {
+              staticClass: "mx-auto",
+              attrs: { color: "#E3F2FD", "max-width": "100%" }
+            },
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "title font-weight-bold" }, [
+                  _vm._v("Set Document to Terminal")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-divider", { staticClass: "mx-4" }),
+              _vm._v(" "),
+              _c("v-card-text", { staticClass: "font-weight-light" }, [
+                _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                  _vm._v("Set an existing document as terminal")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-list-item",
+                    { staticClass: "grow" },
+                    [
+                      _c(
+                        "v-row",
+                        { attrs: { align: "center", justify: "end" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { fab: "", color: "#0D47A1", dark: "" }
+                            },
+                            [_c("v-icon", [_vm._v("mdi-close-outline")])],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -25126,7 +25510,18 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("v-main", [_c("router-view")], 1)
+          _c(
+            "v-main",
+            [
+              _c(
+                "v-container",
+                { attrs: { fluid: "" } },
+                [_c("router-view")],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )

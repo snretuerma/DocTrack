@@ -90,7 +90,9 @@
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-        <router-view></router-view>
+        <v-container fluid>
+            <router-view></router-view>
+        </v-container>
     </v-main>
 </div>
 </template>

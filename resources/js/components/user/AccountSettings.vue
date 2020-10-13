@@ -1,7 +1,7 @@
 <template>
-    <v-card
+     <v-card
         class="mx-auto"
-        max-width="90%"
+        flat
     >
         <v-card-title>
             <v-icon
