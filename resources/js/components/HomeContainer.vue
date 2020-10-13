@@ -1,32 +1,30 @@
 <template>
     <div>
         <div v-if="user">
-            Name: {{user.name}} <br>
-            Username: {{user.username}}<br>
+            <div v-if="user.role_id === 1">
+                <!-- <admin-dashboard-component :user="user"></admin-dashboard-component> -->
+            </div>
+            <div v-if="user.role_id === 2">
+                <user-home-component :user="user"></user-home-component>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     data() {
         return {
             user: null,
+            title: null,
         }
-    },
-    computed: {
-
     },
     methods: {
         getUser() {
             axios.get('/api/user').then((response)=>{
                 this.user = response.data;
             });
-        },
-        logout(){
-            axios.post('/api/logout').then(()=>{
-                this.$router.push({ name: "Login"})
-            })
         }
     },
     mounted() {

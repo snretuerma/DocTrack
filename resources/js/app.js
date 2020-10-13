@@ -8,9 +8,11 @@ require('./bootstrap');
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
 import routes from './routes';
+import "./validate";
 window.Vue = require('vue');
 Vue.use(Vuetify);
 Vue.use(VueRouter);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -23,8 +25,8 @@ Vue.use(VueRouter);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('welcome-component', require('./components/Welcome.vue').default);
-Vue.component('admin-dashboard-component', require('./components/admin/AdminDashboard.vue').default);
-Vue.component('user-dashboard-component', require('./components/user/UserDashboard.vue').default);
+Vue.component('login-component', require('./components/Login.vue').default);
+Vue.component('user-home-component', require('./components/user/Home.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

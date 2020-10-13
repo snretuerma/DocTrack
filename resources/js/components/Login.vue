@@ -1,11 +1,12 @@
 <template>
 <div>
+<v-app>
     <v-app-bar
         app
         color="blue darken-3"
         dark
     >
-        <v-toolbar-title><router-link class="home_title_link" to="/" tag='a'>Document Tracking System</router-link></v-toolbar-title>
+        <v-toolbar-title>Document Tracking System</v-toolbar-title>
         <v-spacer></v-spacer>
     </v-app-bar>
     <v-main>
@@ -73,6 +74,7 @@
             </v-flex>
         </v-layout>
     </v-main>
+</v-app>
 </div>
 
 
@@ -91,14 +93,14 @@ export default {
   },
   methods: {
        login() {
-           axios.post('/api/login', this.form)
-           .then(response => {
-                this.$router.push({
-                    name: 'Dashboard'
-                });
-           })
-           .catch(error => {
-
+           axios.get('/sanctum/csrf-cookie').then(response => {
+                axios.post('/api/login', this.form)
+                .then(response => {
+                        this.$router.push({
+                            name: 'Dashboard'
+                        });
+                })
+                .catch(error => {});
            });
        }
     },

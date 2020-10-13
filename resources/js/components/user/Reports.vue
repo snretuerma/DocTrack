@@ -1,5 +1,5 @@
 <template>
-    <div>HOME</div>
+<div>Document Reports</div>
 </template>
 
 <script>
