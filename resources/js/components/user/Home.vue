@@ -1,98 +1,98 @@
 <template>
 <div v-if="user">
-        <v-navigation-drawer app v-model="drawer">
-            <template v-slot:prepend>
-                <v-list-item two-line>
-                    <v-list-item-avatar>
-                        <img src="https://randomuser.me/api/portraits/women/81.jpg">
-                    </v-list-item-avatar>
+    <v-navigation-drawer app v-model="drawer">
+        <template v-slot:prepend>
+            <v-list-item two-line>
+                <v-list-item-avatar>
+                    <img src="https://randomuser.me/api/portraits/women/81.jpg">
+                </v-list-item-avatar>
 
-                    <v-list-item-content>
-                        <v-list-item-title>{{user.first_name + ' ' + user.last_name}}</v-list-item-title>
-                        <v-list-item-subtitle>{{user.username}}</v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
-            </template>
+                <v-list-item-content>
+                    <v-list-item-title>{{user.first_name + ' ' + user.last_name}}</v-list-item-title>
+                    <v-list-item-subtitle>{{user.username}}</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+        </template>
 
-            <v-divider></v-divider>
+        <v-divider></v-divider>
 
-            <v-list>
+        <v-list>
 
-                <v-list-item link @click.prevent="getDashboard">
+            <v-list-item link @click.prevent="getDashboard">
+            <v-list-item-icon>
+                <v-icon>mdi-view-dashboard-outline</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+                <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item link @click.prevent="getDocumentRecords">
                 <v-list-item-icon>
-                    <v-icon>mdi-view-dashboard-outline</v-icon>
+                    <v-icon>mdi-file-document-multiple-outline</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>Dashboard</v-list-item-title>
+                    <v-list-item-title>Document Records</v-list-item-title>
                 </v-list-item-content>
-                </v-list-item>
+            </v-list-item>
 
-                <v-list-item link @click.prevent="getDocumentRecords">
-                    <v-list-item-icon>
-                        <v-icon>mdi-file-document-multiple-outline</v-icon>
-                    </v-list-item-icon>
+            <v-list-item link @click.prevent="getReports">
+                <v-list-item-icon>
+                    <v-icon>mdi-timeline-check-outline</v-icon>
+                </v-list-item-icon>
 
-                    <v-list-item-content>
-                        <v-list-item-title>Document Records</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item link @click.prevent="getReports">
-                    <v-list-item-icon>
-                        <v-icon>mdi-timeline-check-outline</v-icon>
-                    </v-list-item-icon>
-
-                    <v-list-item-content>
-                        <v-list-item-title>Reports</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title>Reports</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
 
 
-                <v-list-item link @click.prevent="getAccountSettings">
-                    <v-list-item-icon>
-                        <v-icon>mdi-account-cog-outline</v-icon>
-                    </v-list-item-icon>
+            <v-list-item link @click.prevent="getAccountSettings">
+                <v-list-item-icon>
+                    <v-icon>mdi-account-cog-outline</v-icon>
+                </v-list-item-icon>
 
-                    <v-list-item-content>
-                        <v-list-item-title>Account Settings</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title>Account Settings</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
 
-                <v-list-item link @click.prevent="logout">
-                    <v-list-item-icon>
-                        <v-icon>mdi-logout-variant</v-icon>
-                    </v-list-item-icon>
+            <v-list-item link @click.prevent="logout">
+                <v-list-item-icon>
+                    <v-icon>mdi-logout-variant</v-icon>
+                </v-list-item-icon>
 
-                    <v-list-item-content>
-                        <v-list-item-title>Logout</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
+                <v-list-item-content>
+                    <v-list-item-title>Logout</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
 
-            <template v-slot:append>
-                <div class="pa-2">
-                    <v-btn block @click.stop="drawer = !drawer">
-                        Close
-                    </v-btn>
-                </div>
-            </template>
-        </v-navigation-drawer>
+        <template v-slot:append>
+            <div class="pa-2">
+                <v-btn block @click.stop="drawer = !drawer">
+                    Close
+                </v-btn>
+            </div>
+        </template>
+    </v-navigation-drawer>
 
-        <v-app-bar
-            app
-            color="blue darken-3"
-            dark
-        >
-            <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer">
-                <v-icon>mdi-menu</v-icon>
-            </v-app-bar-nav-icon>
-            <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
-        </v-app-bar>
-        <v-main>
-            <router-view></router-view>
-        </v-main>
-    </div>
+    <v-app-bar
+        app
+        color="blue darken-3"
+        dark
+    >
+        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer">
+            <v-icon>mdi-menu</v-icon>
+        </v-app-bar-nav-icon>
+        <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
+    </v-app-bar>
+    <v-main>
+        <router-view></router-view>
+    </v-main>
+</div>
 </template>
 
 <script>
