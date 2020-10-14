@@ -3,7 +3,7 @@
     <v-col cols="12" xl="6" lg="6" md="6">
         <v-card
             class="mx-auto"
-            color="#E3F2FD"
+            color="#E1EBEE"
         >
             <v-card-title>
                 <span class="title font-weight-bold">New Document</span>
@@ -25,6 +25,7 @@
                             fab
                             color="#0D47A1"
                             dark
+                            link @click.prevent="getNewDocumentPage"
                         >
                             <v-icon>mdi-file-document-multiple-outline</v-icon>
                         </v-btn>
@@ -36,7 +37,7 @@
     <v-col cols="12" xl="6" lg="6" md="6">
         <v-card
             class="mx-auto"
-            color="#E3F2FD"
+            color="#E1EBEE"
             max-width="100%"
         >
             <v-card-title>
@@ -69,7 +70,7 @@
     <v-col cols="12" xl="6" lg="6" md="6">
         <v-card
             class="mx-auto"
-            color="#E3F2FD"
+            color="#E1EBEE"
             max-width="100%"
         >
             <v-card-title>
@@ -102,7 +103,7 @@
     <v-col cols="12" xl="6" lg="6" md="6">
         <v-card
             class="mx-auto"
-            color="#E3F2FD"
+            color="#E1EBEE"
             max-width="100%"
         >
             <v-card-title>
@@ -137,6 +138,12 @@
 
 <script>
 export default {
-
+    methods: {
+        getNewDocumentPage() {
+            axios.get('new_document').then(()=>{
+                this.$router.push({ name: "New Document"})
+            })
+        }
+    }
 }
 </script>

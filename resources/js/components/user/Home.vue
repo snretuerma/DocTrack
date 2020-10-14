@@ -1,6 +1,6 @@
 <template>
 <div v-if="user">
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app color="#E1EBEE" v-model="drawer">
         <template v-slot:prepend>
             <v-list-item two-line>
                 <v-list-item-avatar>
@@ -72,7 +72,10 @@
 
         <template v-slot:append>
             <div class="pa-2">
-                <v-btn block @click.stop="drawer = !drawer">
+                <v-btn block tile @click.stop="drawer = !drawer" outlined color="primary">
+                    <v-icon left>
+                        mdi-window-close
+                    </v-icon>
                     Close
                 </v-btn>
             </div>
@@ -84,7 +87,7 @@
         color="blue darken-3"
         dark
     >
-        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer">
+        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer" >
             <v-icon>mdi-menu</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>

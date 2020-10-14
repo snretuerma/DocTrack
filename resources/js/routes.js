@@ -3,6 +3,8 @@ import DocumentRecords from './components/user/DocumentRecords';
 import Reports from './components/user/Reports';
 import AccountSettings from './components/user/AccountSettings';
 
+import NewDocument from './components/user/NewDocument';
+
 import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
 import NotFound from './components/NotFound';
@@ -31,14 +33,14 @@ export default {
             },
             children: [
                 {
-                  path: '/',
-                  component: Dashboard,
-                  name: 'Dashboard',
+                    path: '/',
+                    component: Dashboard,
+                    name: 'Dashboard',
                 },
                 {
-                  path: 'document_records',
-                  component: DocumentRecords,
-                  name: 'Document Records',
+                    path: 'document_records',
+                    component: DocumentRecords,
+                    name: 'Document Records',
                 },
                 {
                     path: 'reports',
@@ -49,6 +51,11 @@ export default {
                     path: 'account_settings',
                     component: AccountSettings,
                     name: 'Account Settings',
+                },
+                {
+                    path: 'new_document',
+                    component: NewDocument,
+                    name: 'New Document'
                 }
               ]
         },

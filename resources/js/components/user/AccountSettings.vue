@@ -256,12 +256,6 @@
 
 <script>
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-extend('min_len', {
-    validate: value => {
-        return value % 2 !== 0;
-    },
-    message: 'This field must be an odd number'
-});
 
 export default {
     components: {
