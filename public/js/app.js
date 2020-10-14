@@ -2548,6 +2548,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     getNewDocumentPage: function getNewDocumentPage() {
@@ -2558,7 +2577,10 @@ __webpack_require__.r(__webpack_exports__);
           name: "New Document"
         });
       });
-    }
+    },
+    getReceiveDocumentPage: function getReceiveDocumentPage() {},
+    getForwardDocumentPage: function getForwardDocumentPage() {},
+    getSetTerminalDocumentPage: function getSetTerminalDocumentPage() {}
   }
 });
 
@@ -2909,9 +2931,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      breadcrumbs: [{
+        text: 'Document Records',
+        disabled: false,
+        to: 'document_records'
+      }, {
+        text: 'New Document',
+        disabled: true,
+        to: 'new_document'
+      }],
       document_types: [{
         id: 1,
         name: 'Document Type 1'
@@ -2980,6 +3014,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.home_title_link:link, .home_title_link:active, .home_title_link:hover, .home_title_link:visited{\n    text-decoration: none;\n    color: white;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.document_record_card {\r\n    min-height:150px;\n}\n.document_record_card_text {\r\n    min-height:150px;\n}\r\n", ""]);
 
 // exports
 
@@ -20661,6 +20714,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./DocumentRecords.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -25184,7 +25267,10 @@ var render = function() {
         [
           _c(
             "v-card",
-            { staticClass: "mx-auto", attrs: { color: "#E1EBEE" } },
+            {
+              staticClass: "mx-auto document_record_card",
+              attrs: { color: "#E1EBEE" }
+            },
             [
               _c("v-card-title", [
                 _c("span", { staticClass: "title font-weight-bold" }, [
@@ -25194,14 +25280,19 @@ var render = function() {
               _vm._v(" "),
               _c("v-divider", { staticClass: "mx-4" }),
               _vm._v(" "),
-              _c("v-card-text", { staticClass: "font-weight-light" }, [
-                _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                  _vm._v("Create a new document for routing")
-                ])
-              ]),
+              _c(
+                "v-card-text",
+                { staticClass: "font-weight-light document_record_card_text" },
+                [
+                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                    _vm._v("Create a new document for routing")
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "v-card-actions",
+                { attrs: { align: "right", justify: "end" } },
                 [
                   _c(
                     "v-list-item",
@@ -25209,29 +25300,36 @@ var render = function() {
                     [
                       _c(
                         "v-row",
-                        { attrs: { align: "center", justify: "end" } },
+                        { attrs: { "no-gutters": "" } },
                         [
                           _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-2",
-                              attrs: {
-                                fab: "",
-                                color: "#0D47A1",
-                                dark: "",
-                                link: ""
-                              },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.getNewDocumentPage($event)
-                                }
-                              }
-                            },
+                            "v-col",
+                            { attrs: { cols: "12" } },
                             [
-                              _c("v-icon", [
-                                _vm._v("mdi-file-document-multiple-outline")
-                              ])
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "ma-2",
+                                  attrs: {
+                                    fab: "",
+                                    color: "#0D47A1",
+                                    dark: "",
+                                    link: ""
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.getNewDocumentPage($event)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-icon", [
+                                    _vm._v("mdi-file-document-multiple-outline")
+                                  ])
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
@@ -25257,10 +25355,7 @@ var render = function() {
         [
           _c(
             "v-card",
-            {
-              staticClass: "mx-auto",
-              attrs: { color: "#E1EBEE", "max-width": "100%" }
-            },
+            { staticClass: "mx-auto", attrs: { color: "#E1EBEE" } },
             [
               _c("v-card-title", [
                 _c("span", { staticClass: "title font-weight-bold" }, [
@@ -25270,14 +25365,21 @@ var render = function() {
               _vm._v(" "),
               _c("v-divider", { staticClass: "mx-4" }),
               _vm._v(" "),
-              _c("v-card-text", { staticClass: "font-weight-light" }, [
-                _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                  _vm._v("Receive an existing document routed to your office")
-                ])
-              ]),
+              _c(
+                "v-card-text",
+                { staticClass: "font-weight-light document_record_card_text" },
+                [
+                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                    _vm._v(
+                      "\r\n                    Receive an existing document routed to your office by scanning or entering the document\r\n                    routing number\r\n                "
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "v-card-actions",
+                { attrs: { align: "right", justify: "end" } },
                 [
                   _c(
                     "v-list-item",
@@ -25285,15 +25387,47 @@ var render = function() {
                     [
                       _c(
                         "v-row",
-                        { attrs: { align: "center", justify: "end" } },
+                        { attrs: { "no-gutters": "" } },
                         [
                           _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-2",
-                              attrs: { fab: "", color: "#0D47A1", dark: "" }
-                            },
-                            [_c("v-icon", [_vm._v("mdi-email-open-outline")])],
+                            "v-col",
+                            { attrs: { cols: "9" } },
+                            [
+                              _c(
+                                "v-form",
+                                { ref: "form" },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Routing Number",
+                                      clearable: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "3" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "ma-2",
+                                  attrs: { fab: "", color: "#0D47A1", dark: "" }
+                                },
+                                [
+                                  _c("v-icon", [
+                                    _vm._v("mdi-email-open-outline")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
                             1
                           )
                         ],
@@ -25331,14 +25465,19 @@ var render = function() {
               _vm._v(" "),
               _c("v-divider", { staticClass: "mx-4" }),
               _vm._v(" "),
-              _c("v-card-text", { staticClass: "font-weight-light" }, [
-                _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                  _vm._v("Forward an existing document to another office")
-                ])
-              ]),
+              _c(
+                "v-card-text",
+                { staticClass: "font-weight-light document_record_card_text" },
+                [
+                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                    _vm._v("Forward an existing document to another office")
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "v-card-actions",
+                { attrs: { align: "right", justify: "end" } },
                 [
                   _c(
                     "v-list-item",
@@ -25346,15 +25485,26 @@ var render = function() {
                     [
                       _c(
                         "v-row",
-                        { attrs: { align: "center", justify: "end" } },
+                        { attrs: { "no-gutters": "" } },
                         [
                           _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-2",
-                              attrs: { fab: "", color: "#0D47A1", dark: "" }
-                            },
-                            [_c("v-icon", [_vm._v("mdi-email-send-outline")])],
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "ma-2",
+                                  attrs: { fab: "", color: "#0D47A1", dark: "" }
+                                },
+                                [
+                                  _c("v-icon", [
+                                    _vm._v("mdi-email-send-outline")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
                             1
                           )
                         ],
@@ -25392,14 +25542,19 @@ var render = function() {
               _vm._v(" "),
               _c("v-divider", { staticClass: "mx-4" }),
               _vm._v(" "),
-              _c("v-card-text", { staticClass: "font-weight-light" }, [
-                _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                  _vm._v("Set an existing document as terminal")
-                ])
-              ]),
+              _c(
+                "v-card-text",
+                { staticClass: "font-weight-light document_record_card_text" },
+                [
+                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
+                    _vm._v("Set an existing document as terminal")
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "v-card-actions",
+                { attrs: { align: "right", justify: "end" } },
                 [
                   _c(
                     "v-list-item",
@@ -25407,15 +25562,22 @@ var render = function() {
                     [
                       _c(
                         "v-row",
-                        { attrs: { align: "center", justify: "end" } },
+                        { attrs: { "no-gutters": "" } },
                         [
                           _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-2",
-                              attrs: { fab: "", color: "#0D47A1", dark: "" }
-                            },
-                            [_c("v-icon", [_vm._v("mdi-close-outline")])],
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "ma-2",
+                                  attrs: { fab: "", color: "#0D47A1", dark: "" }
+                                },
+                                [_c("v-icon", [_vm._v("mdi-close-outline")])],
+                                1
+                              )
+                            ],
                             1
                           )
                         ],
@@ -25791,9 +25953,24 @@ var render = function() {
         _vm._v("\r\n        New Document\r\n    ")
       ]),
       _vm._v(" "),
-      _c("v-card-subtitle", [
-        _vm._v("\r\n        Info about this form\r\n    ")
-      ]),
+      _c(
+        "v-card-subtitle",
+        [
+          _c("v-breadcrumbs", {
+            attrs: { items: _vm.breadcrumbs },
+            scopedSlots: _vm._u([
+              {
+                key: "divider",
+                fn: function() {
+                  return [_c("v-icon", [_vm._v("mdi-arrow-right-thick")])]
+                },
+                proxy: true
+              }
+            ])
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-card-text",
@@ -85669,7 +85846,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DocumentRecords_vue_vue_type_template_id_3ff944e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DocumentRecords.vue?vue&type=template&id=3ff944e4& */ "./resources/js/components/user/DocumentRecords.vue?vue&type=template&id=3ff944e4&");
 /* harmony import */ var _DocumentRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DocumentRecords.vue?vue&type=script&lang=js& */ "./resources/js/components/user/DocumentRecords.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DocumentRecords.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -85677,7 +85856,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _DocumentRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _DocumentRecords_vue_vue_type_template_id_3ff944e4___WEBPACK_IMPORTED_MODULE_0__["render"],
   _DocumentRecords_vue_vue_type_template_id_3ff944e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -85706,6 +85885,22 @@ component.options.__file = "resources/js/components/user/DocumentRecords.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DocumentRecords.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./DocumentRecords.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

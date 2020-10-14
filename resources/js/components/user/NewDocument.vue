@@ -4,8 +4,11 @@
         New Document
     </v-card-title>
     <v-card-subtitle>
-        <!-- TODO: INFORMATION ABOUT THIS FORM -->
-        Info about this form
+        <v-breadcrumbs :items="breadcrumbs">
+        <template v-slot:divider>
+            <v-icon>mdi-arrow-right-thick</v-icon>
+        </template>
+        </v-breadcrumbs>
     </v-card-subtitle>
     <v-card-text>
         <v-form>
@@ -154,6 +157,18 @@
 export default {
     data() {
         return {
+            breadcrumbs: [
+                {
+                    text: 'Document Records',
+                    disabled: false,
+                    to: 'document_records',
+                },
+                {
+                    text: 'New Document',
+                    disabled: true,
+                    to: 'new_document',
+                },
+            ],
             document_types: [
                 {id: 1, name: 'Document Type 1'},
                 {id: 2, name: 'Document Type 2'},
