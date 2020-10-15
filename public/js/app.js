@@ -2401,6 +2401,165 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentAction.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/DocumentAction.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// TODO: Backend functionality
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      breadcrumbs: [{
+        text: 'Document Records',
+        disabled: false,
+        to: 'document_records'
+      }, {
+        text: 'Receive Document',
+        disabled: true,
+        to: 'receive_document'
+      }],
+      document_record: {
+        tracking_code: '2012-21323-1234454',
+        title: 'Some Random Document',
+        document_type_id: '1',
+        originating_office: 'Governor\'s Office',
+        is_external: false,
+        current_office: null,
+        sender_name: 'FirstName MiddleName LastName',
+        page_count: 10,
+        date_filed: new Date().toISOString().substr(0, 10),
+        is_terminal: false,
+        remarks: 'No attachment',
+        attachment_page_count: 0
+      }
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/DocumentRecords.vue?vue&type=script&lang=js& ***!
@@ -2567,7 +2726,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      routing_number: ''
+    };
+  },
   methods: {
     getNewDocumentPage: function getNewDocumentPage() {
       var _this = this;
@@ -2578,9 +2767,48 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    getReceiveDocumentPage: function getReceiveDocumentPage() {},
-    getForwardDocumentPage: function getForwardDocumentPage() {},
-    getSetTerminalDocumentPage: function getSetTerminalDocumentPage() {}
+    getReceiveDocumentPage: function getReceiveDocumentPage() {
+      var _this2 = this;
+
+      if (this.routing_number) {
+        axios.get('receive_document').then(function () {
+          _this2.$router.push({
+            name: "Receive Document",
+            params: {
+              routing_number: _this2.routing_number
+            }
+          });
+        });
+      }
+    },
+    getForwardDocumentPage: function getForwardDocumentPage() {
+      var _this3 = this;
+
+      if (this.routing_number) {
+        axios.get('forward_document').then(function () {
+          _this3.$router.push({
+            name: "Forward Document",
+            params: {
+              routing_number: _this3.routing_number
+            }
+          });
+        });
+      }
+    },
+    getSetTerminalDocumentPage: function getSetTerminalDocumentPage() {
+      var _this4 = this;
+
+      if (this.routing_number) {
+        axios.get('terminal_document').then(function () {
+          _this4.$router.push({
+            name: "Terminal Document",
+            params: {
+              routing_number: _this4.routing_number
+            }
+          });
+        });
+      }
+    }
   }
 });
 
@@ -25243,6 +25471,455 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentAction.vue?vue&type=template&id=416d219a&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/DocumentAction.vue?vue&type=template&id=416d219a& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    { attrs: { flat: "" } },
+    [
+      _c("v-card-title", { attrs: { "primary-title": "" } }, [
+        _vm._v("\r\n        {Action} Document\r\n    ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-card-subtitle",
+        [
+          _c("v-breadcrumbs", {
+            attrs: { items: _vm.breadcrumbs },
+            scopedSlots: _vm._u([
+              {
+                key: "divider",
+                fn: function() {
+                  return [_c("v-icon", [_vm._v("mdi-arrow-right-thick")])]
+                },
+                proxy: true
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        [
+          _c(
+            "v-card",
+            { staticClass: "mx-auto" },
+            [
+              _c(
+                "v-list-item",
+                { attrs: { "two-line": "" } },
+                [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            {
+                              staticClass: "d-flex flex-row",
+                              attrs: { cols: "8" }
+                            },
+                            [
+                              _c(
+                                "v-list-item-title",
+                                { staticClass: "headline" },
+                                [
+                                  _vm._v(
+                                    "\r\n                                " +
+                                      _vm._s(_vm.document_record.title) +
+                                      "\r\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              attrs: {
+                                cols: "4",
+                                align: "end",
+                                justify: "center"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                { attrs: { tile: "", color: "primary" } },
+                                [
+                                  _c("v-icon", { attrs: { left: "" } }, [
+                                    _vm._v(
+                                      "\r\n                                mdi-email-open-outline\r\n                            "
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    "\r\n                                Receive\r\n                            "
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        [
+                          _c("v-simple-table", {
+                            attrs: { "fixed-header": "" },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "default",
+                                fn: function() {
+                                  return [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c(
+                                          "th",
+                                          { staticClass: "text-center" },
+                                          [
+                                            _vm._v(
+                                              "\r\n                                            Attribute\r\n                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "th",
+                                          { staticClass: "text-center" },
+                                          [
+                                            _vm._v(
+                                              "\r\n                                            Value\r\n                                        "
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tbody", [
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Tracking Number")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record
+                                                  .tracking_code
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Source Type")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record.is_external
+                                                  ? "External"
+                                                  : "Internal"
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Document Type")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record
+                                                  .document_type_id
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Originating Office")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record
+                                                  .originating_office
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Sender Name")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record.sender_name
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Current Office")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record
+                                                  .current_office
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [_c("strong", [_vm._v("Date Filed")])]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record.date_filed
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [_c("strong", [_vm._v("Page Count")])]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record.page_count
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [
+                                            _c("strong", [
+                                              _vm._v("Attacment Page Count")
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record
+                                                  .attachment_page_count
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [_c("strong", [_vm._v("Status")])]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record.is_terminal
+                                                  ? "Terminal"
+                                                  : "Active"
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-2" },
+                                          [_c("strong", [_vm._v("Remarks")])]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "subtitle-1" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.document_record.remarks
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ])
+                                  ]
+                                },
+                                proxy: true
+                              }
+                            ])
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentRecords.vue?vue&type=template&id=3ff944e4&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/DocumentRecords.vue?vue&type=template&id=3ff944e4& ***!
@@ -25401,6 +26078,13 @@ var render = function() {
                                     attrs: {
                                       label: "Routing Number",
                                       clearable: ""
+                                    },
+                                    model: {
+                                      value: _vm.routing_number,
+                                      callback: function($$v) {
+                                        _vm.routing_number = $$v
+                                      },
+                                      expression: "routing_number"
                                     }
                                   })
                                 ],
@@ -25418,7 +26102,18 @@ var render = function() {
                                 "v-btn",
                                 {
                                   staticClass: "ma-2",
-                                  attrs: { fab: "", color: "#0D47A1", dark: "" }
+                                  attrs: {
+                                    fab: "",
+                                    color: "#0D47A1",
+                                    dark: "",
+                                    link: ""
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.getReceiveDocumentPage($event)
+                                    }
+                                  }
                                 },
                                 [
                                   _c("v-icon", [
@@ -25489,13 +26184,52 @@ var render = function() {
                         [
                           _c(
                             "v-col",
-                            { attrs: { cols: "12" } },
+                            { attrs: { cols: "9" } },
+                            [
+                              _c(
+                                "v-form",
+                                { ref: "form" },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Routing Number",
+                                      clearable: ""
+                                    },
+                                    model: {
+                                      value: _vm.routing_number,
+                                      callback: function($$v) {
+                                        _vm.routing_number = $$v
+                                      },
+                                      expression: "routing_number"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "3" } },
                             [
                               _c(
                                 "v-btn",
                                 {
                                   staticClass: "ma-2",
-                                  attrs: { fab: "", color: "#0D47A1", dark: "" }
+                                  attrs: {
+                                    fab: "",
+                                    color: "#0D47A1",
+                                    dark: "",
+                                    link: ""
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.getForwardDocumentPage($event)
+                                    }
+                                  }
                                 },
                                 [
                                   _c("v-icon", [
@@ -25566,13 +26300,54 @@ var render = function() {
                         [
                           _c(
                             "v-col",
-                            { attrs: { cols: "12" } },
+                            { attrs: { cols: "9" } },
+                            [
+                              _c(
+                                "v-form",
+                                { ref: "form" },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Routing Number",
+                                      clearable: ""
+                                    },
+                                    model: {
+                                      value: _vm.routing_number,
+                                      callback: function($$v) {
+                                        _vm.routing_number = $$v
+                                      },
+                                      expression: "routing_number"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "3" } },
                             [
                               _c(
                                 "v-btn",
                                 {
                                   staticClass: "ma-2",
-                                  attrs: { fab: "", color: "#0D47A1", dark: "" }
+                                  attrs: {
+                                    fab: "",
+                                    color: "#0D47A1",
+                                    dark: "",
+                                    link: ""
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.getSetTerminalDocumentPage(
+                                        $event
+                                      )
+                                    }
+                                  }
                                 },
                                 [_c("v-icon", [_vm._v("mdi-close-outline")])],
                                 1
@@ -25740,6 +26515,14 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
+                      directives: [
+                        {
+                          name: "ripple",
+                          rawName: "v-ripple",
+                          value: { class: "primary--text" },
+                          expression: "{ class: 'primary--text' }"
+                        }
+                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -25767,6 +26550,14 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
+                      directives: [
+                        {
+                          name: "ripple",
+                          rawName: "v-ripple",
+                          value: { class: "primary--text" },
+                          expression: "{ class: 'primary--text' }"
+                        }
+                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -25798,6 +26589,14 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
+                      directives: [
+                        {
+                          name: "ripple",
+                          rawName: "v-ripple",
+                          value: { class: "primary--text" },
+                          expression: "{ class: 'primary--text' }"
+                        }
+                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -25825,6 +26624,14 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
+                      directives: [
+                        {
+                          name: "ripple",
+                          rawName: "v-ripple",
+                          value: { class: "primary--text" },
+                          expression: "{ class: 'primary--text' }"
+                        }
+                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -25852,6 +26659,14 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
+                      directives: [
+                        {
+                          name: "ripple",
+                          rawName: "v-ripple",
+                          value: { class: "primary--text" },
+                          expression: "{ class: 'primary--text' }"
+                        }
+                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -85835,6 +86650,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/DocumentAction.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/user/DocumentAction.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DocumentAction_vue_vue_type_template_id_416d219a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DocumentAction.vue?vue&type=template&id=416d219a& */ "./resources/js/components/user/DocumentAction.vue?vue&type=template&id=416d219a&");
+/* harmony import */ var _DocumentAction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DocumentAction.vue?vue&type=script&lang=js& */ "./resources/js/components/user/DocumentAction.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DocumentAction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DocumentAction_vue_vue_type_template_id_416d219a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DocumentAction_vue_vue_type_template_id_416d219a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/DocumentAction.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/DocumentAction.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/user/DocumentAction.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentAction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DocumentAction.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentAction.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentAction_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/DocumentAction.vue?vue&type=template&id=416d219a&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/user/DocumentAction.vue?vue&type=template&id=416d219a& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentAction_vue_vue_type_template_id_416d219a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DocumentAction.vue?vue&type=template&id=416d219a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/DocumentAction.vue?vue&type=template&id=416d219a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentAction_vue_vue_type_template_id_416d219a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DocumentAction_vue_vue_type_template_id_416d219a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/user/DocumentRecords.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/user/DocumentRecords.vue ***!
@@ -86143,9 +87027,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_user_Reports__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/user/Reports */ "./resources/js/components/user/Reports.vue");
 /* harmony import */ var _components_user_AccountSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/user/AccountSettings */ "./resources/js/components/user/AccountSettings.vue");
 /* harmony import */ var _components_user_NewDocument__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/user/NewDocument */ "./resources/js/components/user/NewDocument.vue");
-/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.vue");
-/* harmony import */ var _components_HomeContainer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/HomeContainer */ "./resources/js/components/HomeContainer.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/user/DocumentAction */ "./resources/js/components/user/DocumentAction.vue");
+/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.vue");
+/* harmony import */ var _components_HomeContainer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/HomeContainer */ "./resources/js/components/HomeContainer.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+
 
 
 
@@ -86158,14 +87044,14 @@ __webpack_require__.r(__webpack_exports__);
   mode: 'history',
   routes: [{
     path: '*',
-    component: _components_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _components_NotFound__WEBPACK_IMPORTED_MODULE_8__["default"]
   }, {
     path: '/',
-    component: _components_Login__WEBPACK_IMPORTED_MODULE_5__["default"],
+    component: _components_Login__WEBPACK_IMPORTED_MODULE_6__["default"],
     name: 'Login'
   }, {
     path: '/user',
-    component: _components_HomeContainer__WEBPACK_IMPORTED_MODULE_6__["default"],
+    component: _components_HomeContainer__WEBPACK_IMPORTED_MODULE_7__["default"],
     beforeEnter: function beforeEnter(to, form, next) {
       axios.get('/api/authenticated').then(function (response) {
         next();
@@ -86195,6 +87081,18 @@ __webpack_require__.r(__webpack_exports__);
       path: 'new_document',
       component: _components_user_NewDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
       name: 'New Document'
+    }, {
+      path: 'receive_document/:routing_number',
+      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__["default"],
+      name: 'Receive Document'
+    }, {
+      path: 'forward_document/:routing_number',
+      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__["default"],
+      name: 'Forward Document'
+    }, {
+      path: 'terminal_document/:routing_number',
+      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__["default"],
+      name: 'Terminal Document'
     }]
   }]
 });

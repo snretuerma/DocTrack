@@ -18,17 +18,17 @@
 
         <v-list>
 
-            <v-list-item link @click.prevent="getDashboard">
-            <v-list-item-icon>
-                <v-icon>mdi-view-dashboard-outline</v-icon>
-            </v-list-item-icon>
+            <v-list-item link @click.prevent="getDashboard" v-ripple="{ class: 'primary--text' }">
+                <v-list-item-icon>
+                    <v-icon>mdi-view-dashboard-outline</v-icon>
+                </v-list-item-icon>
 
-            <v-list-item-content>
-                <v-list-item-title>Dashboard</v-list-item-title>
-            </v-list-item-content>
+                <v-list-item-content>
+                    <v-list-item-title>Dashboard</v-list-item-title>
+                </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getDocumentRecords">
+            <v-list-item link @click.prevent="getDocumentRecords" v-ripple="{ class: 'primary--text' }">
                 <v-list-item-icon>
                     <v-icon>mdi-file-document-multiple-outline</v-icon>
                 </v-list-item-icon>
@@ -38,7 +38,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getReports">
+            <v-list-item link @click.prevent="getReports" v-ripple="{ class: 'primary--text' }">
                 <v-list-item-icon>
                     <v-icon>mdi-timeline-check-outline</v-icon>
                 </v-list-item-icon>
@@ -49,7 +49,7 @@
             </v-list-item>
 
 
-            <v-list-item link @click.prevent="getAccountSettings">
+            <v-list-item link @click.prevent="getAccountSettings" v-ripple="{ class: 'primary--text' }">
                 <v-list-item-icon>
                     <v-icon>mdi-account-cog-outline</v-icon>
                 </v-list-item-icon>
@@ -59,7 +59,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="logout">
+            <v-list-item link @click.prevent="logout" v-ripple="{ class: 'primary--text' }">
                 <v-list-item-icon>
                     <v-icon>mdi-logout-variant</v-icon>
                 </v-list-item-icon>

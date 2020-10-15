@@ -26,7 +26,8 @@
                                 fab
                                 color="#0D47A1"
                                 dark
-                                link @click.prevent="getNewDocumentPage"
+                                link
+                                @click.prevent="getNewDocumentPage"
                             >
                                 <v-icon>mdi-file-document-multiple-outline</v-icon>
                             </v-btn>
@@ -61,6 +62,7 @@
                         <v-col cols="9">
                             <v-form ref="form">
                                 <v-text-field
+                                    v-model="routing_number"
                                     label="Routing Number"
                                     clearable
                                 ></v-text-field>
@@ -72,6 +74,8 @@
                                 fab
                                 color="#0D47A1"
                                 dark
+                                link
+                                @click.prevent="getReceiveDocumentPage"
                             >
                                 <v-icon>mdi-email-open-outline</v-icon>
                             </v-btn>
@@ -95,19 +99,29 @@
             <v-card-text class="font-weight-light document_record_card_text">
                 <span class="subtitle font-weight-bold">Forward an existing document to another office</span>
             </v-card-text>
-
             <v-card-actions
                 align="right"
                 justify="end"
             >
                 <v-list-item class="grow">
                     <v-row no-gutters>
-                        <v-col cols="12">
+                        <v-col cols="9">
+                            <v-form ref="form">
+                                <v-text-field
+                                    v-model="routing_number"
+                                    label="Routing Number"
+                                    clearable
+                                ></v-text-field>
+                            </v-form>
+                        </v-col>
+                        <v-col cols="3">
                             <v-btn
                                 class="ma-2"
                                 fab
                                 color="#0D47A1"
                                 dark
+                                link
+                                @click.prevent="getForwardDocumentPage"
                             >
                                 <v-icon>mdi-email-send-outline</v-icon>
                             </v-btn>
@@ -137,12 +151,23 @@
             >
                 <v-list-item class="grow">
                     <v-row no-gutters>
-                        <v-col cols="12">
+                        <v-col cols="9">
+                            <v-form ref="form">
+                                <v-text-field
+                                    v-model="routing_number"
+                                    label="Routing Number"
+                                    clearable
+                                ></v-text-field>
+                            </v-form>
+                        </v-col>
+                        <v-col cols="3">
                             <v-btn
                                 class="ma-2"
                                 fab
                                 color="#0D47A1"
                                 dark
+                                link
+                                @click.prevent="getSetTerminalDocumentPage"
                             >
                                 <v-icon>mdi-close-outline</v-icon>
                             </v-btn>
@@ -157,6 +182,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            routing_number: '',
+        }
+    },
     methods: {
         getNewDocumentPage() {
             axios.get('new_document').then(()=>{
@@ -164,13 +194,25 @@ export default {
             })
         },
         getReceiveDocumentPage() {
-
+            if(this.routing_number){
+                axios.get('receive_document').then(()=>{
+                    this.$router.push({ name: "Receive Document", params: { routing_number: this.routing_number }})
+                })
+            }
         },
         getForwardDocumentPage() {
-
+            if(this.routing_number){
+                axios.get('forward_document').then(()=>{
+                    this.$router.push({ name: "Forward Document", params: { routing_number: this.routing_number }})
+                })
+            }
         },
         getSetTerminalDocumentPage() {
-
+            if(this.routing_number){
+                axios.get('terminal_document').then(()=>{
+                    this.$router.push({ name: "Terminal Document", params: { routing_number: this.routing_number }})
+                })
+            }
         }
     }
 }

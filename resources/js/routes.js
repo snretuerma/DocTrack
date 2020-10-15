@@ -4,6 +4,7 @@ import Reports from './components/user/Reports';
 import AccountSettings from './components/user/AccountSettings';
 
 import NewDocument from './components/user/NewDocument';
+import DocumentAction from './components/user/DocumentAction';
 
 import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
@@ -56,6 +57,21 @@ export default {
                     path: 'new_document',
                     component: NewDocument,
                     name: 'New Document'
+                },
+                {
+                    path: 'receive_document/:routing_number',
+                    component: DocumentAction,
+                    name: 'Receive Document'
+                },
+                {
+                    path: 'forward_document/:routing_number',
+                    component: DocumentAction,
+                    name: 'Forward Document'
+                },
+                {
+                    path: 'terminal_document/:routing_number',
+                    component: DocumentAction,
+                    name: 'Terminal Document'
                 }
               ]
         },
