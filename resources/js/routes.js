@@ -5,6 +5,8 @@ import AccountSettings from './components/user/AccountSettings';
 
 import NewDocument from './components/user/NewDocument';
 import DocumentAction from './components/user/DocumentAction';
+import ReportAging from './components/user/ReportAging';
+import ReportMasterList from './components/user/ReportMasterList';
 
 import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
@@ -44,11 +46,6 @@ export default {
                     name: 'Document Records',
                 },
                 {
-                    path: 'reports',
-                    component: Reports,
-                    name: 'Reports',
-                },
-                {
                     path: 'account_settings',
                     component: AccountSettings,
                     name: 'Account Settings',
@@ -72,8 +69,18 @@ export default {
                     path: 'terminal_document/:routing_number',
                     component: DocumentAction,
                     name: 'Terminal Document'
+                },
+                {
+                    path: 'reports/aging',
+                    component: ReportAging,
+                    name: 'Document Aging Report'
+                },
+                {
+                    path: 'reports/master_list',
+                    component: ReportMasterList,
+                    name: 'Document Master List'
                 }
-              ]
+            ]
         },
 
     ]
