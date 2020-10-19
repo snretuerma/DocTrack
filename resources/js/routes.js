@@ -12,6 +12,7 @@ import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
 import NotFound from './components/NotFound';
 
+// TODO: Fix routes structure
 export default {
     base: '/',
     mode: 'history',

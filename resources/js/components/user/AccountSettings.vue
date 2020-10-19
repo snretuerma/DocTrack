@@ -289,6 +289,7 @@ export default {
         }
     },
     methods: {
+        // TODO: Fix this method
         editAccountDetails() {
             axios({
                 method: 'post',

@@ -2388,6 +2388,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // TODO: Fix this method
     editAccountDetails: function editAccountDetails() {
       axios({
         method: 'post',
@@ -87390,6 +87391,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // TODO: Fix routes structure
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   base: '/',
