@@ -13,6 +13,7 @@ import HomeContainer from './components/HomeContainer';
 import NotFound from './components/NotFound';
 
 export default {
+    base: '/',
     mode: 'history',
     routes: [
         {

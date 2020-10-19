@@ -29,7 +29,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form>
+                        <v-form method="get" @submit.prevent="editAccountDetails">
                             <v-row>
                                 <v-col cols="12" xl="6" lg="6" md="12" sm="12">
                                     <ValidationProvider rules="required" v-slot="{ errors, valid }">
@@ -81,6 +81,7 @@
                                 >
                                     <v-btn
                                         color="primary"
+                                        type="submit"
                                         dark
                                     >
                                         Submit
@@ -149,6 +150,7 @@
                                 >
                                     <v-btn
                                         color="primary"
+                                        type="submit"
                                         dark
                                     >
                                         Submit
@@ -240,6 +242,7 @@
                                 >
                                     <v-btn
                                         color="primary"
+                                        type="submit"
                                         dark
                                     >
                                         Submit
@@ -284,6 +287,15 @@ export default {
             show_new_password: false,
             show_confirm_password: false,
         }
+    },
+    methods: {
+        editAccountDetails() {
+            axios({
+                method: 'post',
+                url: 'api/account_setting/edit_details',
+                data: this.name_form
+            });
+        },
     },
 }
 </script>

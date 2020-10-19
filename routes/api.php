@@ -14,13 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::middleware('auth:sanctum')->get('/authenticated', function () {
-    return true;
-});
-
 Route::post('login', 'App\Http\Controllers\LoginController@login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout');
+Route::post('/account_setting/edit_details', 'App\Http\Controllers\UserController@editAccountDetails');
+Route::get('/account_setting/edit_details', 'App\Http\Controllers\UserController@editAccountDetails');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/authenticated', function () {
+        return true;
+    });
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});

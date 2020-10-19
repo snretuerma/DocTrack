@@ -1,6 +1,6 @@
 <template>
 <div v-if="user">
-    <v-navigation-drawer app color="#E1EBEE" v-model="drawer">
+    <v-navigation-drawer app v-model="drawer">
         <template v-slot:prepend>
             <v-list-item two-line>
                 <v-list-item-avatar>
@@ -16,18 +16,19 @@
 
         <v-divider></v-divider>
 
-        <v-list nav>
-            <v-list-item link @click.prevent="getDashboard" v-ripple="{ class: 'primary--text' }">
-                <v-list-item-icon>
-                    <v-icon>mdi-view-dashboard-outline</v-icon>
-                </v-list-item-icon>
+        <v-list>
 
-                <v-list-item-content>
-                    <v-list-item-title>Dashboard</v-list-item-title>
-                </v-list-item-content>
+            <v-list-item link @click.prevent="getDashboard">
+            <v-list-item-icon>
+                <v-icon>mdi-view-dashboard-outline</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+                <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getDocumentRecords" v-ripple="{ class: 'primary--text' }">
+            <v-list-item link @click.prevent="getDocumentRecords">
                 <v-list-item-icon>
                     <v-icon>mdi-file-document-multiple-outline</v-icon>
                 </v-list-item-icon>
@@ -37,31 +38,18 @@
                 </v-list-item-content>
             </v-list-item>
 
+            <v-list-item link @click.prevent="getReports">
+                <v-list-item-icon>
+                    <v-icon>mdi-timeline-check-outline</v-icon>
+                </v-list-item-icon>
 
-            <v-list-group
-                prepend-icon="mdi-timeline-check-outline"
-                no-action
-            >
-                <template v-slot:activator>
-                    <v-list-item-content>
-                        <v-list-item-title>Reports</v-list-item-title>
-                    </v-list-item-content>
-                </template>
-                <v-list-item link @click.prevent="getAgingReport" v-ripple="{ class: 'primary--text' }">
-                    <v-list-item-icon>
-                    <v-icon>mdi-timeline-clock-outline</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-title>Aging</v-list-item-title>
-                </v-list-item>
-                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
-                    <v-list-item-icon>
-                    <v-icon>mdi-timeline-text</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-title>Master List</v-list-item-title>
-                </v-list-item>
-            </v-list-group>
+                <v-list-item-content>
+                    <v-list-item-title>Reports</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
 
-            <v-list-item link @click.prevent="getAccountSettings" v-ripple="{ class: 'primary--text' }">
+
+            <v-list-item link @click.prevent="getAccountSettings">
                 <v-list-item-icon>
                     <v-icon>mdi-account-cog-outline</v-icon>
                 </v-list-item-icon>
@@ -71,7 +59,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="logout" v-ripple="{ class: 'primary--text' }">
+            <v-list-item link @click.prevent="logout">
                 <v-list-item-icon>
                     <v-icon>mdi-logout-variant</v-icon>
                 </v-list-item-icon>
@@ -84,10 +72,7 @@
 
         <template v-slot:append>
             <div class="pa-2">
-                <v-btn block tile @click.stop="drawer = !drawer" outlined color="primary">
-                    <v-icon left>
-                        mdi-window-close
-                    </v-icon>
+                <v-btn block @click.stop="drawer = !drawer">
                     Close
                 </v-btn>
             </div>
@@ -99,15 +84,13 @@
         color="blue darken-3"
         dark
     >
-        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer" >
+        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer">
             <v-icon>mdi-menu</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-        <v-container fluid>
-            <router-view></router-view>
-        </v-container>
+        <router-view></router-view>
     </v-main>
 </div>
 </template>
@@ -148,17 +131,10 @@ export default {
                 }
             })
         },
-        getAgingReport() {
-            axios.get('reports/aging').then(()=>{
-                if(this.$route.name !== 'Document Aging Report') {
-                    this.$router.push({ name: "Document Aging Report"})
-                }
-            })
-        },
-        getMasterListReport() {
-            axios.get('reports/master_list').then(()=>{
-                if(this.$route.name !== 'Document Master List') {
-                    this.$router.push({ name: "Document Master List"})
+        getReports() {
+            axios.get('reports').then(()=>{
+                if(this.$route.name !== 'Reports') {
+                    this.$router.push({ name: "Reports"})
                 }
             })
         },

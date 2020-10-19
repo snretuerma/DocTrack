@@ -30,7 +30,7 @@
                         </template>
                     </v-img>
                 </v-row>
-                <v-form>
+                <v-form @submit.prevent="login">
                     <v-card>
                         <v-toolbar color="blue darken-3" dark flat>
                             <v-toolbar-title>Login</v-toolbar-title>
@@ -68,7 +68,7 @@
                         </v-card-text>
                         <v-card-actions >
                             <v-spacer></v-spacer>
-                            <v-btn dark color="blue darken-3" type="submit" @click.prevent="login">Login</v-btn>
+                            <v-btn dark color="blue darken-3" type="submit">Login</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-form>

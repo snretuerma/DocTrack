@@ -2355,6 +2355,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2383,6 +2386,15 @@ __webpack_require__.r(__webpack_exports__);
       show_new_password: false,
       show_confirm_password: false
     };
+  },
+  methods: {
+    editAccountDetails: function editAccountDetails() {
+      axios({
+        method: 'post',
+        url: 'api/account_setting/edit_details',
+        data: this.name_form
+      });
+    }
   }
 });
 
@@ -2924,23 +2936,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   computed: {
@@ -2986,34 +2981,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getAgingReport: function getAgingReport() {
+    getReports: function getReports() {
       var _this4 = this;
 
-      axios.get('reports/aging').then(function () {
-        if (_this4.$route.name !== 'Document Aging Report') {
+      axios.get('reports').then(function () {
+        if (_this4.$route.name !== 'Reports') {
           _this4.$router.push({
-            name: "Document Aging Report"
-          });
-        }
-      });
-    },
-    getMasterListReport: function getMasterListReport() {
-      var _this5 = this;
-
-      axios.get('reports/master_list').then(function () {
-        if (_this5.$route.name !== 'Document Master List') {
-          _this5.$router.push({
-            name: "Document Master List"
+            name: "Reports"
           });
         }
       });
     },
     getAccountSettings: function getAccountSettings() {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.get('account_settings').then(function () {
-        if (_this6.$route.name !== 'Account Settings') {
-          _this6.$router.push({
+        if (_this5.$route.name !== 'Account Settings') {
+          _this5.$router.push({
             name: "Account Settings"
           });
         }
@@ -24645,6 +24629,14 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.login($event)
+                            }
+                          }
+                        },
                         [
                           _c(
                             "v-card",
@@ -24738,12 +24730,6 @@ var render = function() {
                                         dark: "",
                                         color: "blue darken-3",
                                         type: "submit"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.login($event)
-                                        }
                                       }
                                     },
                                     [_vm._v("Login")]
@@ -24927,6 +24913,15 @@ var render = function() {
                     [
                       _c(
                         "v-form",
+                        {
+                          attrs: { method: "get" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.editAccountDetails($event)
+                            }
+                          }
+                        },
                         [
                           _c(
                             "v-row",
@@ -25133,7 +25128,13 @@ var render = function() {
                                 [
                                   _c(
                                     "v-btn",
-                                    { attrs: { color: "primary", dark: "" } },
+                                    {
+                                      attrs: {
+                                        color: "primary",
+                                        type: "submit",
+                                        dark: ""
+                                      }
+                                    },
                                     [
                                       _vm._v(
                                         "\n                                    Submit\n                                "
@@ -25315,7 +25316,13 @@ var render = function() {
                                 [
                                   _c(
                                     "v-btn",
-                                    { attrs: { color: "primary", dark: "" } },
+                                    {
+                                      attrs: {
+                                        color: "primary",
+                                        type: "submit",
+                                        dark: ""
+                                      }
+                                    },
                                     [
                                       _vm._v(
                                         "\n                                    Submit\n                                "
@@ -25585,7 +25592,13 @@ var render = function() {
                                 [
                                   _c(
                                     "v-btn",
-                                    { attrs: { color: "primary", dark: "" } },
+                                    {
+                                      attrs: {
+                                        color: "primary",
+                                        type: "submit",
+                                        dark: ""
+                                      }
+                                    },
                                     [
                                       _vm._v(
                                         "\n                                    Submit\n                                "
@@ -26580,7 +26593,7 @@ var render = function() {
           _c(
             "v-navigation-drawer",
             {
-              attrs: { app: "", color: "#E1EBEE" },
+              attrs: { app: "" },
               scopedSlots: _vm._u(
                 [
                   {
@@ -26637,12 +26650,7 @@ var render = function() {
                             _c(
                               "v-btn",
                               {
-                                attrs: {
-                                  block: "",
-                                  tile: "",
-                                  outlined: "",
-                                  color: "primary"
-                                },
+                                attrs: { block: "" },
                                 on: {
                                   click: function($event) {
                                     $event.stopPropagation()
@@ -26651,16 +26659,10 @@ var render = function() {
                                 }
                               },
                               [
-                                _c("v-icon", { attrs: { left: "" } }, [
-                                  _vm._v(
-                                    "\r\n                        mdi-window-close\r\n                    "
-                                  )
-                                ]),
                                 _vm._v(
                                   "\r\n                    Close\r\n                "
                                 )
-                              ],
-                              1
+                              ]
                             )
                           ],
                           1
@@ -26672,7 +26674,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                3467810142
+                3272371610
               ),
               model: {
                 value: _vm.drawer,
@@ -26688,19 +26690,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list",
-                { attrs: { nav: "" } },
                 [
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26728,14 +26721,6 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26765,100 +26750,26 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-list-group",
+                    "v-list-item",
                     {
-                      attrs: {
-                        "prepend-icon": "mdi-timeline-check-outline",
-                        "no-action": ""
-                      },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "activator",
-                            fn: function() {
-                              return [
-                                _c(
-                                  "v-list-item-content",
-                                  [
-                                    _c("v-list-item-title", [_vm._v("Reports")])
-                                  ],
-                                  1
-                                )
-                              ]
-                            },
-                            proxy: true
-                          }
-                        ],
-                        null,
-                        false,
-                        748016885
-                      )
+                      attrs: { link: "" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.getReports($event)
+                        }
+                      }
                     },
                     [
-                      _vm._v(" "),
                       _c(
-                        "v-list-item",
-                        {
-                          directives: [
-                            {
-                              name: "ripple",
-                              rawName: "v-ripple",
-                              value: { class: "primary--text" },
-                              expression: "{ class: 'primary--text' }"
-                            }
-                          ],
-                          attrs: { link: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.getAgingReport($event)
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "v-list-item-icon",
-                            [
-                              _c("v-icon", [
-                                _vm._v("mdi-timeline-clock-outline")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-list-item-title", [_vm._v("Aging")])
-                        ],
+                        "v-list-item-icon",
+                        [_c("v-icon", [_vm._v("mdi-timeline-check-outline")])],
                         1
                       ),
                       _vm._v(" "),
                       _c(
-                        "v-list-item",
-                        {
-                          directives: [
-                            {
-                              name: "ripple",
-                              rawName: "v-ripple",
-                              value: { class: "primary--text" },
-                              expression: "{ class: 'primary--text' }"
-                            }
-                          ],
-                          attrs: { link: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.getMasterListReport($event)
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "v-list-item-icon",
-                            [_c("v-icon", [_vm._v("mdi-timeline-text")])],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-list-item-title", [_vm._v("Master List")])
-                        ],
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v("Reports")])],
                         1
                       )
                     ],
@@ -26868,14 +26779,6 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26903,14 +26806,6 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26965,18 +26860,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-main",
-            [
-              _c(
-                "v-container",
-                { attrs: { fluid: "" } },
-                [_c("router-view")],
-                1
-              )
-            ],
-            1
-          )
+          _c("v-main", [_c("router-view")], 1)
         ],
         1
       )
@@ -87508,6 +87392,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  base: '/',
   mode: 'history',
   routes: [{
     path: '*',
