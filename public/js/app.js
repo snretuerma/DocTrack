@@ -2035,6 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2049,12 +2050,15 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
+      this.submitStatus = '';
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/api/login', _this.form).then(function (response) {
           _this.$router.push({
             name: 'Dashboard'
           });
-        })["catch"](function (error) {});
+        })["catch"](function (error) {
+          _this.submitStatus = 'ERROR';
+        });
       });
     }
   }
@@ -24682,11 +24686,12 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("v-text-field", {
                                     attrs: {
-                                      "prepend-icon": "fas fa-user-circle",
+                                      "prepend-inner-icon": "mdi-account-box",
                                       name: "username",
                                       label: "Username",
                                       id: "username",
                                       type: "text",
+                                      outlined: "",
                                       required: ""
                                     },
                                     model: {
@@ -24700,12 +24705,14 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("v-text-field", {
                                     attrs: {
-                                      "prepend-icon": "fas fa-key",
+                                      "prepend-inner-icon":
+                                        "mdi-form-textbox-password",
                                       name: "password",
                                       label: "Password",
                                       id: "password",
                                       type: "password",
-                                      required: ""
+                                      required: "",
+                                      outlined: ""
                                     },
                                     model: {
                                       value: _vm.form.password,

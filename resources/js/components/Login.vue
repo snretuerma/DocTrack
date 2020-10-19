@@ -45,24 +45,25 @@
                             >
                                 Login Failed. Incorrect username or password
                             </v-alert>
-
                                 <v-text-field
-                                    prepend-icon="fas fa-user-circle"
+                                    prepend-inner-icon="mdi-account-box"
                                     name="username"
                                     v-model="form.username"
                                     label="Username"
                                     id="username"
                                     type="text"
+                                    outlined
                                     required
                                 ></v-text-field>
                                 <v-text-field
-                                    prepend-icon="fas fa-key"
+                                    prepend-inner-icon="mdi-form-textbox-password"
                                     name="password"
                                     v-model="form.password"
                                     label="Password"
                                     id="password"
                                     type="password"
                                     required
+                                    outlined
                                 ></v-text-field>
                         </v-card-text>
                         <v-card-actions >
@@ -93,6 +94,7 @@ export default {
   },
   methods: {
        login() {
+           this.submitStatus = '';
            axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.form)
                 .then(response => {
@@ -100,7 +102,9 @@ export default {
                             name: 'Dashboard'
                         });
                 })
-                .catch(error => {});
+                .catch(error => {
+                    this.submitStatus = 'ERROR'
+                });
            });
        }
     },
