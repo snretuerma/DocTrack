@@ -17,15 +17,11 @@ use Illuminate\Support\Facades\Route;
 // TODO: Fix backend post route not read post request in the frontend
 Route::post('login', 'App\Http\Controllers\LoginController@login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout');
-Route::post('/account_setting/edit_details', 'App\Http\Controllers\UserController@editAccountDetails');
-Route::get('/account_setting/edit_details', 'App\Http\Controllers\UserController@editAccountDetails');
+Route::resource('/users', App\Http\Controllers\UserController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/authenticated', function () {
         return true;
-    });
-    Route::get('/user', function (Request $request) {
-        return $request->user();
     });
 });

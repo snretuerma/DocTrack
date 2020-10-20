@@ -1932,10 +1932,13 @@ __webpack_require__.r(__webpack_exports__);
     getUser: function getUser() {
       var _this = this;
 
-      axios.get('/api/user').then(function (response) {
+      axios.get('/api/users').then(function (response) {
         _this.user = response.data;
       });
     }
+  },
+  created: function created() {
+    this.getUser();
   },
   mounted: function mounted() {
     this.getUser();
@@ -2360,6 +2363,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AccountSettings",
+  // props: {
+  //     user: {
+  //         type: Object,
+  //         required: true
+  //     }
+  // },
   components: {
     ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
     ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
@@ -2390,13 +2400,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // TODO: Fix this method
     editAccountDetails: function editAccountDetails() {
-      axios({
-        method: 'post',
-        url: 'api/account_setting/edit_details',
-        data: this.name_form
-      });
+      if (this.$route.params.user) {
+        axios.put('/api/users/' + this.$route.params.user.id, this.name_form).then();
+      }
     }
-  }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -2937,6 +2946,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   computed: {
@@ -2982,24 +3004,38 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getReports: function getReports() {
+    getAgingReport: function getAgingReport() {
       var _this4 = this;
 
-      axios.get('reports').then(function () {
-        if (_this4.$route.name !== 'Reports') {
+      axios.get('reports/aging').then(function () {
+        if (_this4.$route.name !== 'Document Aging Report') {
           _this4.$router.push({
-            name: "Reports"
+            name: "Document Aging Report"
+          });
+        }
+      });
+    },
+    getMasterListReport: function getMasterListReport() {
+      var _this5 = this;
+
+      axios.get('reports/master_list').then(function () {
+        if (_this5.$route.name !== 'Document Master List') {
+          _this5.$router.push({
+            name: "Document Master List"
           });
         }
       });
     },
     getAccountSettings: function getAccountSettings() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('account_settings').then(function () {
-        if (_this5.$route.name !== 'Account Settings') {
-          _this5.$router.push({
-            name: "Account Settings"
+        if (_this6.$route.name !== 'Account Settings') {
+          _this6.$router.push({
+            name: "Account Settings",
+            params: {
+              user: _this6.user
+            }
           });
         }
       });
@@ -24915,7 +24951,7 @@ var render = function() {
                       _c(
                         "v-form",
                         {
-                          attrs: { method: "get" },
+                          attrs: { method: "put" },
                           on: {
                             submit: function($event) {
                               $event.preventDefault()
@@ -26751,26 +26787,100 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-list-item",
+                    "v-list-group",
                     {
-                      attrs: { link: "" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.getReports($event)
-                        }
-                      }
+                      attrs: {
+                        "prepend-icon": "mdi-timeline-check-outline",
+                        "no-action": ""
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "activator",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c("v-list-item-title", [_vm._v("Reports")])
+                                  ],
+                                  1
+                                )
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        false,
+                        748016885
+                      )
                     },
                     [
+                      _vm._v(" "),
                       _c(
-                        "v-list-item-icon",
-                        [_c("v-icon", [_vm._v("mdi-timeline-check-outline")])],
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getAgingReport($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [
+                              _c("v-icon", [
+                                _vm._v("mdi-timeline-clock-outline")
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("Aging")])
+                        ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Reports")])],
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getMasterListReport($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [_c("v-icon", [_vm._v("mdi-timeline-text")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("Master List")])
+                        ],
                         1
                       )
                     ],
@@ -87394,7 +87504,7 @@ __webpack_require__.r(__webpack_exports__);
  // TODO: Fix routes structure
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  base: '/',
+  base: '/api',
   mode: 'history',
   routes: [{
     path: '*',
@@ -87404,7 +87514,7 @@ __webpack_require__.r(__webpack_exports__);
     component: _components_Login__WEBPACK_IMPORTED_MODULE_8__["default"],
     name: 'Login'
   }, {
-    path: '/user',
+    path: '/',
     component: _components_HomeContainer__WEBPACK_IMPORTED_MODULE_9__["default"],
     beforeEnter: function beforeEnter(to, form, next) {
       axios.get('/api/authenticated').then(function (response) {

@@ -14,7 +14,7 @@ import NotFound from './components/NotFound';
 
 // TODO: Fix routes structure
 export default {
-    base: '/',
+    base: '/api',
     mode: 'history',
     routes: [
         {
@@ -27,7 +27,7 @@ export default {
             name: 'Login',
         },
         {
-            path: '/user',
+            path: '/',
             component: HomeContainer,
             beforeEnter: (to, form, next) => {
                 axios.get('/api/authenticated').then((response) => {
@@ -50,7 +50,7 @@ export default {
                 {
                     path: 'account_settings',
                     component: AccountSettings,
-                    name: 'Account Settings',
+                    name: 'Account Settings'
                 },
                 {
                     path: 'new_document',

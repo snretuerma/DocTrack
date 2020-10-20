@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -22,10 +21,13 @@ export default {
     },
     methods: {
         getUser() {
-            axios.get('/api/user').then((response)=>{
+            axios.get('/api/users').then((response)=>{
                 this.user = response.data;
             });
         }
+    },
+    created() {
+        this.getUser();
     },
     mounted() {
         this.getUser();

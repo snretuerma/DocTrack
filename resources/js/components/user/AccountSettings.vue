@@ -29,7 +29,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form method="get" @submit.prevent="editAccountDetails">
+                        <v-form method="put" @submit.prevent="editAccountDetails">
                             <v-row>
                                 <v-col cols="12" xl="6" lg="6" md="12" sm="12">
                                     <ValidationProvider rules="required" v-slot="{ errors, valid }">
@@ -259,8 +259,14 @@
 
 <script>
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-
 export default {
+    name: "AccountSettings",
+    // props: {
+    //     user: {
+    //         type: Object,
+    //         required: true
+    //     }
+    // },
     components: {
         ValidationProvider,
         ValidationObserver
@@ -291,12 +297,14 @@ export default {
     methods: {
         // TODO: Fix this method
         editAccountDetails() {
-            axios({
-                method: 'post',
-                url: 'api/account_setting/edit_details',
-                data: this.name_form
-            });
+            if(this.$route.params.user) {
+                axios.put('/api/users/'  + this.$route.params.user.id, this.name_form)
+                .then();
+            }
         },
     },
+    mounted() {
+
+    }
 }
 </script>

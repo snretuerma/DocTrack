@@ -38,15 +38,28 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getReports">
-                <v-list-item-icon>
-                    <v-icon>mdi-timeline-check-outline</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                    <v-list-item-title>Reports</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+            <v-list-group
+                prepend-icon="mdi-timeline-check-outline"
+                no-action
+            >
+                <template v-slot:activator>
+                    <v-list-item-content>
+                        <v-list-item-title>Reports</v-list-item-title>
+                    </v-list-item-content>
+                </template>
+                <v-list-item link @click.prevent="getAgingReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-timeline-clock-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Aging</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-timeline-text</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Master List</v-list-item-title>
+                </v-list-item>
+            </v-list-group>
 
 
             <v-list-item link @click.prevent="getAccountSettings">
@@ -131,23 +144,29 @@ export default {
                 }
             })
         },
-        getReports() {
-            axios.get('reports').then(()=>{
-                if(this.$route.name !== 'Reports') {
-                    this.$router.push({ name: "Reports"})
+        getAgingReport() {
+            axios.get('reports/aging').then(()=>{
+                if(this.$route.name !== 'Document Aging Report') {
+                    this.$router.push({ name: "Document Aging Report"});
                 }
-            })
+            });
+        },
+        getMasterListReport() {
+            axios.get('reports/master_list').then(()=>{
+                if(this.$route.name !== 'Document Master List') {
+                    this.$router.push({ name: "Document Master List"})
+                }
+            });
         },
         getAccountSettings() {
             axios.get('account_settings').then(()=>{
                 if(this.$route.name !== 'Account Settings') {
-                    this.$router.push({ name: "Account Settings"})
+                    this.$router.push({ name: "Account Settings",  params: { user: this.user }})
                 }
             })
         }
     },
     mounted() {
-
     }
 }
 </script>
