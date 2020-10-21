@@ -2361,6 +2361,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+function myFunction() {
+  alert("The form was submitted");
+}
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AccountSettings",
@@ -2378,34 +2436,181 @@ __webpack_require__.r(__webpack_exports__);
     return {
       panel: [0],
       name_form: {
+        form_type: 'account_details',
         first_name: '',
         middle_name: '',
         last_name: '',
         name_suffix: ''
       },
       username_form: {
+        form_type: 'account_username',
         new_username: '',
         confirm_username: ''
       },
       password_form: {
+        form_type: 'account_password',
         old_password: '',
         new_password: '',
         confirm_password: ''
       },
       show_old_password: false,
       show_new_password: false,
-      show_confirm_password: false
+      show_confirm_password: false,
+      snackbar: false,
+      snackbar_text: '',
+      snackbar_timeout: 2000,
+      snackbar_color: '',
+      loader: null,
+      loading: false,
+      dialog: false,
+      clicked: ''
     };
   },
   methods: {
-    // TODO: Fix this method
     editAccountDetails: function editAccountDetails() {
+      var _this = this;
+
       if (this.$route.params.user) {
-        axios.put('/api/users/' + this.$route.params.user.id, this.name_form).then();
+        axios.put('/api/users/' + this.$route.params.user.id, this.name_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            _this.snackbar = true;
+            _this.snackbar_text = response.data.message;
+            _this.snackbar_color = 'success';
+          } else {
+            _this.snackbar = true;
+            _this.snackbar_text = response.data.message;
+            _this.snackbar_color = 'error';
+          }
+        })["catch"](function (error) {
+          _this.snackbar = true;
+          _this.snackbar_text = response.error.message;
+          _this.snackbar_color = 'error';
+        });
+        this.loading = false;
+        this.loader = null;
+      }
+    },
+    editUsername: function editUsername() {
+      var _this2 = this;
+
+      if (this.$route.params.user) {
+        axios.put('/api/users/' + this.$route.params.user.id, this.username_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            _this2.snackbar = true;
+            _this2.snackbar_text = response.data.message;
+            _this2.snackbar_color = 'success';
+          } else {
+            _this2.snackbar = true;
+            _this2.snackbar_text = response.data.message;
+            _this2.snackbar_color = 'error';
+          }
+        })["catch"](function (error) {
+          _this2.snackbar = true;
+          _this2.snackbar_text = response.error.message;
+          _this2.snackbar_color = 'error';
+        });
+      }
+    },
+    editPassword: function editPassword() {
+      var _this3 = this;
+
+      if (this.$route.params.user) {
+        axios.put('/api/users/' + this.$route.params.user.id, this.password_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            _this3.snackbar = true;
+            _this3.snackbar_text = response.data.message;
+            _this3.snackbar_color = 'success';
+          } else {
+            _this3.snackbar = true;
+            _this3.snackbar_text = response.data.message;
+            _this3.snackbar_color = 'error';
+          }
+        })["catch"](function (error) {
+          _this3.snackbar = true;
+          _this3.snackbar_text = response.error.message;
+          _this3.snackbar_color = 'error';
+        });
       }
     }
   },
   mounted: function mounted() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialog: false,
+      clicked: ''
+    };
+  },
+  methods: {
+    emitSubmit: function emitSubmit() {
+      this.$emit('submit');
+    }
+  }
 });
 
 /***/ }),
@@ -2849,6 +3054,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -24951,7 +25159,7 @@ var render = function() {
                       _c(
                         "v-form",
                         {
-                          attrs: { method: "put" },
+                          attrs: { id: "account_details", method: "put" },
                           on: {
                             submit: function($event) {
                               $event.preventDefault()
@@ -25168,8 +25376,15 @@ var render = function() {
                                     {
                                       attrs: {
                                         color: "primary",
+                                        dark: "",
                                         type: "submit",
-                                        dark: ""
+                                        loading: _vm.loading
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.loader = "loading"
+                                          _vm.loading = true
+                                        }
                                       }
                                     },
                                     [
@@ -25229,6 +25444,15 @@ var render = function() {
                     [
                       _c(
                         "v-form",
+                        {
+                          attrs: { id: "account_username", method: "put" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.editUsername($event)
+                            }
+                          }
+                        },
                         [
                           _c(
                             "ValidationObserver",
@@ -25356,8 +25580,8 @@ var render = function() {
                                     {
                                       attrs: {
                                         color: "primary",
-                                        type: "submit",
-                                        dark: ""
+                                        dark: "",
+                                        type: "submit"
                                       }
                                     },
                                     [
@@ -25365,6 +25589,106 @@ var render = function() {
                                         "\n                                    Submit\n                                "
                                       )
                                     ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-row",
+                            { attrs: { justify: "center" } },
+                            [
+                              _c(
+                                "v-dialog",
+                                {
+                                  attrs: {
+                                    persistent: "",
+                                    "max-width": "400px"
+                                  },
+                                  model: {
+                                    value: _vm.dialog,
+                                    callback: function($$v) {
+                                      _vm.dialog = $$v
+                                    },
+                                    expression: "dialog"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c(
+                                        "v-card-title",
+                                        {
+                                          staticClass:
+                                            "headline light-blue lighten-5"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                    Edit Username\n                                "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-card-text", [
+                                        _vm._v(
+                                          "\n                                    Are you sure you want to change your account username?\n                                "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-actions",
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "primary darken-1",
+                                                text: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.dialog = false
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        Cancel\n                                    "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "primary darken-1",
+                                                text: "",
+                                                type: "submit"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.dialog = false
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        Confirm\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
@@ -25417,6 +25741,15 @@ var render = function() {
                     [
                       _c(
                         "v-form",
+                        {
+                          attrs: { id: "account_password", method: "put" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.editPassword($event)
+                            }
+                          }
+                        },
                         [
                           _c(
                             "v-row",
@@ -25457,16 +25790,16 @@ var render = function() {
                                               model: {
                                                 value:
                                                   _vm.password_form
-                                                    .old_passowrd,
+                                                    .old_password,
                                                 callback: function($$v) {
                                                   _vm.$set(
                                                     _vm.password_form,
-                                                    "old_passowrd",
+                                                    "old_password",
                                                     $$v
                                                   )
                                                 },
                                                 expression:
-                                                  "password_form.old_passowrd"
+                                                  "password_form.old_password"
                                               }
                                             })
                                           ]
@@ -25632,8 +25965,8 @@ var render = function() {
                                     {
                                       attrs: {
                                         color: "primary",
-                                        type: "submit",
-                                        dark: ""
+                                        dark: "",
+                                        type: "submit"
                                       }
                                     },
                                     [
@@ -25650,6 +25983,187 @@ var render = function() {
                           )
                         ],
                         1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: {
+            timeout: _vm.snackbar_timeout,
+            "multi-line": true,
+            color: _vm.snackbar_color
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "action",
+              fn: function(ref) {
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._b(
+                      {
+                        attrs: { color: "black", text: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.snackbar = false
+                            _vm.snackbar_text = ""
+                          }
+                        }
+                      },
+                      "v-btn",
+                      attrs,
+                      false
+                    ),
+                    [_vm._v("\n            Close\n        ")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [_vm._v("\n    " + _vm._s(_vm.snackbar_text) + "\n    ")]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=template&id=fb113244&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=template&id=fb113244& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-col",
+        { attrs: { align: "center", justify: "end" } },
+        [
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "primary", dark: "" },
+              on: {
+                click: function($event) {
+                  _vm.dialog = true
+                }
+              }
+            },
+            [_vm._t("button-title")],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { attrs: { justify: "center" } },
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "400px" },
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-card-title",
+                    { staticClass: "headline light-blue lighten-5" },
+                    [_vm._t("modal-title")],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("v-card-text", [_vm._t("modal-message")], 2),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary darken-1", text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Cancel\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            color: "primary darken-1",
+                            text: "",
+                            type: "submit"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                              this.$emit("submit")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Confirm\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -26696,10 +27210,16 @@ var render = function() {
                                 }
                               },
                               [
+                                _c("v-icon", { attrs: { left: "" } }, [
+                                  _vm._v(
+                                    "\r\n                        mdi-close-circle-outline\r\n                    "
+                                  )
+                                ]),
                                 _vm._v(
-                                  "\r\n                    Close\r\n                "
+                                  "\r\n                    Hide\r\n                "
                                 )
-                              ]
+                              ],
+                              1
                             )
                           ],
                           1
@@ -26711,7 +27231,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                3272371610
+                4157025228
               ),
               model: {
                 value: _vm.drawer,
@@ -26954,7 +27474,7 @@ var render = function() {
               _c(
                 "v-app-bar-nav-icon",
                 {
-                  staticClass: "d.none .d-sm-flex",
+                  staticClass: ".d-none .d-sm-flex .d-md-none",
                   on: {
                     click: function($event) {
                       $event.stopPropagation()
@@ -86508,6 +87028,7 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.component('welcome-component', __webpack_require__(/*! ./components/Welcome.vue */ "./resources/js/components/Welcome.vue")["default"]);
 Vue.component('login-component', __webpack_require__(/*! ./components/Login.vue */ "./resources/js/components/Login.vue")["default"]);
 Vue.component('user-home-component', __webpack_require__(/*! ./components/user/Home.vue */ "./resources/js/components/user/Home.vue")["default"]);
+Vue.component('button-notification-submit', __webpack_require__(/*! ./components/user/ButtonNotificationSubmit.vue */ "./resources/js/components/user/ButtonNotificationSubmit.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -86896,6 +87417,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountSettings_vue_vue_type_template_id_47a67dd7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountSettings_vue_vue_type_template_id_47a67dd7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/ButtonNotificationSubmit.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/user/ButtonNotificationSubmit.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ButtonNotificationSubmit_vue_vue_type_template_id_fb113244___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ButtonNotificationSubmit.vue?vue&type=template&id=fb113244& */ "./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=template&id=fb113244&");
+/* harmony import */ var _ButtonNotificationSubmit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ButtonNotificationSubmit.vue?vue&type=script&lang=js& */ "./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ButtonNotificationSubmit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ButtonNotificationSubmit_vue_vue_type_template_id_fb113244___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ButtonNotificationSubmit_vue_vue_type_template_id_fb113244___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/ButtonNotificationSubmit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonNotificationSubmit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ButtonNotificationSubmit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonNotificationSubmit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=template&id=fb113244&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=template&id=fb113244& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonNotificationSubmit_vue_vue_type_template_id_fb113244___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ButtonNotificationSubmit.vue?vue&type=template&id=fb113244& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/ButtonNotificationSubmit.vue?vue&type=template&id=fb113244&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonNotificationSubmit_vue_vue_type_template_id_fb113244___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonNotificationSubmit_vue_vue_type_template_id_fb113244___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

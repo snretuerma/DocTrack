@@ -86,7 +86,10 @@
         <template v-slot:append>
             <div class="pa-2">
                 <v-btn block @click.stop="drawer = !drawer">
-                    Close
+                    <v-icon left>
+                        mdi-close-circle-outline
+                    </v-icon>
+                    Hide
                 </v-btn>
             </div>
         </template>
@@ -97,7 +100,7 @@
         color="blue darken-3"
         dark
     >
-        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer">
+        <v-app-bar-nav-icon class=".d-none .d-sm-flex .d-md-none" @click.stop="drawer = !drawer">
             <v-icon>mdi-menu</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>

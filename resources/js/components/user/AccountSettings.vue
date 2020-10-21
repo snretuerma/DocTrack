@@ -29,7 +29,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form method="put" @submit.prevent="editAccountDetails">
+                        <v-form id='account_details' method="put" @submit.prevent="editAccountDetails">
                             <v-row>
                                 <v-col cols="12" xl="6" lg="6" md="12" sm="12">
                                     <ValidationProvider rules="required" v-slot="{ errors, valid }">
@@ -81,8 +81,10 @@
                                 >
                                     <v-btn
                                         color="primary"
-                                        type="submit"
                                         dark
+                                        type="submit"
+                                        :loading="loading"
+                                        @click="loader = 'loading';loading=true"
                                     >
                                         Submit
                                     </v-btn>
@@ -101,7 +103,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form>
+                        <v-form id='account_username' method="put" @submit.prevent="editUsername">
                             <ValidationObserver>
                                 <v-row>
                                     <v-col
@@ -150,13 +152,47 @@
                                 >
                                     <v-btn
                                         color="primary"
-                                        type="submit"
                                         dark
+                                        type="submit"
                                     >
                                         Submit
                                     </v-btn>
                                 </v-col>
                             </v-row>
+                            <v-row justify="center">
+                            <v-dialog
+                                v-model="dialog"
+                                persistent
+                                max-width="400px"
+                            >
+                                <v-card>
+                                    <v-card-title class="headline light-blue lighten-5">
+                                        Edit Username
+                                    </v-card-title>
+                                    <v-card-text>
+                                        Are you sure you want to change your account username?
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            color="primary darken-1"
+                                            text
+                                            @click="dialog = false"
+                                        >
+                                            Cancel
+                                        </v-btn>
+                                        <v-btn
+                                            color="primary darken-1"
+                                            text
+                                            type="submit"
+                                            @click="dialog = false"
+                                        >
+                                            Confirm
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </v-row>
                         </v-form>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -170,7 +206,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form>
+                        <v-form id='account_password' method="put" @submit.prevent="editPassword">
                             <v-row>
                                 <v-col
                                     cols="12"
@@ -178,7 +214,7 @@
                                     <ValidationProvider rules="required|min:6" v-slot="{ errors, valid }">
                                         <v-text-field
                                             outlined
-                                            v-model="password_form.old_passowrd"
+                                            v-model="password_form.old_password"
                                             label="Old Password"
                                             :append-icon="show_old_password ? 'mdi-eye' : 'mdi-eye-off'"
                                             :type="show_old_password ? 'text' : 'password'"
@@ -242,8 +278,8 @@
                                 >
                                     <v-btn
                                         color="primary"
-                                        type="submit"
                                         dark
+                                        type="submit"
                                     >
                                         Submit
                                     </v-btn>
@@ -254,10 +290,31 @@
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-card-text>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="snackbar_timeout"
+            :multi-line="true"
+            :color="snackbar_color"
+        >
+        {{ snackbar_text }}
+        <template v-slot:action="{ attrs }">
+            <v-btn
+                color="black"
+                text
+                v-bind="attrs"
+                @click="snackbar = false; snackbar_text=''"
+            >
+                Close
+            </v-btn>
+        </template>
+        </v-snackbar>
     </v-card>
 </template>
 
 <script>
+function myFunction() {
+  alert("The form was submitted");
+}
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
     name: "AccountSettings",
@@ -269,22 +326,25 @@ export default {
     // },
     components: {
         ValidationProvider,
-        ValidationObserver
+        ValidationObserver,
     },
     data () {
         return {
             panel: [0],
             name_form: {
+                form_type: 'account_details',
                 first_name: '',
                 middle_name: '',
                 last_name: '',
                 name_suffix: '' ,
             },
             username_form: {
+                form_type: 'account_username',
                 new_username: '',
                 confirm_username: '',
             },
             password_form: {
+                form_type: 'account_password',
                 old_password: '',
                 new_password: '',
                 confirm_password: '',
@@ -292,19 +352,86 @@ export default {
             show_old_password: false,
             show_new_password: false,
             show_confirm_password: false,
+            snackbar: false,
+            snackbar_text: '',
+            snackbar_timeout: 2000,
+            snackbar_color: '',
+            loader: null,
+            loading: false,
+            dialog: false,
+            clicked: '',
         }
     },
     methods: {
-        // TODO: Fix this method
         editAccountDetails() {
             if(this.$route.params.user) {
                 axios.put('/api/users/'  + this.$route.params.user.id, this.name_form)
-                .then();
+                .then(response => {
+                    if(response.data.code == 'Success') {
+                        this.snackbar = true;
+                        this.snackbar_text = response.data.message;
+                        this.snackbar_color = 'success';
+                    } else {
+                        this.snackbar = true;
+                        this.snackbar_text = response.data.message;
+                        this.snackbar_color = 'error';
+                    }
+                })
+                .catch(error => {
+                    this.snackbar = true;
+                    this.snackbar_text = response.error.message;
+                    this.snackbar_color = 'error';
+                });
+                this.loading = false;
+                this.loader = null;
+            }
+        },
+        editUsername() {
+            if(this.$route.params.user) {
+                axios.put('/api/users/'  + this.$route.params.user.id, this.username_form)
+                .then(response => {
+                    if(response.data.code == 'Success') {
+                        this.snackbar = true;
+                        this.snackbar_text = response.data.message;
+                        this.snackbar_color = 'success';
+                    } else {
+                        this.snackbar = true;
+                        this.snackbar_text = response.data.message;
+                        this.snackbar_color = 'error';
+                    }
+                })
+                .catch(error => {
+                    this.snackbar = true;
+                    this.snackbar_text = response.error.message;
+                    this.snackbar_color = 'error';
+                });
+            }
+        },
+        editPassword() {
+            if(this.$route.params.user) {
+                axios.put('/api/users/'  + this.$route.params.user.id, this.password_form)
+                .then(response => {
+                    if(response.data.code == 'Success') {
+                        this.snackbar = true;
+                        this.snackbar_text = response.data.message;
+                        this.snackbar_color = 'success';
+                    } else {
+                        this.snackbar = true;
+                        this.snackbar_text = response.data.message;
+                        this.snackbar_color = 'error';
+                    }
+                })
+                .catch(error => {
+                    this.snackbar = true;
+                    this.snackbar_text = response.error.message;
+                    this.snackbar_color = 'error';
+                });
             }
         },
     },
     mounted() {
 
     }
+
 }
 </script>
