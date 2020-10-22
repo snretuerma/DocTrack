@@ -83,8 +83,8 @@
                                         color="primary"
                                         dark
                                         type="submit"
-                                        :loading="loading"
-                                        @click="loader = 'loading';loading=true"
+                                        :loading="loading_edit_details"
+                                        @click="loader = 'loading_edit_details'"
                                     >
                                         Submit
                                     </v-btn>
@@ -357,7 +357,9 @@ export default {
             snackbar_timeout: 2000,
             snackbar_color: '',
             loader: null,
-            loading: false,
+            loading_edit_details: false,
+            loading_edit_username: false,
+            loading_edit_password: false,
             dialog: false,
             clicked: '',
         }
@@ -365,25 +367,33 @@ export default {
     methods: {
         editAccountDetails() {
             if(this.$route.params.user) {
+                this[this.loader] = !this[this.loader];
                 axios.put('/api/users/'  + this.$route.params.user.id, this.name_form)
                 .then(response => {
                     if(response.data.code == 'Success') {
+                        console.log('success_respose');
                         this.snackbar = true;
                         this.snackbar_text = response.data.message;
                         this.snackbar_color = 'success';
+                        this[this.loader] = false
+                        this.loader = null;
                     } else {
+                        console.log('error_respose');
                         this.snackbar = true;
                         this.snackbar_text = response.data.message;
                         this.snackbar_color = 'error';
+                        this[this.loader] = false
+                        this.loader = null;
                     }
                 })
                 .catch(error => {
+                    console.log('catch_error');
                     this.snackbar = true;
                     this.snackbar_text = response.error.message;
                     this.snackbar_color = 'error';
+                    this[this.loader] = false
+                    this.loader = null;
                 });
-                this.loading = false;
-                this.loader = null;
             }
         },
         editUsername() {

@@ -4,7 +4,7 @@
         <template v-slot:prepend>
             <v-list-item two-line>
                 <v-list-item-avatar>
-                    <img src="https://randomuser.me/api/portraits/women/81.jpg">
+                    <img :src="placeholderImage">
                 </v-list-item-avatar>
 
                 <v-list-item-content>
@@ -119,6 +119,10 @@ export default {
     computed: {
         currentRouteName() {
             return this.$route.name;
+        },
+        placeholderImage() {
+            var url = 'https://randomuser.me/api/portraits/women/' + Math.floor(Math.random() * 10)+ 1 + '.jpg';
+            return url;
         }
     },
     data() {
@@ -170,6 +174,7 @@ export default {
         }
     },
     mounted() {
+
     }
 }
 </script>

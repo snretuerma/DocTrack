@@ -92,7 +92,7 @@ class UserController extends Controller
             $user->middle_name = ucfirst($request->middle_name);
             $user->last_name = ucfirst($request->last_name);
             if($request->name_suffix) {
-                $user->name_suffix = ucfirst($request->name_suffix);
+                $user->suffix = ucfirst($request->name_suffix);
             }
             $user->save();
             return response()->json([

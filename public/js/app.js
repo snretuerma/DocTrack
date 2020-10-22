@@ -2461,7 +2461,9 @@ function myFunction() {
       snackbar_timeout: 2000,
       snackbar_color: '',
       loader: null,
-      loading: false,
+      loading_edit_details: false,
+      loading_edit_username: false,
+      loading_edit_password: false,
       dialog: false,
       clicked: ''
     };
@@ -2471,23 +2473,31 @@ function myFunction() {
       var _this = this;
 
       if (this.$route.params.user) {
+        this[this.loader] = !this[this.loader];
         axios.put('/api/users/' + this.$route.params.user.id, this.name_form).then(function (response) {
           if (response.data.code == 'Success') {
+            console.log('success_respose');
             _this.snackbar = true;
             _this.snackbar_text = response.data.message;
             _this.snackbar_color = 'success';
+            _this[_this.loader] = false;
+            _this.loader = null;
           } else {
+            console.log('error_respose');
             _this.snackbar = true;
             _this.snackbar_text = response.data.message;
             _this.snackbar_color = 'error';
+            _this[_this.loader] = false;
+            _this.loader = null;
           }
         })["catch"](function (error) {
+          console.log('catch_error');
           _this.snackbar = true;
           _this.snackbar_text = response.error.message;
           _this.snackbar_color = 'error';
+          _this[_this.loader] = false;
+          _this.loader = null;
         });
-        this.loading = false;
-        this.loader = null;
       }
     },
     editUsername: function editUsername() {
@@ -2641,6 +2651,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3172,6 +3183,10 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentRouteName: function currentRouteName() {
       return this.$route.name;
+    },
+    placeholderImage: function placeholderImage() {
+      var url = 'https://randomuser.me/api/portraits/women/' + Math.floor(Math.random() * 10) + 1 + '.jpg';
+      return url;
     }
   },
   data: function data() {
@@ -25378,12 +25393,11 @@ var render = function() {
                                         color: "primary",
                                         dark: "",
                                         type: "submit",
-                                        loading: _vm.loading
+                                        loading: _vm.loading_edit_details
                                       },
                                       on: {
                                         click: function($event) {
-                                          _vm.loader = "loading"
-                                          _vm.loading = true
+                                          _vm.loader = "loading_edit_details"
                                         }
                                       }
                                     },
@@ -26331,6 +26345,8 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
               _c(
                 "v-list-item",
                 [
@@ -27157,10 +27173,7 @@ var render = function() {
                           [
                             _c("v-list-item-avatar", [
                               _c("img", {
-                                attrs: {
-                                  src:
-                                    "https://randomuser.me/api/portraits/women/81.jpg"
-                                }
+                                attrs: { src: _vm.placeholderImage }
                               })
                             ]),
                             _vm._v(" "),
@@ -27231,7 +27244,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                4157025228
+                965767789
               ),
               model: {
                 value: _vm.drawer,
