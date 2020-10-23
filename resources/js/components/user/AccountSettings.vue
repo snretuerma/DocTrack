@@ -303,6 +303,7 @@ export default {
             });
         },
         updateAccountDetailView(response) {
+            // TODO: Emit response handler
             console.log(response);
         },
         updateUsernameView(response) {

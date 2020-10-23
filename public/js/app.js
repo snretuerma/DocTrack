@@ -2424,6 +2424,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateAccountDetailView: function updateAccountDetailView(response) {
+      // TODO: Emit response handler
       console.log(response);
     },
     updateUsernameView: function updateUsernameView(response) {
