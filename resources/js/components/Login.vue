@@ -98,9 +98,9 @@ export default {
            axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.form)
                 .then(response => {
-                        this.$router.push({
-                            name: 'Dashboard'
-                        });
+                    this.$router.push({
+                        name: 'Dashboard'
+                    });
                 })
                 .catch(error => {
                     this.submitStatus = 'ERROR'

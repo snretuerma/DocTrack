@@ -106,7 +106,7 @@
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-        <router-view></router-view>
+        <router-view :user="user"></router-view>
     </v-main>
 </div>
 </template>
@@ -121,8 +121,7 @@ export default {
             return this.$route.name;
         },
         placeholderImage() {
-            var url = 'https://randomuser.me/api/portraits/women/' + Math.floor(Math.random() * 10)+ 1 + '.jpg';
-            return url;
+            return 'https://randomuser.me/api/portraits/women/' + Math.floor(Math.random() * 10)+ 1 + '.jpg';
         }
     },
     data() {
@@ -171,10 +170,15 @@ export default {
                     this.$router.push({ name: "Account Settings",  params: { user: this.user }})
                 }
             })
+        },
+        updateUsername() {
+            // TODO: Do this on change of username in the account settings component
+        },
+        updateName() {
+            // TODO: Do this on change of name in the account settings component
         }
     },
     mounted() {
-
     }
 }
 </script>

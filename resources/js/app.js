@@ -27,7 +27,6 @@ Vue.use(VueRouter);
 Vue.component('welcome-component', require('./components/Welcome.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('user-home-component', require('./components/user/Home.vue').default);
-Vue.component('button-notification-submit', require('./components/user/ButtonNotificationSubmit.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

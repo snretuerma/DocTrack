@@ -1,7 +1,8 @@
 <template>
-     <v-card
+    <v-card
         class="mx-auto"
         flat
+        v-if="user"
     >
         <v-card-title>
             <v-icon
@@ -103,7 +104,8 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form id='account_username' method="put" @submit.prevent="editUsername">
+                        <change-username-form :user="user"></change-username-form>
+                        <!-- <v-form id='account_username' method="put" @submit.prevent="editUsername">
                             <ValidationObserver>
                                 <v-row>
                                     <v-col
@@ -193,7 +195,7 @@
                                 </v-card>
                             </v-dialog>
                         </v-row>
-                        </v-form>
+                        </v-form> -->
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
@@ -312,21 +314,14 @@
 </template>
 
 <script>
-function myFunction() {
-  alert("The form was submitted");
-}
+import ChangeUsernameForm from './ChangeUsernameForm';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
-    name: "AccountSettings",
-    // props: {
-    //     user: {
-    //         type: Object,
-    //         required: true
-    //     }
-    // },
+    props: ['user'],
     components: {
         ValidationProvider,
         ValidationObserver,
+        ChangeUsernameForm
     },
     data () {
         return {
@@ -366,77 +361,71 @@ export default {
     },
     methods: {
         editAccountDetails() {
-            if(this.$route.params.user) {
-                this[this.loader] = !this[this.loader];
-                axios.put('/api/users/'  + this.$route.params.user.id, this.name_form)
-                .then(response => {
-                    if(response.data.code == 'Success') {
-                        console.log('success_respose');
-                        this.snackbar = true;
-                        this.snackbar_text = response.data.message;
-                        this.snackbar_color = 'success';
-                        this[this.loader] = false
-                        this.loader = null;
-                    } else {
-                        console.log('error_respose');
-                        this.snackbar = true;
-                        this.snackbar_text = response.data.message;
-                        this.snackbar_color = 'error';
-                        this[this.loader] = false
-                        this.loader = null;
-                    }
-                })
-                .catch(error => {
-                    console.log('catch_error');
+            this[this.loader] = !this[this.loader];
+            axios.put('/api/users/'  + this.$route.params.user.id, this.name_form)
+            .then(response => {
+                if(response.data.code == 'Success') {
+                    console.log('success_respose');
                     this.snackbar = true;
-                    this.snackbar_text = response.error.message;
+                    this.snackbar_text = response.data.message;
+                    this.snackbar_color = 'success';
+                    this[this.loader] = false
+                    this.loader = null;
+                } else {
+                    console.log('error_respose');
+                    this.snackbar = true;
+                    this.snackbar_text = response.data.message;
                     this.snackbar_color = 'error';
                     this[this.loader] = false
                     this.loader = null;
-                });
-            }
+                }
+            })
+            .catch(error => {
+                console.log('catch_error');
+                this.snackbar = true;
+                this.snackbar_text = response.error.message;
+                this.snackbar_color = 'error';
+                this[this.loader] = false
+                this.loader = null;
+            });
         },
         editUsername() {
-            if(this.$route.params.user) {
-                axios.put('/api/users/'  + this.$route.params.user.id, this.username_form)
-                .then(response => {
-                    if(response.data.code == 'Success') {
-                        this.snackbar = true;
-                        this.snackbar_text = response.data.message;
-                        this.snackbar_color = 'success';
-                    } else {
-                        this.snackbar = true;
-                        this.snackbar_text = response.data.message;
-                        this.snackbar_color = 'error';
-                    }
-                })
-                .catch(error => {
+            axios.put('/api/users/'  + this.$route.params.user.id, this.username_form)
+            .then(response => {
+                if(response.data.code == 'Success') {
                     this.snackbar = true;
-                    this.snackbar_text = response.error.message;
+                    this.snackbar_text = response.data.message;
+                    this.snackbar_color = 'success';
+                } else {
+                    this.snackbar = true;
+                    this.snackbar_text = response.data.message;
                     this.snackbar_color = 'error';
-                });
-            }
+                }
+            })
+            .catch(error => {
+                this.snackbar = true;
+                this.snackbar_text = response.error.message;
+                this.snackbar_color = 'error';
+            });
         },
         editPassword() {
-            if(this.$route.params.user) {
-                axios.put('/api/users/'  + this.$route.params.user.id, this.password_form)
-                .then(response => {
-                    if(response.data.code == 'Success') {
-                        this.snackbar = true;
-                        this.snackbar_text = response.data.message;
-                        this.snackbar_color = 'success';
-                    } else {
-                        this.snackbar = true;
-                        this.snackbar_text = response.data.message;
-                        this.snackbar_color = 'error';
-                    }
-                })
-                .catch(error => {
+            axios.put('/api/users/'  + this.$route.params.user.id, this.password_form)
+            .then(response => {
+                if(response.data.code == 'Success') {
                     this.snackbar = true;
-                    this.snackbar_text = response.error.message;
+                    this.snackbar_text = response.data.message;
+                    this.snackbar_color = 'success';
+                } else {
+                    this.snackbar = true;
+                    this.snackbar_text = response.data.message;
                     this.snackbar_color = 'error';
-                });
-            }
+                }
+            })
+            .catch(error => {
+                this.snackbar = true;
+                this.snackbar_text = response.error.message;
+                this.snackbar_color = 'error';
+            });
         },
     },
     mounted() {
