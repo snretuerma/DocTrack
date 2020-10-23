@@ -30,7 +30,11 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form id='account_details' method="put" @submit.prevent="editAccountDetails">
+                        <change-account-details-form
+                            :user="user"
+                            @update-details="updateAccountDetailView"
+                        ></change-account-details-form>
+                        <!-- <v-form id='account_details' method="put" @submit.prevent="editAccountDetails">
                             <v-row>
                                 <v-col cols="12" xl="6" lg="6" md="12" sm="12">
                                     <ValidationProvider rules="required" v-slot="{ errors, valid }">
@@ -91,7 +95,7 @@
                                     </v-btn>
                                 </v-col>
                             </v-row>
-                        </v-form>
+                        </v-form> -->
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
@@ -104,98 +108,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <change-username-form :user="user"></change-username-form>
-                        <!-- <v-form id='account_username' method="put" @submit.prevent="editUsername">
-                            <ValidationObserver>
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                    >
-                                        <ValidationProvider
-                                            rules="required"
-                                            v-slot="{ errors, valid }"
-                                            vid="username"
-                                            name="New Username"
-                                        >
-                                            <v-text-field
-                                                outlined
-                                                v-model="username_form.new_username"
-                                                label="New Username"
-                                                :error-messages="errors"
-                                                :success="valid"
-                                            ></v-text-field>
-                                        </ValidationProvider>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                    >
-                                        <ValidationProvider
-                                            rules="required|confirmed:username"
-                                            v-slot="{ errors, valid }"
-                                            name="Confirm New Username"
-                                        >
-                                            <v-text-field
-                                                outlined
-                                                v-model="username_form.confirm_username"
-                                                label="Confirm New Username"
-                                                :error-messages="errors"
-                                                :success="valid"
-                                            ></v-text-field>
-                                        </ValidationProvider>
-                                    </v-col>
-                                </v-row>
-                            </ValidationObserver>
-                            <v-row>
-                                <v-col
-                                    align="center"
-                                    justify="end"
-                                >
-                                    <v-btn
-                                        color="primary"
-                                        dark
-                                        type="submit"
-                                    >
-                                        Submit
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                            <v-row justify="center">
-                            <v-dialog
-                                v-model="dialog"
-                                persistent
-                                max-width="400px"
-                            >
-                                <v-card>
-                                    <v-card-title class="headline light-blue lighten-5">
-                                        Edit Username
-                                    </v-card-title>
-                                    <v-card-text>
-                                        Are you sure you want to change your account username?
-                                    </v-card-text>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            color="primary darken-1"
-                                            text
-                                            @click="dialog = false"
-                                        >
-                                            Cancel
-                                        </v-btn>
-                                        <v-btn
-                                            color="primary darken-1"
-                                            text
-                                            type="submit"
-                                            @click="dialog = false"
-                                        >
-                                            Confirm
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-                        </v-row>
-                        </v-form> -->
+                        <change-username-form :user="user" @update-username="updateUsernameView"></change-username-form>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
@@ -314,14 +227,16 @@
 </template>
 
 <script>
-import ChangeUsernameForm from './ChangeUsernameForm';
+import ChangeUsernameForm from './components/ChangeUsernameForm';
+import ChangeAccountDetailsForm from './components/ChangeAccountDetailsForm';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
     props: ['user'],
     components: {
         ValidationProvider,
         ValidationObserver,
-        ChangeUsernameForm
+        ChangeUsernameForm,
+        ChangeAccountDetailsForm
     },
     data () {
         return {
@@ -332,11 +247,6 @@ export default {
                 middle_name: '',
                 last_name: '',
                 name_suffix: '' ,
-            },
-            username_form: {
-                form_type: 'account_username',
-                new_username: '',
-                confirm_username: '',
             },
             password_form: {
                 form_type: 'account_password',
@@ -353,10 +263,13 @@ export default {
             snackbar_color: '',
             loader: null,
             loading_edit_details: false,
-            loading_edit_username: false,
             loading_edit_password: false,
-            dialog: false,
             clicked: '',
+            new_username: '',
+            new_first_name: '',
+            new_middle_name: '',
+            new_last_name: '',
+            new_suffix: '',
         }
     },
     methods: {
@@ -389,24 +302,16 @@ export default {
                 this.loader = null;
             });
         },
-        editUsername() {
-            axios.put('/api/users/'  + this.$route.params.user.id, this.username_form)
-            .then(response => {
-                if(response.data.code == 'Success') {
-                    this.snackbar = true;
-                    this.snackbar_text = response.data.message;
-                    this.snackbar_color = 'success';
-                } else {
-                    this.snackbar = true;
-                    this.snackbar_text = response.data.message;
-                    this.snackbar_color = 'error';
-                }
-            })
-            .catch(error => {
-                this.snackbar = true;
-                this.snackbar_text = response.error.message;
-                this.snackbar_color = 'error';
-            });
+        updateAccountDetailView(response) {
+            console.log(response);
+        },
+        updateUsernameView(response) {
+            this.snackbar = response.snackbar;
+            this.snackbar_text = response.snackbar_text;
+            this.snackbar_color = response.snackbar_color;
+            if(response.snackbar == 'success') {
+                // TODO: Emit to parent component
+            }
         },
         editPassword() {
             axios.put('/api/users/'  + this.$route.params.user.id, this.password_form)
