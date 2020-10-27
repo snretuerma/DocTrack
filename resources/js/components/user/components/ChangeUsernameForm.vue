@@ -1,5 +1,8 @@
 <template>
-    <v-form v-if="user">
+    <v-form
+        v-if="user"
+        ref="form"
+    >
         <ValidationObserver ref="observer" v-slot="{ invalid }">
             <v-row>
                 <v-col cols="12">
@@ -15,7 +18,6 @@
                             label="New Username"
                             :error-messages="errors"
                             :success="valid"
-                            required
                         ></v-text-field>
                     </ValidationProvider>
                 </v-col>
@@ -33,7 +35,6 @@
                             label="Confirm New Username"
                             :error-messages="errors"
                             :success="valid"
-                            required
                         ></v-text-field>
                     </ValidationProvider>
                 </v-col>
@@ -111,8 +112,8 @@ export default {
         }
     },
     methods: {
-        async editUsername() {
-            const isValid = await this.$refs.observer.validate();
+        editUsername() {
+            const isValid = this.$refs.observer.validate();
             if(isValid) {
                 var response_data = {
                     snackbar : false,
@@ -127,19 +128,23 @@ export default {
                         response_data.snackbar_text = response.data.message;
                         response_data.snackbar_color = 'success';
                         response_data.username = this.username_form.new_username;
+                        this.$refs.form.reset();
+                        this.$refs.observer.reset();
                     } else {
                         response_data.snackbar = true;
                         response_data.snackbar_text = response.data.message;
                         response_data.snackbar_color = 'error';
                     }
+                    this.$emit('update-username', response_data);
+                    this.dialog = false;
                 })
                 .catch(error => {
                     response_data.snackbar = true;
-                    response_data.snackbar_text = response.error.message;
+                    response_data.snackbar_text = error.message;
                     response_data.snackbar_color = 'error';
+                    this.$emit('update-username', response_data);
+                    this.dialog = false;
                 });
-                this.$emit('update-username', response_data);
-                this.dialog = false;
             }
         },
     }

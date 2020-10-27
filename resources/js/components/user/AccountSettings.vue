@@ -34,68 +34,6 @@
                             :user="user"
                             @update-details="updateAccountDetailView"
                         ></change-account-details-form>
-                        <!-- <v-form id='account_details' method="put" @submit.prevent="editAccountDetails">
-                            <v-row>
-                                <v-col cols="12" xl="6" lg="6" md="12" sm="12">
-                                    <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                                        <v-text-field
-                                            outlined
-                                            v-model="name_form.first_name"
-                                            label="First Name"
-                                            :error-messages="errors"
-                                            :success="valid"
-                                        ></v-text-field>
-                                    </ValidationProvider>
-                                </v-col>
-                                <v-col cols="12" xl="6" lg="6" md="12" sm="12">
-                                    <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                                        <v-text-field
-                                            outlined
-                                            v-model="name_form.middle_name"
-                                            label="Middle Name"
-                                            :error-messages="errors"
-                                            :success="valid"
-                                        ></v-text-field>
-                                    </ValidationProvider>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12" xl="9" lg="9" md="9" sm="12">
-                                    <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                                        <v-text-field
-                                            outlined
-                                            v-model="name_form.last_name"
-                                            label="Last Name"
-                                            :error-messages="errors"
-                                            :success="valid"
-                                        ></v-text-field>
-                                    </ValidationProvider>
-                                </v-col>
-                                <v-col cols="12" xl="3" lg="3" md="3" sm="12">
-                                    <v-text-field
-                                        outlined
-                                        v-model="name_form.name_suffix"
-                                        label="Suffix (Optional)"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col
-                                    align="center"
-                                    justify="end"
-                                >
-                                    <v-btn
-                                        color="primary"
-                                        dark
-                                        type="submit"
-                                        :loading="loading_edit_details"
-                                        @click="loader = 'loading_edit_details'"
-                                    >
-                                        Submit
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-form> -->
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
@@ -273,45 +211,20 @@ export default {
         }
     },
     methods: {
-        editAccountDetails() {
-            this[this.loader] = !this[this.loader];
-            axios.put('/api/users/'  + this.$route.params.user.id, this.name_form)
-            .then(response => {
-                if(response.data.code == 'Success') {
-                    console.log('success_respose');
-                    this.snackbar = true;
-                    this.snackbar_text = response.data.message;
-                    this.snackbar_color = 'success';
-                    this[this.loader] = false
-                    this.loader = null;
-                } else {
-                    console.log('error_respose');
-                    this.snackbar = true;
-                    this.snackbar_text = response.data.message;
-                    this.snackbar_color = 'error';
-                    this[this.loader] = false
-                    this.loader = null;
-                }
-            })
-            .catch(error => {
-                console.log('catch_error');
-                this.snackbar = true;
-                this.snackbar_text = response.error.message;
-                this.snackbar_color = 'error';
-                this[this.loader] = false
-                this.loader = null;
-            });
-        },
         updateAccountDetailView(response) {
-            // TODO: Emit response handler
-            console.log(response);
+            this.snackbar = response.snackbar;
+            this.snackbar_text = response.snackbar_text;
+            this.snackbar_color = response.snackbar_color;
+            if(response.snackbar) {
+                this.$emit('update-parent-name', response);
+            }
         },
         updateUsernameView(response) {
             this.snackbar = response.snackbar;
             this.snackbar_text = response.snackbar_text;
             this.snackbar_color = response.snackbar_color;
-            if(response.snackbar == 'success') {
-                // TODO: Emit to parent component
+            if(response.snackbar) {
+                this.$emit('update-parent-username', response.username);
             }
         },
         editPassword() {
@@ -329,7 +242,7 @@ export default {
             })
             .catch(error => {
                 this.snackbar = true;
-                this.snackbar_text = response.error.message;
+                this.snackbar_text = error.message;
                 this.snackbar_color = 'error';
             });
         },

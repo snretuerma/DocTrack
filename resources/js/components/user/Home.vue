@@ -8,8 +8,18 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{user.first_name + ' ' + user.last_name}}</v-list-item-title>
-                    <v-list-item-subtitle>{{user.username}}</v-list-item-subtitle>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-list-item-title
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                {{fullName}}
+                            </v-list-item-title>
+                        </template>
+                        <span>{{fullName}}</span>
+                    </v-tooltip>
+                    <v-list-item-subtitle>{{username}}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </template>
@@ -106,7 +116,11 @@
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-        <router-view :user="user"></router-view>
+        <router-view
+            :user="user"
+            @update-parent-username="updateUsername"
+            @update-parent-name="updateName"
+        ></router-view>
     </v-main>
 </div>
 </template>
@@ -117,6 +131,30 @@ export default {
         'user'
     ],
     computed: {
+        username: {
+            get () {
+                return this.user.username;
+            },
+            set (new_username) {
+                this.user.username = new_username;
+            }
+        },
+        fullName: {
+            get() {
+                return this.buildName(
+                    this.user.first_name,
+                    this.user.middle_name,
+                    this.user.last_name,
+                    this.user.suffix
+                );
+            },
+            set(new_value) {
+                this.user.first_name = new_value.first_name;
+                this.user.middle_name = new_value.middle_name;
+                this.user.last_name = new_value.last_name;
+                this.user.suffix = new_value.suffix;
+            }
+        },
         currentRouteName() {
             return this.$route.name;
         },
@@ -135,6 +173,15 @@ export default {
             axios.post('/api/logout').then(()=>{
                 this.$router.push({ name: "Login"})
             })
+        },
+        buildName(first_name, middle_name, last_name, suffix) {
+            var name =  this.user.first_name.trim() + ' '
+                + this.user.middle_name.trim() + ' '
+                + this.user.last_name.trim()
+            if(this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
+                name = name + ' ' + this.user.suffix.trim();
+            }
+            return name.trim();
         },
         getDashboard() {
             axios.get('/').then(()=>{
@@ -171,11 +218,11 @@ export default {
                 }
             })
         },
-        updateUsername() {
-            // TODO: Do this on change of username in the account settings component
+        updateUsername(response) {
+            this.username = response;
         },
-        updateName() {
-            // TODO: Do this on change of name in the account settings component
+        updateName(response) {
+            this.fullName = response;
         }
     },
     mounted() {
