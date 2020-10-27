@@ -159,7 +159,9 @@ export default {
             return this.$route.name;
         },
         placeholderImage() {
-            return 'https://randomuser.me/api/portraits/women/' + Math.floor(Math.random() * 10)+ 1 + '.jpg';
+            return 'https://randomuser.me/api/portraits/' +
+                (Math.floor(Math.random() * 2)+ 1 == 1 ? 'men' : 'women') + '/' +
+                Math.floor(Math.random() * 10)+ 1 + '.jpg';
         }
     },
     data() {
