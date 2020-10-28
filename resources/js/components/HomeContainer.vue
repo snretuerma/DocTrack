@@ -12,20 +12,27 @@
 </template>
 
 <script>
-
+import UserHomeComponent from './user/Home';
 export default {
+    components: {
+        UserHomeComponent
+    },
     data() {
         return {
             user: null,
             title: null,
+            var_user: null,
         }
     },
     methods: {
         getUser() {
-            axios.get('/api/user').then((response)=>{
+            axios.get('/api/users').then((response) => {
                 this.user = response.data;
             });
         }
+    },
+    created() {
+
     },
     mounted() {
         this.getUser();

@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::middleware('auth:sanctum')->get('/authenticated', function () {
-    return true;
-});
-
+// TODO: Fix backend post route not read post request in the frontend
 Route::post('login', 'App\Http\Controllers\LoginController@login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout');
+Route::resource('/users', App\Http\Controllers\UserController::class);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/authenticated', function () {
+        return true;
+    });
+});

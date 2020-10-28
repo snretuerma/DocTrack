@@ -1,37 +1,42 @@
 import { extend } from 'vee-validate';
-import { required, email, max, min, confirmed } from "vee-validate/dist/rules";
+import { required, email, max, min, confirmed, alpha_spaces } from 'vee-validate/dist/rules';
 
-extend("required", {
+extend ('required', {
   ...required,
-  message: "This field is required"
+  message: 'This field is required'
 });
 
-extend("max", {
+extend ('max', {
   ...max,
-  message: "This field must be {length} characters or less"
+  message: 'This field must be {length} characters or less'
 });
 
-extend("min", {
+extend ('min', {
   ...min,
-  message: "This field must be {length} characters or more"
+  message: 'This field must be {length} characters or more'
 });
 
-extend("email", {
+extend ('email', {
   ...email,
-  message: "This field must be a valid email"
+  message: 'This field must be a valid email'
 });
 
 
-extend("confirmed", {
+extend ('confirmed', {
   ...confirmed,
   message: 'The value for {_field_} field does not match'
 });
 
 
-extend("password", {
+extend ('password', {
   params: ['target'],
   validate(value, { target }) {
     return value === target;
   },
   message: 'Password confirmation does not match'
 });
+
+extend ('alpha_spaces', {
+  ...alpha_spaces,
+  message: 'Suffix may only contain alphabetic characters'
+})

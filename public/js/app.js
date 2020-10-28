@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _user_Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user/Home */ "./resources/js/components/user/Home.vue");
 //
 //
 //
@@ -1921,22 +1922,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    UserHomeComponent: _user_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       user: null,
-      title: null
+      title: null,
+      var_user: null
     };
   },
   methods: {
     getUser: function getUser() {
       var _this = this;
 
-      axios.get('/api/user').then(function (response) {
+      axios.get('/api/users').then(function (response) {
         _this.user = response.data;
       });
     }
   },
+  created: function created() {},
   mounted: function mounted() {
     this.getUser();
   }
@@ -2098,175 +2105,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _components_ChangeUsernameForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ChangeUsernameForm */ "./resources/js/components/user/components/ChangeUsernameForm.vue");
+/* harmony import */ var _components_ChangeAccountDetailsForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ChangeAccountDetailsForm */ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue");
+/* harmony import */ var _components_ChangePasswordForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ChangePasswordForm */ "./resources/js/components/user/components/ChangePasswordForm.vue");
 //
 //
 //
@@ -2356,34 +2197,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
   components: {
-    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
-    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
+    ChangeUsernameForm: _components_ChangeUsernameForm__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ChangeAccountDetailsForm: _components_ChangeAccountDetailsForm__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ChangePasswordForm: _components_ChangePasswordForm__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       panel: [0],
-      name_form: {
-        first_name: '',
-        middle_name: '',
-        last_name: '',
-        name_suffix: ''
-      },
-      username_form: {
-        new_username: '',
-        confirm_username: ''
-      },
-      password_form: {
-        old_password: '',
-        new_password: '',
-        confirm_password: ''
-      },
-      show_old_password: false,
-      show_new_password: false,
-      show_confirm_password: false
+      snackbar: false,
+      snackbar_text: '',
+      snackbar_timeout: 2000,
+      snackbar_color: '',
+      loader: null,
+      loading_edit_details: false,
+      loading_edit_password: false,
+      clicked: ''
     };
-  }
+  },
+  methods: {
+    updateAccountDetailView: function updateAccountDetailView(response) {
+      this.snackbar = response.snackbar;
+      this.snackbar_text = response.snackbar_text;
+      this.snackbar_color = response.snackbar_color;
+
+      if (response.snackbar) {
+        this.$emit('update-parent-name', response);
+      }
+    },
+    updateUsernameView: function updateUsernameView(response) {
+      this.snackbar = response.snackbar;
+      this.snackbar_text = response.snackbar_text;
+      this.snackbar_color = response.snackbar_color;
+
+      if (response.snackbar) {
+        this.$emit('update-parent-username', response.username);
+      }
+    },
+    updatePasswordView: function updatePasswordView(response) {
+      this.snackbar = response.snackbar;
+      this.snackbar_text = response.snackbar_text;
+      this.snackbar_color = response.snackbar_color;
+    }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -2414,6 +2275,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2941,11 +2803,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   computed: {
+    username: {
+      get: function get() {
+        return this.user.username;
+      },
+      set: function set(new_username) {
+        this.user.username = new_username;
+      }
+    },
+    fullName: {
+      get: function get() {
+        return this.buildName(this.user.first_name, this.user.middle_name, this.user.last_name, this.user.suffix);
+      },
+      set: function set(new_value) {
+        this.user.first_name = new_value.first_name;
+        this.user.middle_name = new_value.middle_name;
+        this.user.last_name = new_value.last_name;
+        this.user.suffix = new_value.suffix;
+      }
+    },
     currentRouteName: function currentRouteName() {
       return this.$route.name;
+    },
+    placeholderImage: function placeholderImage() {
+      return 'https://randomuser.me/api/portraits/' + (Math.floor(Math.random() * 2) + 1 == 1 ? 'men' : 'women') + '/' + Math.floor(Math.random() * 10) + 1 + '.jpg';
     }
   },
   data: function data() {
@@ -2963,6 +2860,15 @@ __webpack_require__.r(__webpack_exports__);
           name: "Login"
         });
       });
+    },
+    buildName: function buildName(first_name, middle_name, last_name, suffix) {
+      var name = this.capitalize(this.user.first_name.trim()) + ' ' + this.capitalize(this.user.middle_name.trim()) + ' ' + this.capitalize(this.user.last_name.trim());
+
+      if (this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
+        name = name + ' ' + this.capitalize(this.user.suffix.trim());
+      }
+
+      return name.trim();
     },
     getDashboard: function getDashboard() {
       var _this2 = this;
@@ -3014,10 +2920,22 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('account_settings').then(function () {
         if (_this6.$route.name !== 'Account Settings') {
           _this6.$router.push({
-            name: "Account Settings"
+            name: "Account Settings",
+            params: {
+              user: _this6.user
+            }
           });
         }
       });
+    },
+    updateUsername: function updateUsername(response) {
+      this.username = response;
+    },
+    updateName: function updateName(response) {
+      this.fullName = response;
+    },
+    capitalize: function capitalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   },
   mounted: function mounted() {}
@@ -3403,6 +3321,534 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  components: {
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
+  },
+  data: function data() {
+    return {
+      name_form: {
+        form_type: 'account_details',
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        name_suffix: ''
+      },
+      loader: null,
+      loading_edit_details: false
+    };
+  },
+  methods: {
+    updateAccountDetails: function updateAccountDetails() {
+      var _this = this;
+
+      this[this.loader] = !this[this.loader];
+      var isValid = this.$refs.observer.validate();
+
+      if (isValid) {
+        var response_data = {
+          snackbar: false,
+          snackbar_text: null,
+          snackbar_color: null,
+          first_name: null,
+          middle_name: null,
+          last_name: null,
+          suffix: null
+        };
+        axios.put('/api/users/' + this.user.id, this.name_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'success';
+            response_data.first_name = _this.name_form.first_name;
+            response_data.middle_name = _this.name_form.middle_name;
+            response_data.last_name = _this.name_form.last_name;
+            response_data.suffix = _this.name_form.name_suffix;
+
+            _this.$refs.form.reset();
+
+            _this.$refs.observer.reset();
+
+            _this[_this.loader] = false;
+            _this.loader = null;
+          } else {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'error';
+            _this[_this.loader] = false;
+            _this.loader = null;
+          }
+
+          _this.$emit('update-details', response_data);
+        })["catch"](function (error) {
+          response_data.snackbar = true;
+          response_data.snackbar_text = error.message;
+          response_data.snackbar_color = 'error';
+          _this[_this.loader] = false;
+          _this.loader = null;
+
+          _this.$emit('update-details', response_data);
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  components: {
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      password_form: {
+        form_type: 'account_password',
+        old_password: '',
+        new_password: '',
+        confirm_password: ''
+      },
+      show_old_password: false,
+      show_new_password: false,
+      show_confirm_password: false
+    };
+  },
+  methods: {
+    editPassword: function editPassword() {
+      var _this = this;
+
+      var isValid = this.$refs.observer.validate();
+
+      if (isValid) {
+        var response_data = {
+          snackbar: false,
+          snackbar_text: null,
+          snackbar_color: null
+        };
+        axios.put('/api/users/' + this.user.id, this.password_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'success';
+
+            _this.$refs.form.reset();
+
+            _this.$refs.observer.reset();
+          } else {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'error';
+          }
+
+          _this.$emit('update-password', response_data);
+
+          _this.dialog = false;
+        })["catch"](function (error) {
+          response_data.snackbar = true;
+          response_data.snackbar_text = error.message;
+          response_data.snackbar_color = 'error';
+
+          _this.$emit('update-password', response_data);
+
+          _this.dialog = false;
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  components: {
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      username_form: {
+        form_type: 'account_username',
+        new_username: '',
+        confirm_username: ''
+      },
+      loader: null,
+      loading_edit_username: false
+    };
+  },
+  methods: {
+    editUsername: function editUsername() {
+      var _this = this;
+
+      var isValid = this.$refs.observer.validate();
+
+      if (isValid) {
+        var response_data = {
+          snackbar: false,
+          snackbar_text: null,
+          snackbar_color: null,
+          username: null
+        };
+        axios.put('/api/users/' + this.user.id, this.username_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'success';
+            response_data.username = _this.username_form.new_username;
+
+            _this.$refs.form.reset();
+
+            _this.$refs.observer.reset();
+          } else {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'error';
+          }
+
+          _this.$emit('update-username', response_data);
+
+          _this.dialog = false;
+        })["catch"](function (error) {
+          response_data.snackbar = true;
+          response_data.snackbar_text = error.message;
+          response_data.snackbar_color = 'error';
+
+          _this.$emit('update-username', response_data);
+
+          _this.dialog = false;
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Welcome.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Welcome.vue?vue&type=style&index=0&lang=css& ***!
@@ -3415,7 +3861,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.home_title_link:link, .home_title_link:active, .home_title_link:hover, .home_title_link:visited{\n    text-decoration: none;\n    color: white;\n}\n", ""]);
+exports.push([module.i, "\n.home_title_link:link,\n.home_title_link:active,\n.home_title_link:hover,\n.home_title_link:visited {\n    text-decoration: none;\n    color: white;\n}\n", ""]);
 
 // exports
 
@@ -24645,6 +25091,14 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.login($event)
+                            }
+                          }
+                        },
                         [
                           _c(
                             "v-card",
@@ -24738,12 +25192,6 @@ var render = function() {
                                         dark: "",
                                         color: "blue darken-3",
                                         type: "submit"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.login($event)
-                                        }
                                       }
                                     },
                                     [_vm._v("Login")]
@@ -24859,745 +25307,184 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { staticClass: "mx-auto", attrs: { flat: "" } },
-    [
-      _c(
-        "v-card-title",
-        [
-          _c("v-icon", { attrs: { left: "" } }, [
-            _vm._v("\n            mdi-account-edit\n        ")
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Edit Account Info")])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-text",
-        { staticClass: "headline font-weight-bold" },
+  return _vm.user
+    ? _c(
+        "v-card",
+        { staticClass: "mx-auto", attrs: { flat: "" } },
         [
           _c(
-            "v-expansion-panels",
-            {
-              attrs: { focusable: "", flat: "", multiple: "" },
-              model: {
-                value: _vm.panel,
-                callback: function($$v) {
-                  _vm.panel = $$v
-                },
-                expression: "panel"
-              }
-            },
+            "v-card-title",
+            [
+              _c("v-icon", { attrs: { left: "" } }, [
+                _vm._v("\n            mdi-account-edit\n        ")
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "title" }, [
+                _vm._v("Edit Account Info")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            { staticClass: "headline font-weight-bold" },
             [
               _c(
-                "v-expansion-panel",
+                "v-expansion-panels",
+                {
+                  attrs: { focusable: "", flat: "", multiple: "" },
+                  model: {
+                    value: _vm.panel,
+                    callback: function($$v) {
+                      _vm.panel = $$v
+                    },
+                    expression: "panel"
+                  }
+                },
                 [
                   _c(
-                    "v-expansion-panel-header",
-                    {
-                      attrs: { "disable-icon-rotate": "" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "actions",
-                          fn: function() {
-                            return [
-                              _c("v-icon", [
-                                _vm._v(
-                                  "\n                            mdi-account-details\n                        "
-                                )
-                              ])
-                            ]
-                          },
-                          proxy: true
-                        }
-                      ])
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Edit Account details\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-expansion-panel-content",
+                    "v-expansion-panel",
                     [
                       _c(
-                        "v-form",
-                        [
-                          _c(
-                            "v-row",
+                        "v-expansion-panel-header",
+                        {
+                          attrs: { "disable-icon-rotate": "" },
+                          scopedSlots: _vm._u(
                             [
-                              _c(
-                                "v-col",
-                                {
-                                  attrs: {
-                                    cols: "12",
-                                    xl: "6",
-                                    lg: "6",
-                                    md: "12",
-                                    sm: "12"
-                                  }
-                                },
-                                [
-                                  _c("ValidationProvider", {
-                                    attrs: { rules: "required" },
-                                    scopedSlots: _vm._u([
-                                      {
-                                        key: "default",
-                                        fn: function(ref) {
-                                          var errors = ref.errors
-                                          var valid = ref.valid
-                                          return [
-                                            _c("v-text-field", {
-                                              attrs: {
-                                                outlined: "",
-                                                label: "First Name",
-                                                "error-messages": errors,
-                                                success: valid
-                                              },
-                                              model: {
-                                                value: _vm.name_form.first_name,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.name_form,
-                                                    "first_name",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "name_form.first_name"
-                                              }
-                                            })
-                                          ]
-                                        }
-                                      }
-                                    ])
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                {
-                                  attrs: {
-                                    cols: "12",
-                                    xl: "6",
-                                    lg: "6",
-                                    md: "12",
-                                    sm: "12"
-                                  }
-                                },
-                                [
-                                  _c("ValidationProvider", {
-                                    attrs: { rules: "required" },
-                                    scopedSlots: _vm._u([
-                                      {
-                                        key: "default",
-                                        fn: function(ref) {
-                                          var errors = ref.errors
-                                          var valid = ref.valid
-                                          return [
-                                            _c("v-text-field", {
-                                              attrs: {
-                                                outlined: "",
-                                                label: "Middle Name",
-                                                "error-messages": errors,
-                                                success: valid
-                                              },
-                                              model: {
-                                                value:
-                                                  _vm.name_form.middle_name,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.name_form,
-                                                    "middle_name",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "name_form.middle_name"
-                                              }
-                                            })
-                                          ]
-                                        }
-                                      }
-                                    ])
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-col",
-                                {
-                                  attrs: {
-                                    cols: "12",
-                                    xl: "9",
-                                    lg: "9",
-                                    md: "9",
-                                    sm: "12"
-                                  }
-                                },
-                                [
-                                  _c("ValidationProvider", {
-                                    attrs: { rules: "required" },
-                                    scopedSlots: _vm._u([
-                                      {
-                                        key: "default",
-                                        fn: function(ref) {
-                                          var errors = ref.errors
-                                          var valid = ref.valid
-                                          return [
-                                            _c("v-text-field", {
-                                              attrs: {
-                                                outlined: "",
-                                                label: "Last Name",
-                                                "error-messages": errors,
-                                                success: valid
-                                              },
-                                              model: {
-                                                value: _vm.name_form.last_name,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.name_form,
-                                                    "last_name",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "name_form.last_name"
-                                              }
-                                            })
-                                          ]
-                                        }
-                                      }
-                                    ])
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                {
-                                  attrs: {
-                                    cols: "12",
-                                    xl: "3",
-                                    lg: "3",
-                                    md: "3",
-                                    sm: "12"
-                                  }
-                                },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      outlined: "",
-                                      label: "Suffix (Optional)"
-                                    },
-                                    model: {
-                                      value: _vm.name_form.name_suffix,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.name_form,
-                                          "name_suffix",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "name_form.name_suffix"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-col",
-                                { attrs: { align: "center", justify: "end" } },
-                                [
-                                  _c(
-                                    "v-btn",
-                                    { attrs: { color: "primary", dark: "" } },
-                                    [
+                              {
+                                key: "actions",
+                                fn: function() {
+                                  return [
+                                    _c("v-icon", [
                                       _vm._v(
-                                        "\n                                    Submit\n                                "
+                                        "\n                            mdi-account-details\n                        "
                                       )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
+                                    ])
+                                  ]
+                                },
+                                proxy: true
+                              }
                             ],
-                            1
+                            null,
+                            false,
+                            1031074836
                           )
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Edit Account details\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-expansion-panel-content",
+                        [
+                          _c("change-account-details-form", {
+                            attrs: { user: _vm.user },
+                            on: {
+                              "update-details": _vm.updateAccountDetailView
+                            }
+                          })
                         ],
                         1
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-expansion-panel",
-                [
-                  _c(
-                    "v-expansion-panel-header",
-                    {
-                      attrs: { "disable-icon-rotate": "" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "actions",
-                          fn: function() {
-                            return [
-                              _c("v-icon", [
-                                _vm._v(
-                                  "\n                            mdi-form-textbox\n                        "
-                                )
-                              ])
-                            ]
-                          },
-                          proxy: true
-                        }
-                      ])
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Edit Username\n                    "
-                      )
-                    ]
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-expansion-panel-content",
+                    "v-expansion-panel",
                     [
                       _c(
-                        "v-form",
-                        [
-                          _c(
-                            "ValidationObserver",
+                        "v-expansion-panel-header",
+                        {
+                          attrs: { "disable-icon-rotate": "" },
+                          scopedSlots: _vm._u(
                             [
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
-                                    [
-                                      _c("ValidationProvider", {
-                                        attrs: {
-                                          rules: "required",
-                                          vid: "username",
-                                          name: "New Username"
-                                        },
-                                        scopedSlots: _vm._u([
-                                          {
-                                            key: "default",
-                                            fn: function(ref) {
-                                              var errors = ref.errors
-                                              var valid = ref.valid
-                                              return [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    outlined: "",
-                                                    label: "New Username",
-                                                    "error-messages": errors,
-                                                    success: valid
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.username_form
-                                                        .new_username,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.username_form,
-                                                        "new_username",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "username_form.new_username"
-                                                  }
-                                                })
-                                              ]
-                                            }
-                                          }
-                                        ])
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
-                                    [
-                                      _c("ValidationProvider", {
-                                        attrs: {
-                                          rules: "required|confirmed:username",
-                                          name: "Confirm New Username"
-                                        },
-                                        scopedSlots: _vm._u([
-                                          {
-                                            key: "default",
-                                            fn: function(ref) {
-                                              var errors = ref.errors
-                                              var valid = ref.valid
-                                              return [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    outlined: "",
-                                                    label:
-                                                      "Confirm New Username",
-                                                    "error-messages": errors,
-                                                    success: valid
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.username_form
-                                                        .confirm_username,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.username_form,
-                                                        "confirm_username",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "username_form.confirm_username"
-                                                  }
-                                                })
-                                              ]
-                                            }
-                                          }
-                                        ])
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-col",
-                                { attrs: { align: "center", justify: "end" } },
-                                [
-                                  _c(
-                                    "v-btn",
-                                    { attrs: { color: "primary", dark: "" } },
-                                    [
+                              {
+                                key: "actions",
+                                fn: function() {
+                                  return [
+                                    _c("v-icon", [
                                       _vm._v(
-                                        "\n                                    Submit\n                                "
+                                        "\n                            mdi-form-textbox\n                        "
                                       )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
+                                    ])
+                                  ]
+                                },
+                                proxy: true
+                              }
                             ],
-                            1
+                            null,
+                            false,
+                            1266291689
                           )
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Edit Username\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-expansion-panel-content",
+                        [
+                          _c("change-username-form", {
+                            attrs: { user: _vm.user },
+                            on: { "update-username": _vm.updateUsernameView }
+                          })
                         ],
                         1
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-expansion-panel",
-                [
-                  _c(
-                    "v-expansion-panel-header",
-                    {
-                      attrs: { "disable-icon-rotate": "" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "actions",
-                          fn: function() {
-                            return [
-                              _c("v-icon", [
-                                _vm._v(
-                                  "\n                            mdi-form-textbox-password\n                        "
-                                )
-                              ])
-                            ]
-                          },
-                          proxy: true
-                        }
-                      ])
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Edit Password\n                    "
-                      )
-                    ]
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-expansion-panel-content",
+                    "v-expansion-panel",
                     [
                       _c(
-                        "v-form",
-                        [
-                          _c(
-                            "v-row",
+                        "v-expansion-panel-header",
+                        {
+                          attrs: { "disable-icon-rotate": "" },
+                          scopedSlots: _vm._u(
                             [
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "12" } },
-                                [
-                                  _c("ValidationProvider", {
-                                    attrs: { rules: "required|min:6" },
-                                    scopedSlots: _vm._u([
-                                      {
-                                        key: "default",
-                                        fn: function(ref) {
-                                          var errors = ref.errors
-                                          var valid = ref.valid
-                                          return [
-                                            _c("v-text-field", {
-                                              attrs: {
-                                                outlined: "",
-                                                label: "Old Password",
-                                                "append-icon": _vm.show_old_password
-                                                  ? "mdi-eye"
-                                                  : "mdi-eye-off",
-                                                type: _vm.show_old_password
-                                                  ? "text"
-                                                  : "password",
-                                                "error-messages": errors,
-                                                success: valid
-                                              },
-                                              on: {
-                                                "click:append": function(
-                                                  $event
-                                                ) {
-                                                  _vm.show_old_password = !_vm.show_old_password
-                                                }
-                                              },
-                                              model: {
-                                                value:
-                                                  _vm.password_form
-                                                    .old_passowrd,
-                                                callback: function($$v) {
-                                                  _vm.$set(
-                                                    _vm.password_form,
-                                                    "old_passowrd",
-                                                    $$v
-                                                  )
-                                                },
-                                                expression:
-                                                  "password_form.old_passowrd"
-                                              }
-                                            })
-                                          ]
-                                        }
-                                      }
-                                    ])
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "ValidationObserver",
-                            [
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
-                                    [
-                                      _c("ValidationProvider", {
-                                        attrs: {
-                                          name: "confirm",
-                                          rules: "required|min:6"
-                                        },
-                                        scopedSlots: _vm._u([
-                                          {
-                                            key: "default",
-                                            fn: function(ref) {
-                                              var errors = ref.errors
-                                              var valid = ref.valid
-                                              return [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    outlined: "",
-                                                    label: "New Password",
-                                                    "append-icon": _vm.show_new_password
-                                                      ? "mdi-eye"
-                                                      : "mdi-eye-off",
-                                                    type: _vm.show_new_password
-                                                      ? "text"
-                                                      : "password",
-                                                    "error-messages": errors,
-                                                    success: valid
-                                                  },
-                                                  on: {
-                                                    "click:append": function(
-                                                      $event
-                                                    ) {
-                                                      _vm.show_new_password = !_vm.show_new_password
-                                                    }
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.password_form
-                                                        .new_password,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.password_form,
-                                                        "new_password",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "password_form.new_password"
-                                                  }
-                                                })
-                                              ]
-                                            }
-                                          }
-                                        ])
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
-                                    [
-                                      _c("ValidationProvider", {
-                                        attrs: {
-                                          rules:
-                                            "required|min:6|password:@confirm"
-                                        },
-                                        scopedSlots: _vm._u([
-                                          {
-                                            key: "default",
-                                            fn: function(ref) {
-                                              var errors = ref.errors
-                                              var valid = ref.valid
-                                              return [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    outlined: "",
-                                                    label:
-                                                      "Confirm New Password",
-                                                    "append-icon": _vm.show_confirm_password
-                                                      ? "mdi-eye"
-                                                      : "mdi-eye-off",
-                                                    type: _vm.show_confirm_password
-                                                      ? "text"
-                                                      : "password",
-                                                    "error-messages": errors,
-                                                    success: valid
-                                                  },
-                                                  on: {
-                                                    "click:append": function(
-                                                      $event
-                                                    ) {
-                                                      _vm.show_confirm_password = !_vm.show_confirm_password
-                                                    }
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.password_form
-                                                        .confirm_password,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.password_form,
-                                                        "confirm_password",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "password_form.confirm_password"
-                                                  }
-                                                })
-                                              ]
-                                            }
-                                          }
-                                        ])
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-col",
-                                { attrs: { align: "center", justify: "end" } },
-                                [
-                                  _c(
-                                    "v-btn",
-                                    { attrs: { color: "primary", dark: "" } },
-                                    [
+                              {
+                                key: "actions",
+                                fn: function() {
+                                  return [
+                                    _c("v-icon", [
                                       _vm._v(
-                                        "\n                                    Submit\n                                "
+                                        "\n                            mdi-form-textbox-password\n                        "
                                       )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
+                                    ])
+                                  ]
+                                },
+                                proxy: true
+                              }
                             ],
-                            1
+                            null,
+                            false,
+                            2828106363
                           )
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Edit Password\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-expansion-panel-content",
+                        [
+                          _c("change-password-form", {
+                            attrs: { user: _vm.user },
+                            on: { "update-password": _vm.updatePasswordView }
+                          })
                         ],
                         1
                       )
@@ -25609,13 +25496,63 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-snackbar",
+            {
+              attrs: {
+                timeout: _vm.snackbar_timeout,
+                "multi-line": true,
+                color: _vm.snackbar_color
+              },
+              scopedSlots: _vm._u(
+                [
+                  {
+                    key: "action",
+                    fn: function(ref) {
+                      var attrs = ref.attrs
+                      return [
+                        _c(
+                          "v-btn",
+                          _vm._b(
+                            {
+                              attrs: { color: "white", text: "" },
+                              on: {
+                                click: function($event) {
+                                  _vm.snackbar = false
+                                  _vm.snackbar_text = ""
+                                }
+                              }
+                            },
+                            "v-btn",
+                            attrs,
+                            false
+                          ),
+                          [_vm._v("\n            Close\n        ")]
+                        )
+                      ]
+                    }
+                  }
+                ],
+                null,
+                false,
+                2350417524
+              ),
+              model: {
+                value: _vm.snackbar,
+                callback: function($$v) {
+                  _vm.snackbar = $$v
+                },
+                expression: "snackbar"
+              }
+            },
+            [_vm._v("\n    " + _vm._s(_vm.snackbar_text) + "\n    ")]
           )
         ],
         1
       )
-    ],
-    1
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -25766,6 +25703,8 @@ var render = function() {
                 ],
                 1
               ),
+              _vm._v(" "),
+              _c("v-divider"),
               _vm._v(" "),
               _c(
                 "v-list-item",
@@ -26580,7 +26519,7 @@ var render = function() {
           _c(
             "v-navigation-drawer",
             {
-              attrs: { app: "", color: "#E1EBEE" },
+              attrs: { app: "" },
               scopedSlots: _vm._u(
                 [
                   {
@@ -26593,28 +26532,61 @@ var render = function() {
                           [
                             _c("v-list-item-avatar", [
                               _c("img", {
-                                attrs: {
-                                  src:
-                                    "https://randomuser.me/api/portraits/women/81.jpg"
-                                }
+                                attrs: { src: _vm.placeholderImage }
                               })
                             ]),
                             _vm._v(" "),
                             _c(
                               "v-list-item-content",
                               [
-                                _c("v-list-item-title", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.user.first_name +
-                                        " " +
-                                        _vm.user.last_name
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "v-list-item-title",
+                                                _vm._g(
+                                                  _vm._b(
+                                                    {},
+                                                    "v-list-item-title",
+                                                    attrs,
+                                                    false
+                                                  ),
+                                                  on
+                                                ),
+                                                [
+                                                  _vm._v(
+                                                    "\r\n                                " +
+                                                      _vm._s(_vm.fullName) +
+                                                      "\r\n                            "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      false,
+                                      2455703430
                                     )
-                                  )
-                                ]),
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v(_vm._s(_vm.fullName))])
+                                  ]
+                                ),
                                 _vm._v(" "),
                                 _c("v-list-item-subtitle", [
-                                  _vm._v(_vm._s(_vm.user.username))
+                                  _vm._v(_vm._s(_vm.username))
                                 ])
                               ],
                               1
@@ -26637,12 +26609,7 @@ var render = function() {
                             _c(
                               "v-btn",
                               {
-                                attrs: {
-                                  block: "",
-                                  tile: "",
-                                  outlined: "",
-                                  color: "primary"
-                                },
+                                attrs: { block: "" },
                                 on: {
                                   click: function($event) {
                                     $event.stopPropagation()
@@ -26653,11 +26620,11 @@ var render = function() {
                               [
                                 _c("v-icon", { attrs: { left: "" } }, [
                                   _vm._v(
-                                    "\r\n                        mdi-window-close\r\n                    "
+                                    "\r\n                        mdi-close-circle-outline\r\n                    "
                                   )
                                 ]),
                                 _vm._v(
-                                  "\r\n                    Close\r\n                "
+                                  "\r\n                    Hide\r\n                "
                                 )
                               ],
                               1
@@ -26672,7 +26639,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                3467810142
+                4036779590
               ),
               model: {
                 value: _vm.drawer,
@@ -26688,19 +26655,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list",
-                { attrs: { nav: "" } },
                 [
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26728,14 +26686,6 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26868,14 +26818,6 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26903,14 +26845,6 @@ var render = function() {
                   _c(
                     "v-list-item",
                     {
-                      directives: [
-                        {
-                          name: "ripple",
-                          rawName: "v-ripple",
-                          value: { class: "primary--text" },
-                          expression: "{ class: 'primary--text' }"
-                        }
-                      ],
                       attrs: { link: "" },
                       on: {
                         click: function($event) {
@@ -26948,7 +26882,7 @@ var render = function() {
               _c(
                 "v-app-bar-nav-icon",
                 {
-                  staticClass: "d.none .d-sm-flex",
+                  staticClass: ".d-none .d-sm-flex .d-md-none",
                   on: {
                     click: function($event) {
                       $event.stopPropagation()
@@ -26968,12 +26902,13 @@ var render = function() {
           _c(
             "v-main",
             [
-              _c(
-                "v-container",
-                { attrs: { fluid: "" } },
-                [_c("router-view")],
-                1
-              )
+              _c("router-view", {
+                attrs: { user: _vm.user },
+                on: {
+                  "update-parent-username": _vm.updateUsername,
+                  "update-parent-name": _vm.updateName
+                }
+              })
             ],
             1
           )
@@ -27482,6 +27417,1015 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [_vm._v("Document Reports")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.user
+    ? _c(
+        "v-form",
+        {
+          ref: "form",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.updateAccountDetails($event)
+            }
+          }
+        },
+        [
+          _c("ValidationObserver", {
+            ref: "observer",
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var invalid = ref.invalid
+                    return [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            {
+                              attrs: {
+                                cols: "12",
+                                xl: "6",
+                                lg: "6",
+                                md: "12",
+                                sm: "12"
+                              }
+                            },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: { rules: "required" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "First Name",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            model: {
+                                              value: _vm.name_form.first_name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.name_form,
+                                                  "first_name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "name_form.first_name"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              attrs: {
+                                cols: "12",
+                                xl: "6",
+                                lg: "6",
+                                md: "12",
+                                sm: "12"
+                              }
+                            },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: { rules: "required" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Middle Name",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            model: {
+                                              value: _vm.name_form.middle_name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.name_form,
+                                                  "middle_name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "name_form.middle_name"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            {
+                              attrs: {
+                                cols: "12",
+                                xl: "9",
+                                lg: "9",
+                                md: "9",
+                                sm: "12"
+                              }
+                            },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: { rules: "required" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Last Name",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            model: {
+                                              value: _vm.name_form.last_name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.name_form,
+                                                  "last_name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "name_form.last_name"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              attrs: {
+                                cols: "12",
+                                xl: "3",
+                                lg: "3",
+                                md: "3",
+                                sm: "12"
+                              }
+                            },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: { rules: "alpha_spaces" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              id: "suffix_field",
+                                              outlined: "",
+                                              label: "Suffix (Optional)",
+                                              "error-messages": errors
+                                            },
+                                            model: {
+                                              value: _vm.name_form.name_suffix,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.name_form,
+                                                  "name_suffix",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "name_form.name_suffix"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { align: "center", justify: "end" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "primary",
+                                    type: "submit",
+                                    dark: !invalid,
+                                    disabled: invalid,
+                                    loading: _vm.loading_edit_details
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.loader = "loading_edit_details"
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    Submit\n                "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              1060790235
+            )
+          })
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.user
+    ? _c(
+        "v-form",
+        { ref: "form" },
+        [
+          _c("ValidationObserver", {
+            ref: "observer",
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var invalid = ref.invalid
+                    return [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: { rules: "required|min:6" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Old Password",
+                                              "append-icon": _vm.show_old_password
+                                                ? "mdi-eye"
+                                                : "mdi-eye-off",
+                                              type: _vm.show_old_password
+                                                ? "text"
+                                                : "password",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            on: {
+                                              "click:append": function($event) {
+                                                _vm.show_old_password = !_vm.show_old_password
+                                              }
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.password_form.old_password,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.password_form,
+                                                  "old_password",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "password_form.old_password"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: {
+                                  name: "confirm",
+                                  rules: "required|min:6"
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "New Password",
+                                              "append-icon": _vm.show_new_password
+                                                ? "mdi-eye"
+                                                : "mdi-eye-off",
+                                              type: _vm.show_new_password
+                                                ? "text"
+                                                : "password",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            on: {
+                                              "click:append": function($event) {
+                                                _vm.show_new_password = !_vm.show_new_password
+                                              }
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.password_form.new_password,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.password_form,
+                                                  "new_password",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "password_form.new_password"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: {
+                                  rules: "required|min:6|password:@confirm"
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Confirm New Password",
+                                              "append-icon": _vm.show_confirm_password
+                                                ? "mdi-eye"
+                                                : "mdi-eye-off",
+                                              type: _vm.show_confirm_password
+                                                ? "text"
+                                                : "password",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            on: {
+                                              "click:append": function($event) {
+                                                _vm.show_confirm_password = !_vm.show_confirm_password
+                                              }
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.password_form
+                                                  .confirm_password,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.password_form,
+                                                  "confirm_password",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "password_form.confirm_password"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { align: "center", justify: "end" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "primary",
+                                    dark: !invalid,
+                                    disabled: invalid
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.dialog = true
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\r\n                    Submit\r\n                "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        { attrs: { justify: "center" } },
+                        [
+                          _c(
+                            "v-dialog",
+                            {
+                              attrs: { persistent: "", "max-width": "450px" },
+                              model: {
+                                value: _vm.dialog,
+                                callback: function($$v) {
+                                  _vm.dialog = $$v
+                                },
+                                expression: "dialog"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { color: "grey lighten-2" } },
+                                [
+                                  _c(
+                                    "v-card-title",
+                                    { staticClass: "headline" },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "mr-2",
+                                          attrs: { size: "30px" }
+                                        },
+                                        [_vm._v("mdi-alert-octagon")]
+                                      ),
+                                      _vm._v(
+                                        " Edit Password\r\n                    "
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-card-text", [
+                                    _vm._v(
+                                      "\r\n                        Are you sure you want to change your password?\r\n                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "primary darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.dialog = false
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                            Cancel\r\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "primary darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.editPassword($event)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                            Confirm\r\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              317033936
+            )
+          })
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.user
+    ? _c(
+        "v-form",
+        { ref: "form" },
+        [
+          _c("ValidationObserver", {
+            ref: "observer",
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var invalid = ref.invalid
+                    return [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: {
+                                  rules: "required",
+                                  vid: "username",
+                                  name: "New Username"
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "New Username",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.username_form.new_username,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.username_form,
+                                                  "new_username",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "username_form.new_username"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: {
+                                  rules: "required|confirmed:username",
+                                  name: "Confirm New Username"
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Confirm New Username",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.username_form
+                                                  .confirm_username,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.username_form,
+                                                  "confirm_username",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "username_form.confirm_username"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { align: "center", justify: "end" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "primary",
+                                    dark: !invalid,
+                                    disabled: invalid
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.dialog = true
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    Submit\n                "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        { attrs: { justify: "center" } },
+                        [
+                          _c(
+                            "v-dialog",
+                            {
+                              attrs: { persistent: "", "max-width": "450px" },
+                              model: {
+                                value: _vm.dialog,
+                                callback: function($$v) {
+                                  _vm.dialog = $$v
+                                },
+                                expression: "dialog"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { color: "grey lighten-2" } },
+                                [
+                                  _c(
+                                    "v-card-title",
+                                    { staticClass: "headline grey lighten-2" },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "mr-2",
+                                          attrs: { size: "30px" }
+                                        },
+                                        [_vm._v("mdi-alert-octagon")]
+                                      ),
+                                      _vm._v(
+                                        " Edit Username\n                    "
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-text",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(
+                                        "\n                        Are you sure you want to change your account username?\n                    "
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "primary darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.dialog = false
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                            Cancel\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "primary darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.editUsername($event)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                            Confirm\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              134830754
+            )
+          })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -87476,6 +88420,213 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangeAccountDetailsForm.vue ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee& */ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee&");
+/* harmony import */ var _ChangeAccountDetailsForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangeAccountDetailsForm.vue?vue&type=script&lang=js& */ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ChangeAccountDetailsForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/components/ChangeAccountDetailsForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangeAccountDetailsForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee& ***!
+  \*************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeAccountDetailsForm.vue?vue&type=template&id=8ee53eee&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangePasswordForm.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangePasswordForm.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChangePasswordForm.vue?vue&type=template&id=578fbbcf& */ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&");
+/* harmony import */ var _ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangePasswordForm.vue?vue&type=script&lang=js& */ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/components/ChangePasswordForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangePasswordForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangePasswordForm.vue?vue&type=template&id=578fbbcf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangeUsernameForm.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangeUsernameForm.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ChangeUsernameForm_vue_vue_type_template_id_2d471f0a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChangeUsernameForm.vue?vue&type=template&id=2d471f0a& */ "./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a&");
+/* harmony import */ var _ChangeUsernameForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangeUsernameForm.vue?vue&type=script&lang=js& */ "./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ChangeUsernameForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ChangeUsernameForm_vue_vue_type_template_id_2d471f0a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ChangeUsernameForm_vue_vue_type_template_id_2d471f0a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/components/ChangeUsernameForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeUsernameForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangeUsernameForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeUsernameForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeUsernameForm_vue_vue_type_template_id_2d471f0a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangeUsernameForm.vue?vue&type=template&id=2d471f0a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeUsernameForm_vue_vue_type_template_id_2d471f0a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeUsernameForm_vue_vue_type_template_id_2d471f0a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -87506,8 +88657,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // TODO: Fix routes structure
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  base: '/api',
   mode: 'history',
   routes: [{
     path: '*',
@@ -87517,7 +88670,7 @@ __webpack_require__.r(__webpack_exports__);
     component: _components_Login__WEBPACK_IMPORTED_MODULE_8__["default"],
     name: 'Login'
   }, {
-    path: '/user',
+    path: '/',
     component: _components_HomeContainer__WEBPACK_IMPORTED_MODULE_9__["default"],
     beforeEnter: function beforeEnter(to, form, next) {
       axios.get('/api/authenticated').then(function (response) {
@@ -87589,22 +88742,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("required", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["required"]), {}, {
-  message: "This field is required"
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('required', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["required"]), {}, {
+  message: 'This field is required'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("max", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["max"]), {}, {
-  message: "This field must be {length} characters or less"
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('max', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["max"]), {}, {
+  message: 'This field must be {length} characters or less'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("min", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["min"]), {}, {
-  message: "This field must be {length} characters or more"
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('min', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["min"]), {}, {
+  message: 'This field must be {length} characters or more'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("email", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["email"]), {}, {
-  message: "This field must be a valid email"
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('email', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["email"]), {}, {
+  message: 'This field must be a valid email'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("confirmed", _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["confirmed"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('confirmed', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["confirmed"]), {}, {
   message: 'The value for {_field_} field does not match'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("password", {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('password', {
   params: ['target'],
   validate: function validate(value, _ref) {
     var target = _ref.target;
@@ -87612,6 +88765,9 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])("password", {
   },
   message: 'Password confirmation does not match'
 });
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('alpha_spaces', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["alpha_spaces"]), {}, {
+  message: 'Suffix may only contain alphabetic characters'
+}));
 
 /***/ }),
 

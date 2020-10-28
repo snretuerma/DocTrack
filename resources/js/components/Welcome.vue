@@ -5,7 +5,10 @@
 </template>
 
 <style>
-.home_title_link:link, .home_title_link:active, .home_title_link:hover, .home_title_link:visited{
+.home_title_link:link,
+.home_title_link:active,
+.home_title_link:hover,
+.home_title_link:visited {
     text-decoration: none;
     color: white;
 }

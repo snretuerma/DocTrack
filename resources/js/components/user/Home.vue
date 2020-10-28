@@ -1,33 +1,44 @@
 <template>
 <div v-if="user">
-    <v-navigation-drawer app color="#E1EBEE" v-model="drawer">
+    <v-navigation-drawer app v-model="drawer">
         <template v-slot:prepend>
             <v-list-item two-line>
                 <v-list-item-avatar>
-                    <img src="https://randomuser.me/api/portraits/women/81.jpg">
+                    <img :src="placeholderImage">
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{user.first_name + ' ' + user.last_name}}</v-list-item-title>
-                    <v-list-item-subtitle>{{user.username}}</v-list-item-subtitle>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-list-item-title
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                {{fullName}}
+                            </v-list-item-title>
+                        </template>
+                        <span>{{fullName}}</span>
+                    </v-tooltip>
+                    <v-list-item-subtitle>{{username}}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </template>
 
         <v-divider></v-divider>
 
-        <v-list nav>
-            <v-list-item link @click.prevent="getDashboard" v-ripple="{ class: 'primary--text' }">
-                <v-list-item-icon>
-                    <v-icon>mdi-view-dashboard-outline</v-icon>
-                </v-list-item-icon>
+        <v-list>
 
-                <v-list-item-content>
-                    <v-list-item-title>Dashboard</v-list-item-title>
-                </v-list-item-content>
+            <v-list-item link @click.prevent="getDashboard">
+            <v-list-item-icon>
+                <v-icon>mdi-view-dashboard-outline</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+                <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getDocumentRecords" v-ripple="{ class: 'primary--text' }">
+            <v-list-item link @click.prevent="getDocumentRecords">
                 <v-list-item-icon>
                     <v-icon>mdi-file-document-multiple-outline</v-icon>
                 </v-list-item-icon>
@@ -36,7 +47,6 @@
                     <v-list-item-title>Document Records</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-
 
             <v-list-group
                 prepend-icon="mdi-timeline-check-outline"
@@ -61,7 +71,8 @@
                 </v-list-item>
             </v-list-group>
 
-            <v-list-item link @click.prevent="getAccountSettings" v-ripple="{ class: 'primary--text' }">
+
+            <v-list-item link @click.prevent="getAccountSettings">
                 <v-list-item-icon>
                     <v-icon>mdi-account-cog-outline</v-icon>
                 </v-list-item-icon>
@@ -71,7 +82,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="logout" v-ripple="{ class: 'primary--text' }">
+            <v-list-item link @click.prevent="logout">
                 <v-list-item-icon>
                     <v-icon>mdi-logout-variant</v-icon>
                 </v-list-item-icon>
@@ -84,11 +95,11 @@
 
         <template v-slot:append>
             <div class="pa-2">
-                <v-btn block tile @click.stop="drawer = !drawer" outlined color="primary">
+                <v-btn block @click.stop="drawer = !drawer">
                     <v-icon left>
-                        mdi-window-close
+                        mdi-close-circle-outline
                     </v-icon>
-                    Close
+                    Hide
                 </v-btn>
             </div>
         </template>
@@ -99,15 +110,17 @@
         color="blue darken-3"
         dark
     >
-        <v-app-bar-nav-icon class="d.none .d-sm-flex" @click.stop="drawer = !drawer" >
+        <v-app-bar-nav-icon class=".d-none .d-sm-flex .d-md-none" @click.stop="drawer = !drawer">
             <v-icon>mdi-menu</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-        <v-container fluid>
-            <router-view></router-view>
-        </v-container>
+        <router-view
+            :user="user"
+            @update-parent-username="updateUsername"
+            @update-parent-name="updateName"
+        ></router-view>
     </v-main>
 </div>
 </template>
@@ -118,8 +131,37 @@ export default {
         'user'
     ],
     computed: {
+        username: {
+            get () {
+                return this.user.username;
+            },
+            set (new_username) {
+                this.user.username = new_username;
+            }
+        },
+        fullName: {
+            get() {
+                return this.buildName(
+                    this.user.first_name,
+                    this.user.middle_name,
+                    this.user.last_name,
+                    this.user.suffix
+                );
+            },
+            set(new_value) {
+                this.user.first_name = new_value.first_name;
+                this.user.middle_name = new_value.middle_name;
+                this.user.last_name = new_value.last_name;
+                this.user.suffix = new_value.suffix;
+            }
+        },
         currentRouteName() {
             return this.$route.name;
+        },
+        placeholderImage() {
+            return 'https://randomuser.me/api/portraits/' +
+                (Math.floor(Math.random() * 2)+ 1 == 1 ? 'men' : 'women') + '/' +
+                Math.floor(Math.random() * 10)+ 1 + '.jpg';
         }
     },
     data() {
@@ -133,6 +175,15 @@ export default {
             axios.post('/api/logout').then(()=>{
                 this.$router.push({ name: "Login"})
             })
+        },
+        buildName(first_name, middle_name, last_name, suffix) {
+            var name =  this.capitalize(this.user.first_name.trim()) + ' '
+                + this.capitalize(this.user.middle_name.trim()) + ' '
+                + this.capitalize(this.user.last_name.trim())
+            if(this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
+                name = name + ' ' + this.capitalize(this.user.suffix.trim());
+            }
+            return name.trim();
         },
         getDashboard() {
             axios.get('/').then(()=>{
@@ -151,27 +202,35 @@ export default {
         getAgingReport() {
             axios.get('reports/aging').then(()=>{
                 if(this.$route.name !== 'Document Aging Report') {
-                    this.$router.push({ name: "Document Aging Report"})
+                    this.$router.push({ name: "Document Aging Report"});
                 }
-            })
+            });
         },
         getMasterListReport() {
             axios.get('reports/master_list').then(()=>{
                 if(this.$route.name !== 'Document Master List') {
                     this.$router.push({ name: "Document Master List"})
                 }
-            })
+            });
         },
         getAccountSettings() {
             axios.get('account_settings').then(()=>{
                 if(this.$route.name !== 'Account Settings') {
-                    this.$router.push({ name: "Account Settings"})
+                    this.$router.push({ name: "Account Settings",  params: { user: this.user }})
                 }
             })
+        },
+        updateUsername(response) {
+            this.username = response;
+        },
+        updateName(response) {
+            this.fullName = response;
+        },
+        capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
     },
     mounted() {
-
     }
 }
 </script>
