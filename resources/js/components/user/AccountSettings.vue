@@ -74,7 +74,7 @@
         {{ snackbar_text }}
         <template v-slot:action="{ attrs }">
             <v-btn
-                color="black"
+                color="white"
                 text
                 v-bind="attrs"
                 @click="snackbar = false; snackbar_text=''"
@@ -127,29 +127,10 @@ export default {
                 this.$emit('update-parent-username', response.username);
             }
         },
-        updatePasswordView() {
+        updatePasswordView(response) {
             this.snackbar = response.snackbar;
             this.snackbar_text = response.snackbar_text;
             this.snackbar_color = response.snackbar_color;
-        },
-        editPassword() {
-            axios.put('/api/users/'  + this.$route.params.user.id, this.password_form)
-            .then(response => {
-                if(response.data.code == 'Success') {
-                    this.snackbar = true;
-                    this.snackbar_text = response.data.message;
-                    this.snackbar_color = 'success';
-                } else {
-                    this.snackbar = true;
-                    this.snackbar_text = response.data.message;
-                    this.snackbar_color = 'error';
-                }
-            })
-            .catch(error => {
-                this.snackbar = true;
-                this.snackbar_text = error.message;
-                this.snackbar_color = 'error';
-            });
         },
     },
     mounted() {

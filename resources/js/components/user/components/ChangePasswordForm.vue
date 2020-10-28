@@ -83,9 +83,9 @@
                 persistent
                 max-width="450px"
             >
-                <v-card>
-                    <v-card-title class="headline grey lighten-2">
-                        <v-icon class="mr-3" size="30px">mdi-alert-octagon</v-icon> Edit Password
+                <v-card color="grey lighten-2">
+                    <v-card-title class="headline">
+                        <v-icon class="mr-2" size="30px">mdi-alert-octagon</v-icon> Edit Password
                     </v-card-title>
                     <v-card-text>
                         Are you sure you want to change your password?
@@ -140,7 +140,34 @@ export default {
         editPassword() {
             const isValid = this.$refs.observer.validate();
             if(isValid) {
-                console.log(this.password_form);
+                var response_data = {
+                    snackbar : false,
+                    snackbar_text: null,
+                    snackbar_color: null,
+                }
+                axios.put('/api/users/'  + this.user.id, this.password_form)
+                .then(response => {
+                    if(response.data.code == 'Success') {
+                        response_data.snackbar = true;
+                        response_data.snackbar_text = response.data.message;
+                        response_data.snackbar_color = 'success';
+                        this.$refs.form.reset();
+                        this.$refs.observer.reset();
+                    } else {
+                        response_data.snackbar = true;
+                        response_data.snackbar_text = response.data.message;
+                        response_data.snackbar_color = 'error';
+                    }
+                    this.$emit('update-password', response_data);
+                    this.dialog = false;
+                })
+                .catch(error => {
+                    response_data.snackbar = true;
+                    response_data.snackbar_text = error.message;
+                    response_data.snackbar_color = 'error';
+                    this.$emit('update-password', response_data);
+                    this.dialog = false;
+                });
             }
         }
     }

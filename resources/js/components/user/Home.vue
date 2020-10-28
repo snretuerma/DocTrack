@@ -177,11 +177,11 @@ export default {
             })
         },
         buildName(first_name, middle_name, last_name, suffix) {
-            var name =  this.user.first_name.trim() + ' '
-                + this.user.middle_name.trim() + ' '
-                + this.user.last_name.trim()
+            var name =  this.capitalize(this.user.first_name.trim()) + ' '
+                + this.capitalize(this.user.middle_name.trim()) + ' '
+                + this.capitalize(this.user.last_name.trim())
             if(this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
-                name = name + ' ' + this.user.suffix.trim();
+                name = name + ' ' + this.capitalize(this.user.suffix.trim());
             }
             return name.trim();
         },
@@ -225,6 +225,9 @@ export default {
         },
         updateName(response) {
             this.fullName = response;
+        },
+        capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
     },
     mounted() {

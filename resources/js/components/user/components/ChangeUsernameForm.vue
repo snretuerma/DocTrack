@@ -60,11 +60,12 @@
                     persistent
                     max-width="450px"
                 >
-                    <v-card>
+                    <v-card color="grey lighten-2">
                         <v-card-title class="headline grey lighten-2">
-                            <v-icon class="mr-3" size="30px">mdi-alert-octagon</v-icon> Edit Password
+                            <v-icon class="mr-2" size="30px">mdi-alert-octagon</v-icon> Edit Username
                         </v-card-title>
                         <v-card-text>
+                            <v-spacer></v-spacer>
                             Are you sure you want to change your account username?
                         </v-card-text>
                         <v-card-actions>

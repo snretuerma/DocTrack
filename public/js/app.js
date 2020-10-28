@@ -2238,29 +2238,10 @@ __webpack_require__.r(__webpack_exports__);
         this.$emit('update-parent-username', response.username);
       }
     },
-    updatePasswordView: function updatePasswordView() {
+    updatePasswordView: function updatePasswordView(response) {
       this.snackbar = response.snackbar;
       this.snackbar_text = response.snackbar_text;
       this.snackbar_color = response.snackbar_color;
-    },
-    editPassword: function editPassword() {
-      var _this = this;
-
-      axios.put('/api/users/' + this.$route.params.user.id, this.password_form).then(function (response) {
-        if (response.data.code == 'Success') {
-          _this.snackbar = true;
-          _this.snackbar_text = response.data.message;
-          _this.snackbar_color = 'success';
-        } else {
-          _this.snackbar = true;
-          _this.snackbar_text = response.data.message;
-          _this.snackbar_color = 'error';
-        }
-      })["catch"](function (error) {
-        _this.snackbar = true;
-        _this.snackbar_text = error.message;
-        _this.snackbar_color = 'error';
-      });
     }
   },
   mounted: function mounted() {}
@@ -2881,10 +2862,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     buildName: function buildName(first_name, middle_name, last_name, suffix) {
-      var name = this.user.first_name.trim() + ' ' + this.user.middle_name.trim() + ' ' + this.user.last_name.trim();
+      var name = this.capitalize(this.user.first_name.trim()) + ' ' + this.capitalize(this.user.middle_name.trim()) + ' ' + this.capitalize(this.user.last_name.trim());
 
       if (this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
-        name = name + ' ' + this.user.suffix.trim();
+        name = name + ' ' + this.capitalize(this.user.suffix.trim());
       }
 
       return name.trim();
@@ -2952,6 +2933,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateName: function updateName(response) {
       this.fullName = response;
+    },
+    capitalize: function capitalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   },
   mounted: function mounted() {}
@@ -3650,10 +3634,43 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editPassword: function editPassword() {
+      var _this = this;
+
       var isValid = this.$refs.observer.validate();
 
       if (isValid) {
-        console.log(this.password_form);
+        var response_data = {
+          snackbar: false,
+          snackbar_text: null,
+          snackbar_color: null
+        };
+        axios.put('/api/users/' + this.user.id, this.password_form).then(function (response) {
+          if (response.data.code == 'Success') {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'success';
+
+            _this.$refs.form.reset();
+
+            _this.$refs.observer.reset();
+          } else {
+            response_data.snackbar = true;
+            response_data.snackbar_text = response.data.message;
+            response_data.snackbar_color = 'error';
+          }
+
+          _this.$emit('update-password', response_data);
+
+          _this.dialog = false;
+        })["catch"](function (error) {
+          response_data.snackbar = true;
+          response_data.snackbar_text = error.message;
+          response_data.snackbar_color = 'error';
+
+          _this.$emit('update-password', response_data);
+
+          _this.dialog = false;
+        });
       }
     }
   }
@@ -3671,6 +3688,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
 //
 //
 //
@@ -25499,7 +25517,7 @@ var render = function() {
                           "v-btn",
                           _vm._b(
                             {
-                              attrs: { color: "black", text: "" },
+                              attrs: { color: "white", text: "" },
                               on: {
                                 click: function($event) {
                                   _vm.snackbar = false
@@ -25519,7 +25537,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                2432316372
+                2350417524
               ),
               model: {
                 value: _vm.snackbar,
@@ -28005,15 +28023,16 @@ var render = function() {
                             [
                               _c(
                                 "v-card",
+                                { attrs: { color: "grey lighten-2" } },
                                 [
                                   _c(
                                     "v-card-title",
-                                    { staticClass: "headline grey lighten-2" },
+                                    { staticClass: "headline" },
                                     [
                                       _c(
                                         "v-icon",
                                         {
-                                          staticClass: "mr-3",
+                                          staticClass: "mr-2",
                                           attrs: { size: "30px" }
                                         },
                                         [_vm._v("mdi-alert-octagon")]
@@ -28094,7 +28113,7 @@ var render = function() {
               ],
               null,
               false,
-              1941929888
+              317033936
             )
           })
         ],
@@ -28305,6 +28324,7 @@ var render = function() {
                             [
                               _c(
                                 "v-card",
+                                { attrs: { color: "grey lighten-2" } },
                                 [
                                   _c(
                                     "v-card-title",
@@ -28313,23 +28333,28 @@ var render = function() {
                                       _c(
                                         "v-icon",
                                         {
-                                          staticClass: "mr-3",
+                                          staticClass: "mr-2",
                                           attrs: { size: "30px" }
                                         },
                                         [_vm._v("mdi-alert-octagon")]
                                       ),
                                       _vm._v(
-                                        " Edit Password\n                    "
+                                        " Edit Username\n                    "
                                       )
                                     ],
                                     1
                                   ),
                                   _vm._v(" "),
-                                  _c("v-card-text", [
-                                    _vm._v(
-                                      "\n                        Are you sure you want to change your account username?\n                    "
-                                    )
-                                  ]),
+                                  _c(
+                                    "v-card-text",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(
+                                        "\n                        Are you sure you want to change your account username?\n                    "
+                                      )
+                                    ],
+                                    1
+                                  ),
                                   _vm._v(" "),
                                   _c(
                                     "v-card-actions",
@@ -28394,7 +28419,7 @@ var render = function() {
               ],
               null,
               false,
-              2064033081
+              134830754
             )
           })
         ],
