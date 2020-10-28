@@ -59,86 +59,8 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <v-form id='account_password' method="put" @submit.prevent="editPassword">
-                            <v-row>
-                                <v-col
-                                    cols="12"
-                                >
-                                    <ValidationProvider rules="required|min:6" v-slot="{ errors, valid }">
-                                        <v-text-field
-                                            outlined
-                                            v-model="password_form.old_password"
-                                            label="Old Password"
-                                            :append-icon="show_old_password ? 'mdi-eye' : 'mdi-eye-off'"
-                                            :type="show_old_password ? 'text' : 'password'"
-                                            @click:append="show_old_password = !show_old_password"
-                                            :error-messages="errors"
-                                            :success="valid"
-                                        >
-                                        </v-text-field>
-                                    </ValidationProvider>
-                                </v-col>
-                            </v-row>
-                            <ValidationObserver>
-                                <v-row>
-                                    <v-col
-                                        cols="12"
-                                    >
-                                        <ValidationProvider
-                                            name="confirm"
-                                            rules="required|min:6"
-                                            v-slot="{ errors, valid }"
-                                        >
-                                            <v-text-field
-                                                outlined
-                                                v-model="password_form.new_password"
-                                                label="New Password"
-                                                :append-icon="show_new_password ? 'mdi-eye' : 'mdi-eye-off'"
-                                                :type="show_new_password ? 'text' : 'password'"
-                                                @click:append="show_new_password = !show_new_password"
-                                                :error-messages="errors"
-                                                :success="valid"
-                                            >
-                                            </v-text-field>
-                                        </ValidationProvider>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col cols="12">
-                                        <ValidationProvider
-                                            rules="required|min:6|password:@confirm"
-                                            v-slot="{ errors, valid }"
-                                        >
-                                            <v-text-field
-                                                outlined
-                                                v-model="password_form.confirm_password"
-                                                label="Confirm New Password"
-                                                :append-icon="show_confirm_password ? 'mdi-eye' : 'mdi-eye-off'"
-                                                :type="show_confirm_password ? 'text' : 'password'"
-                                                @click:append="show_confirm_password = !show_confirm_password"
-                                                :error-messages="errors"
-                                                :success="valid"
-                                            >
-                                            </v-text-field>
-                                        </ValidationProvider>
-                                    </v-col>
-                                </v-row>
-                            </ValidationObserver>
-                            <v-row>
-                                <v-col
-                                    align="center"
-                                    justify="end"
-                                >
-                                    <v-btn
-                                        color="primary"
-                                        dark
-                                        type="submit"
-                                    >
-                                        Submit
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-form>
+
+                        <change-password-form :user="user" @update-password="updatePasswordView"></change-password-form>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -167,34 +89,17 @@
 <script>
 import ChangeUsernameForm from './components/ChangeUsernameForm';
 import ChangeAccountDetailsForm from './components/ChangeAccountDetailsForm';
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
+import ChangePasswordForm from './components/ChangePasswordForm';
 export default {
     props: ['user'],
     components: {
-        ValidationProvider,
-        ValidationObserver,
         ChangeUsernameForm,
-        ChangeAccountDetailsForm
+        ChangeAccountDetailsForm,
+        ChangePasswordForm
     },
     data () {
         return {
             panel: [0],
-            name_form: {
-                form_type: 'account_details',
-                first_name: '',
-                middle_name: '',
-                last_name: '',
-                name_suffix: '' ,
-            },
-            password_form: {
-                form_type: 'account_password',
-                old_password: '',
-                new_password: '',
-                confirm_password: '',
-            },
-            show_old_password: false,
-            show_new_password: false,
-            show_confirm_password: false,
             snackbar: false,
             snackbar_text: '',
             snackbar_timeout: 2000,
@@ -203,11 +108,6 @@ export default {
             loading_edit_details: false,
             loading_edit_password: false,
             clicked: '',
-            new_username: '',
-            new_first_name: '',
-            new_middle_name: '',
-            new_last_name: '',
-            new_suffix: '',
         }
     },
     methods: {
@@ -226,6 +126,11 @@ export default {
             if(response.snackbar) {
                 this.$emit('update-parent-username', response.username);
             }
+        },
+        updatePasswordView() {
+            this.snackbar = response.snackbar;
+            this.snackbar_text = response.snackbar_text;
+            this.snackbar_color = response.snackbar_color;
         },
         editPassword() {
             axios.put('/api/users/'  + this.$route.params.user.id, this.password_form)

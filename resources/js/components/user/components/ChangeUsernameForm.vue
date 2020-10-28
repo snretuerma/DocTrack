@@ -58,33 +58,33 @@
                 <v-dialog
                     v-model="dialog"
                     persistent
-                    max-width="400px"
+                    max-width="450px"
                 >
-                        <v-card>
-                            <v-card-title class="headline light-blue lighten-5">
-                                Edit Username
-                            </v-card-title>
-                            <v-card-text>
-                                Are you sure you want to change your account username?
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                    color="primary darken-1"
-                                    text
-                                    @click="dialog = false"
-                                >
-                                    Cancel
-                                </v-btn>
-                                <v-btn
-                                    color="primary darken-1"
-                                    text
-                                    @click.prevent="editUsername"
-                                >
-                                    Confirm
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
+                    <v-card>
+                        <v-card-title class="headline grey lighten-2">
+                            <v-icon class="mr-3" size="30px">mdi-alert-octagon</v-icon> Edit Password
+                        </v-card-title>
+                        <v-card-text>
+                            Are you sure you want to change your account username?
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                color="primary darken-1"
+                                text
+                                @click="dialog = false"
+                            >
+                                Cancel
+                            </v-btn>
+                            <v-btn
+                                color="primary darken-1"
+                                text
+                                @click.prevent="editUsername"
+                            >
+                                Confirm
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
                 </v-dialog>
             </v-row>
         </ValidationObserver>

@@ -2107,85 +2107,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ChangeUsernameForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ChangeUsernameForm */ "./resources/js/components/user/components/ChangeUsernameForm.vue");
 /* harmony import */ var _components_ChangeAccountDetailsForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ChangeAccountDetailsForm */ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue");
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _components_ChangePasswordForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ChangePasswordForm */ "./resources/js/components/user/components/ChangePasswordForm.vue");
 //
 //
 //
@@ -2280,30 +2202,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   components: {
-    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_2__["ValidationProvider"],
-    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_2__["ValidationObserver"],
     ChangeUsernameForm: _components_ChangeUsernameForm__WEBPACK_IMPORTED_MODULE_0__["default"],
-    ChangeAccountDetailsForm: _components_ChangeAccountDetailsForm__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ChangeAccountDetailsForm: _components_ChangeAccountDetailsForm__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ChangePasswordForm: _components_ChangePasswordForm__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       panel: [0],
-      name_form: {
-        form_type: 'account_details',
-        first_name: '',
-        middle_name: '',
-        last_name: '',
-        name_suffix: ''
-      },
-      password_form: {
-        form_type: 'account_password',
-        old_password: '',
-        new_password: '',
-        confirm_password: ''
-      },
-      show_old_password: false,
-      show_new_password: false,
-      show_confirm_password: false,
       snackbar: false,
       snackbar_text: '',
       snackbar_timeout: 2000,
@@ -2311,12 +2216,7 @@ __webpack_require__.r(__webpack_exports__);
       loader: null,
       loading_edit_details: false,
       loading_edit_password: false,
-      clicked: '',
-      new_username: '',
-      new_first_name: '',
-      new_middle_name: '',
-      new_last_name: '',
-      new_suffix: ''
+      clicked: ''
     };
   },
   methods: {
@@ -2337,6 +2237,11 @@ __webpack_require__.r(__webpack_exports__);
       if (response.snackbar) {
         this.$emit('update-parent-username', response.username);
       }
+    },
+    updatePasswordView: function updatePasswordView() {
+      this.snackbar = response.snackbar;
+      this.snackbar_text = response.snackbar_text;
+      this.snackbar_color = response.snackbar_color;
     },
     editPassword: function editPassword() {
       var _this = this;
@@ -3589,6 +3494,166 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$emit('update-details', response_data);
         });
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  components: {
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      password_form: {
+        form_type: 'account_password',
+        old_password: '',
+        new_password: '',
+        confirm_password: ''
+      },
+      show_old_password: false,
+      show_new_password: false,
+      show_confirm_password: false
+    };
+  },
+  methods: {
+    editPassword: function editPassword() {
+      var isValid = this.$refs.observer.validate();
+
+      if (isValid) {
+        console.log(this.password_form);
       }
     }
   }
@@ -25398,272 +25463,10 @@ var render = function() {
                       _c(
                         "v-expansion-panel-content",
                         [
-                          _c(
-                            "v-form",
-                            {
-                              attrs: { id: "account_password", method: "put" },
-                              on: {
-                                submit: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.editPassword($event)
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
-                                    [
-                                      _c("ValidationProvider", {
-                                        attrs: { rules: "required|min:6" },
-                                        scopedSlots: _vm._u(
-                                          [
-                                            {
-                                              key: "default",
-                                              fn: function(ref) {
-                                                var errors = ref.errors
-                                                var valid = ref.valid
-                                                return [
-                                                  _c("v-text-field", {
-                                                    attrs: {
-                                                      outlined: "",
-                                                      label: "Old Password",
-                                                      "append-icon": _vm.show_old_password
-                                                        ? "mdi-eye"
-                                                        : "mdi-eye-off",
-                                                      type: _vm.show_old_password
-                                                        ? "text"
-                                                        : "password",
-                                                      "error-messages": errors,
-                                                      success: valid
-                                                    },
-                                                    on: {
-                                                      "click:append": function(
-                                                        $event
-                                                      ) {
-                                                        _vm.show_old_password = !_vm.show_old_password
-                                                      }
-                                                    },
-                                                    model: {
-                                                      value:
-                                                        _vm.password_form
-                                                          .old_password,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          _vm.password_form,
-                                                          "old_password",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "password_form.old_password"
-                                                    }
-                                                  })
-                                                ]
-                                              }
-                                            }
-                                          ],
-                                          null,
-                                          false,
-                                          2159274645
-                                        )
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "ValidationObserver",
-                                [
-                                  _c(
-                                    "v-row",
-                                    [
-                                      _c(
-                                        "v-col",
-                                        { attrs: { cols: "12" } },
-                                        [
-                                          _c("ValidationProvider", {
-                                            attrs: {
-                                              name: "confirm",
-                                              rules: "required|min:6"
-                                            },
-                                            scopedSlots: _vm._u(
-                                              [
-                                                {
-                                                  key: "default",
-                                                  fn: function(ref) {
-                                                    var errors = ref.errors
-                                                    var valid = ref.valid
-                                                    return [
-                                                      _c("v-text-field", {
-                                                        attrs: {
-                                                          outlined: "",
-                                                          label: "New Password",
-                                                          "append-icon": _vm.show_new_password
-                                                            ? "mdi-eye"
-                                                            : "mdi-eye-off",
-                                                          type: _vm.show_new_password
-                                                            ? "text"
-                                                            : "password",
-                                                          "error-messages": errors,
-                                                          success: valid
-                                                        },
-                                                        on: {
-                                                          "click:append": function(
-                                                            $event
-                                                          ) {
-                                                            _vm.show_new_password = !_vm.show_new_password
-                                                          }
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            _vm.password_form
-                                                              .new_password,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.password_form,
-                                                              "new_password",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "password_form.new_password"
-                                                        }
-                                                      })
-                                                    ]
-                                                  }
-                                                }
-                                              ],
-                                              null,
-                                              false,
-                                              3974866133
-                                            )
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-row",
-                                    [
-                                      _c(
-                                        "v-col",
-                                        { attrs: { cols: "12" } },
-                                        [
-                                          _c("ValidationProvider", {
-                                            attrs: {
-                                              rules:
-                                                "required|min:6|password:@confirm"
-                                            },
-                                            scopedSlots: _vm._u(
-                                              [
-                                                {
-                                                  key: "default",
-                                                  fn: function(ref) {
-                                                    var errors = ref.errors
-                                                    var valid = ref.valid
-                                                    return [
-                                                      _c("v-text-field", {
-                                                        attrs: {
-                                                          outlined: "",
-                                                          label:
-                                                            "Confirm New Password",
-                                                          "append-icon": _vm.show_confirm_password
-                                                            ? "mdi-eye"
-                                                            : "mdi-eye-off",
-                                                          type: _vm.show_confirm_password
-                                                            ? "text"
-                                                            : "password",
-                                                          "error-messages": errors,
-                                                          success: valid
-                                                        },
-                                                        on: {
-                                                          "click:append": function(
-                                                            $event
-                                                          ) {
-                                                            _vm.show_confirm_password = !_vm.show_confirm_password
-                                                          }
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            _vm.password_form
-                                                              .confirm_password,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.password_form,
-                                                              "confirm_password",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "password_form.confirm_password"
-                                                        }
-                                                      })
-                                                    ]
-                                                  }
-                                                }
-                                              ],
-                                              null,
-                                              false,
-                                              1480262025
-                                            )
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    {
-                                      attrs: { align: "center", justify: "end" }
-                                    },
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            color: "primary",
-                                            dark: "",
-                                            type: "submit"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    Submit\n                                "
-                                          )
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
+                          _c("change-password-form", {
+                            attrs: { user: _vm.user },
+                            on: { "update-password": _vm.updatePasswordView }
+                          })
                         ],
                         1
                       )
@@ -27922,6 +27725,390 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.user
+    ? _c(
+        "v-form",
+        { ref: "form" },
+        [
+          _c("ValidationObserver", {
+            ref: "observer",
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var invalid = ref.invalid
+                    return [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: { rules: "required|min:6" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Old Password",
+                                              "append-icon": _vm.show_old_password
+                                                ? "mdi-eye"
+                                                : "mdi-eye-off",
+                                              type: _vm.show_old_password
+                                                ? "text"
+                                                : "password",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            on: {
+                                              "click:append": function($event) {
+                                                _vm.show_old_password = !_vm.show_old_password
+                                              }
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.password_form.old_password,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.password_form,
+                                                  "old_password",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "password_form.old_password"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: {
+                                  name: "confirm",
+                                  rules: "required|min:6"
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "New Password",
+                                              "append-icon": _vm.show_new_password
+                                                ? "mdi-eye"
+                                                : "mdi-eye-off",
+                                              type: _vm.show_new_password
+                                                ? "text"
+                                                : "password",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            on: {
+                                              "click:append": function($event) {
+                                                _vm.show_new_password = !_vm.show_new_password
+                                              }
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.password_form.new_password,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.password_form,
+                                                  "new_password",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "password_form.new_password"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("ValidationProvider", {
+                                attrs: {
+                                  rules: "required|min:6|password:@confirm"
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var errors = ref.errors
+                                        var valid = ref.valid
+                                        return [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "Confirm New Password",
+                                              "append-icon": _vm.show_confirm_password
+                                                ? "mdi-eye"
+                                                : "mdi-eye-off",
+                                              type: _vm.show_confirm_password
+                                                ? "text"
+                                                : "password",
+                                              "error-messages": errors,
+                                              success: valid
+                                            },
+                                            on: {
+                                              "click:append": function($event) {
+                                                _vm.show_confirm_password = !_vm.show_confirm_password
+                                              }
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.password_form
+                                                  .confirm_password,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.password_form,
+                                                  "confirm_password",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "password_form.confirm_password"
+                                            }
+                                          })
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { align: "center", justify: "end" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "primary",
+                                    dark: !invalid,
+                                    disabled: invalid
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.dialog = true
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\r\n                    Submit\r\n                "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        { attrs: { justify: "center" } },
+                        [
+                          _c(
+                            "v-dialog",
+                            {
+                              attrs: { persistent: "", "max-width": "450px" },
+                              model: {
+                                value: _vm.dialog,
+                                callback: function($$v) {
+                                  _vm.dialog = $$v
+                                },
+                                expression: "dialog"
+                              }
+                            },
+                            [
+                              _c(
+                                "v-card",
+                                [
+                                  _c(
+                                    "v-card-title",
+                                    { staticClass: "headline grey lighten-2" },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "mr-3",
+                                          attrs: { size: "30px" }
+                                        },
+                                        [_vm._v("mdi-alert-octagon")]
+                                      ),
+                                      _vm._v(
+                                        " Edit Password\r\n                    "
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-card-text", [
+                                    _vm._v(
+                                      "\r\n                        Are you sure you want to change your password?\r\n                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "primary darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.dialog = false
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                            Cancel\r\n                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "primary darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.editPassword($event)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                            Confirm\r\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              1941929888
+            )
+          })
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/ChangeUsernameForm.vue?vue&type=template&id=2d471f0a& ***!
@@ -28106,7 +28293,7 @@ var render = function() {
                           _c(
                             "v-dialog",
                             {
-                              attrs: { persistent: "", "max-width": "400px" },
+                              attrs: { persistent: "", "max-width": "450px" },
                               model: {
                                 value: _vm.dialog,
                                 callback: function($$v) {
@@ -28121,20 +28308,26 @@ var render = function() {
                                 [
                                   _c(
                                     "v-card-title",
-                                    {
-                                      staticClass:
-                                        "headline light-blue lighten-5"
-                                    },
+                                    { staticClass: "headline grey lighten-2" },
                                     [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "mr-3",
+                                          attrs: { size: "30px" }
+                                        },
+                                        [_vm._v("mdi-alert-octagon")]
+                                      ),
                                       _vm._v(
-                                        "\n                            Edit Username\n                        "
+                                        " Edit Password\n                    "
                                       )
-                                    ]
+                                    ],
+                                    1
                                   ),
                                   _vm._v(" "),
                                   _c("v-card-text", [
                                     _vm._v(
-                                      "\n                            Are you sure you want to change your account username?\n                        "
+                                      "\n                        Are you sure you want to change your account username?\n                    "
                                     )
                                   ]),
                                   _vm._v(" "),
@@ -28158,7 +28351,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                                Cancel\n                            "
+                                            "\n                            Cancel\n                        "
                                           )
                                         ]
                                       ),
@@ -28179,7 +28372,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                                Confirm\n                            "
+                                            "\n                            Confirm\n                        "
                                           )
                                         ]
                                       )
@@ -28201,7 +28394,7 @@ var render = function() {
               ],
               null,
               false,
-              2849139208
+              2064033081
             )
           })
         ],
@@ -88266,6 +88459,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeAccountDetailsForm_vue_vue_type_template_id_8ee53eee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangePasswordForm.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangePasswordForm.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChangePasswordForm.vue?vue&type=template&id=578fbbcf& */ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&");
+/* harmony import */ var _ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangePasswordForm.vue?vue&type=script&lang=js& */ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/components/ChangePasswordForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangePasswordForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ChangePasswordForm.vue?vue&type=template&id=578fbbcf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/ChangePasswordForm.vue?vue&type=template&id=578fbbcf&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangePasswordForm_vue_vue_type_template_id_578fbbcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
