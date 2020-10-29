@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Auth::user();
+        return User::with('office', 'division', 'unit', 'sector')->find(Auth::id());
     }
 
     /**
@@ -70,8 +70,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $userId)
+    public function update(Request $request, string $userId): \Illuminate\Http\JsonResponse
     {
+        // TODO: Add Log entry for each change
         if($request->form_type == 'account_details') {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|max:255',
@@ -163,7 +164,6 @@ class UserController extends Controller
                 ]);
             }
         }
-
     }
 
 

@@ -3,7 +3,7 @@ import DocumentRecords from './components/user/DocumentRecords';
 import Reports from './components/user/Reports';
 import AccountSettings from './components/user/AccountSettings';
 
-import NewDocument from './components/user/NewDocument';
+import NewDocument from './components/user/components/NewDocument';
 import DocumentAction from './components/user/DocumentAction';
 import ReportAging from './components/user/ReportAging';
 import ReportMasterList from './components/user/ReportMasterList';
@@ -38,7 +38,7 @@ export default {
             },
             children: [
                 {
-                    path: '/',
+                    path: '',
                     component: Dashboard,
                     name: 'Dashboard',
                 },

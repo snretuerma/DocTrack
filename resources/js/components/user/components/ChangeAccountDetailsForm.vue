@@ -66,6 +66,9 @@
                         :loading="loading_edit_details"
                         @click="loader = 'loading_edit_details'"
                     >
+                        <v-icon left dark>
+                            mdi-send-circle-outline
+                        </v-icon>
                         Submit
                     </v-btn>
                 </v-col>

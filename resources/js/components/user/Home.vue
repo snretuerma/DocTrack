@@ -38,7 +38,7 @@
             </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getDocumentRecords">
+            <!-- <v-list-item link @click.prevent="getDocumentRecords">
                 <v-list-item-icon>
                     <v-icon>mdi-file-document-multiple-outline</v-icon>
                 </v-list-item-icon>
@@ -46,7 +46,42 @@
                 <v-list-item-content>
                     <v-list-item-title>Document Records</v-list-item-title>
                 </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
+
+            <v-list-group
+                prepend-icon="mdi-file-document-multiple-outline"
+                no-action
+            >
+                <template v-slot:activator>
+                    <v-list-item-content>
+                        <v-list-item-title>Document Records</v-list-item-title>
+                    </v-list-item-content>
+                </template>
+                <v-list-item link @click.prevent="getNewDocumentRecordForm" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-file-document-edit-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>New Document</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-email-receive-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Receive Document</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-email-send-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Forward Document</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-check-underline-circle-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Terminal Document</v-list-item-title>
+                </v-list-item>
+            </v-list-group>
 
             <v-list-group
                 prepend-icon="mdi-timeline-check-outline"
@@ -70,7 +105,6 @@
                     <v-list-item-title>Master List</v-list-item-title>
                 </v-list-item>
             </v-list-group>
-
 
             <v-list-item link @click.prevent="getAccountSettings">
                 <v-list-item-icon>
@@ -115,12 +149,14 @@
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
     </v-app-bar>
-    <v-main>
-        <router-view
-            :user="user"
-            @update-parent-username="updateUsername"
-            @update-parent-name="updateName"
-        ></router-view>
+    <v-main fluid>
+        <v-container>
+            <router-view
+                :user="user"
+                @update-parent-username="updateUsername"
+                @update-parent-name="updateName"
+            ></router-view>
+        </v-container>
     </v-main>
 </div>
 </template>
@@ -160,8 +196,8 @@ export default {
         },
         placeholderImage() {
             return 'https://randomuser.me/api/portraits/' +
-                (Math.floor(Math.random() * 2)+ 1 == 1 ? 'men' : 'women') + '/' +
-                Math.floor(Math.random() * 10)+ 1 + '.jpg';
+                (Math.floor(Math.random() * 2) + 1 == 1 ? 'men' : 'women') + '/' +
+                (Math.floor(Math.random() * 10) + 1) + '.jpg';
         }
     },
     data() {
@@ -179,10 +215,9 @@ export default {
         buildName(first_name, middle_name, last_name, suffix) {
             var name =  this.capitalize(this.user.first_name.trim()) + ' '
                 + this.capitalize(this.user.middle_name.trim()) + ' '
-                + this.capitalize(this.user.last_name.trim())
-            if(this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
-                name = name + ' ' + this.capitalize(this.user.suffix.trim());
-            }
+                + this.capitalize(this.user.last_name.trim());
+            this.user.suffix != null && typeof this.user.suffix !== 'undefined' ?
+                name = name + ' ' + this.capitalize(this.user.suffix.trim()) : null;
             return name.trim();
         },
         getDashboard() {
@@ -192,13 +227,20 @@ export default {
                 }
             })
         },
-        getDocumentRecords() {
-            axios.get('document_records').then(()=>{
-                if(this.$route.name !== 'Document Records') {
-                    this.$router.push({ name: "Document Records"})
+        getNewDocumentRecordForm() {
+            axios.post('new_document').then(() => {
+                if(this.$route.name !== 'New Document') {
+                    this.$router.push({ name: "New Document"});
                 }
-            })
+            });
         },
+        // getDocumentRecords() {
+        //     axios.get('document_records').then(()=>{
+        //         if(this.$route.name !== 'Document Records') {
+        //             this.$router.push({ name: "Document Records"})
+        //         }
+        //     })
+        // },
         getAgingReport() {
             axios.get('reports/aging').then(()=>{
                 if(this.$route.name !== 'Document Aging Report') {

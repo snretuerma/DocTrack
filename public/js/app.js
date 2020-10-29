@@ -2435,6 +2435,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_NewDocument__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/NewDocument */ "./resources/js/components/user/components/NewDocument.vue");
 //
 //
 //
@@ -2617,13 +2618,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  components: {
+    NewDocument: _components_NewDocument__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      routing_number: ''
+      home: true,
+      receive_routing_number: '',
+      forward_routing_number: '',
+      terminal_routing_number: ''
     };
   },
   methods: {
+    showDocumentRecordHome: function showDocumentRecordHome() {},
     getNewDocumentPage: function getNewDocumentPage() {
       var _this = this;
 
@@ -2641,7 +2666,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$router.push({
             name: "Receive Document",
             params: {
-              routing_number: _this2.routing_number
+              routing_number: _this2.receive_routing_number
             }
           });
         });
@@ -2655,7 +2680,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$router.push({
             name: "Forward Document",
             params: {
-              routing_number: _this3.routing_number
+              routing_number: _this3.forward_routing_number
             }
           });
         });
@@ -2669,7 +2694,7 @@ __webpack_require__.r(__webpack_exports__);
           _this4.$router.push({
             name: "Terminal Document",
             params: {
-              routing_number: _this4.routing_number
+              routing_number: _this4.terminal_routing_number
             }
           });
         });
@@ -2689,6 +2714,42 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2842,7 +2903,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$route.name;
     },
     placeholderImage: function placeholderImage() {
-      return 'https://randomuser.me/api/portraits/' + (Math.floor(Math.random() * 2) + 1 == 1 ? 'men' : 'women') + '/' + Math.floor(Math.random() * 10) + 1 + '.jpg';
+      return 'https://randomuser.me/api/portraits/' + (Math.floor(Math.random() * 2) + 1 == 1 ? 'men' : 'women') + '/' + (Math.floor(Math.random() * 10) + 1) + '.jpg';
     }
   },
   data: function data() {
@@ -2863,11 +2924,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     buildName: function buildName(first_name, middle_name, last_name, suffix) {
       var name = this.capitalize(this.user.first_name.trim()) + ' ' + this.capitalize(this.user.middle_name.trim()) + ' ' + this.capitalize(this.user.last_name.trim());
-
-      if (this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
-        name = name + ' ' + this.capitalize(this.user.suffix.trim());
-      }
-
+      this.user.suffix != null && typeof this.user.suffix !== 'undefined' ? name = name + ' ' + this.capitalize(this.user.suffix.trim()) : null;
       return name.trim();
     },
     getDashboard: function getDashboard() {
@@ -2881,17 +2938,24 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getDocumentRecords: function getDocumentRecords() {
+    getNewDocumentRecordForm: function getNewDocumentRecordForm() {
       var _this3 = this;
 
-      axios.get('document_records').then(function () {
-        if (_this3.$route.name !== 'Document Records') {
+      axios.post('new_document').then(function () {
+        if (_this3.$route.name !== 'New Document') {
           _this3.$router.push({
-            name: "Document Records"
+            name: "New Document"
           });
         }
       });
     },
+    // getDocumentRecords() {
+    //     axios.get('document_records').then(()=>{
+    //         if(this.$route.name !== 'Document Records') {
+    //             this.$router.push({ name: "Document Records"})
+    //         }
+    //     })
+    // },
     getAgingReport: function getAgingReport() {
       var _this4 = this;
 
@@ -2939,220 +3003,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/NewDocument.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/NewDocument.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      breadcrumbs: [{
-        text: 'Document Records',
-        disabled: false,
-        to: 'document_records'
-      }, {
-        text: 'New Document',
-        disabled: true,
-        to: 'new_document'
-      }],
-      document_types: [{
-        id: 1,
-        name: 'Document Type 1'
-      }, {
-        id: 2,
-        name: 'Document Type 2'
-      }, {
-        id: 3,
-        name: 'Document Type 3'
-      }, {
-        id: 4,
-        name: 'Document Type 4'
-      }, {
-        id: 5,
-        name: 'Document Type 5'
-      }],
-      menu: false,
-      form: {
-        tracking_id: '',
-        document_title: '',
-        document_type: '',
-        originating_office: '',
-        sender_name: '',
-        page_count: '',
-        attachment_page_count: '',
-        is_external: false,
-        date_filed: new Date().toISOString().substr(0, 10)
-      }
-    };
-  },
-  methods: {
-    generateTrackingCode: function generateTrackingCode() {},
-    sanitizeInputs: function sanitizeInputs() {}
-  }
 });
 
 /***/ }),
@@ -3407,6 +3257,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
@@ -3495,6 +3348,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
 //
 //
 //
@@ -3782,6 +3638,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
@@ -3849,6 +3708,301 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/NewDocument.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/NewDocument.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  components: {
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_0__["ValidationObserver"]
+  },
+  data: function data() {
+    return {
+      document_types: [],
+      internal_originating_office: [],
+      external_trigger: true,
+      menu: false,
+      current_date: new Date().toISOString().substr(0, 10),
+      form: {
+        tracking_id: '',
+        document_title: '',
+        document_type: '',
+        originating_office_id: '',
+        external_office_name: '',
+        sender_name: '',
+        page_count: '',
+        attachment_page_count: '',
+        is_external: false,
+        date_filed: new Date().toISOString().substr(0, 10),
+        remarks: ''
+      }
+    };
+  },
+  methods: {
+    generateTrackingCode: function generateTrackingCode(document_data) {
+      var tracking_number = '';
+      var origin = 'I';
+      var salt = '';
+
+      for (var iterator = 0; iterator < 5; iterator++) {
+        salt = salt + (~~(Math.random() * 10)).toString();
+      }
+
+      if (document_data.is_external) {
+        origin = 'E';
+      }
+
+      tracking_number = tracking_number + origin + '-' + this.user.office.office_code + '-' + document_data.date_filed.split('-')[0] + '-' + salt + '-' + document_data.attachment_page_count;
+      return tracking_number;
+    },
+    sanitizeInputs: function sanitizeInputs() {
+      this.form.tracking_id = this.generateTrackingCode(this.form);
+      this.form.document_title = this.form.document_title.toString();
+      this.form.external_office_name = this.form.external_office_name != null && typeof this.form.external_office_name != 'undefined' ? this.form.external_office_name.toString() : null;
+      this.form.sender_name = this.form.sender_name.toString();
+      this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ? this.form.remarks.toString() : null;
+      this.form.is_external = this.form.is_external == 'true' ? true : false;
+    },
+    getDocumentTypes: function getDocumentTypes() {
+      var _this = this;
+
+      axios.get('document_type_list').then(function (response) {
+        _this.document_types = response.data;
+      });
+    },
+    getOffices: function getOffices() {
+      var _this2 = this;
+
+      axios.get('office_list').then(function (response) {
+        _this2.internal_originating_office = response.data;
+      });
+    },
+    originOfficeHandler: function originOfficeHandler() {
+      this.external_trigger = !this.external_trigger;
+      this.form.originating_office_id = '';
+      this.form.external_office_name = '';
+    },
+    addNewDocument: function addNewDocument() {
+      this.sanitizeInputs();
+      axios.post('add_new_document', this.form).then(function (response) {});
+    }
+  },
+  mounted: function mounted() {
+    this.getDocumentTypes();
+    this.getOffices();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Welcome.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Welcome.vue?vue&type=style&index=0&lang=css& ***!
@@ -3861,7 +4015,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.home_title_link:link,\n.home_title_link:active,\n.home_title_link:hover,\n.home_title_link:visited {\n    text-decoration: none;\n    color: white;\n}\n", ""]);
+exports.push([module.i, "\n.home_title_link:link,\r\n.home_title_link:active,\r\n.home_title_link:hover,\r\n.home_title_link:visited {\r\n    text-decoration: none;\r\n    color: white;\n}\r\n", ""]);
 
 // exports
 
@@ -3880,7 +4034,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.document_record_card {\r\n    min-height:150px;\n}\n.document_record_card_text {\r\n    min-height:150px;\n}\r\n", ""]);
+exports.push([module.i, "\n.document_record_card {\n    min-height:150px;\n}\n.document_record_card_text {\n    min-height:150px;\n}\n", ""]);
 
 // exports
 
@@ -26052,420 +26206,476 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-row",
+    "div",
     [
-      _c(
-        "v-col",
-        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
-        [
-          _c(
-            "v-card",
-            {
-              staticClass: "mx-auto document_record_card",
-              attrs: { color: "#E1EBEE" }
-            },
+      _vm.user && _vm.home
+        ? _c(
+            "v-row",
             [
-              _c("v-card-title", [
-                _c("span", { staticClass: "title font-weight-bold" }, [
-                  _vm._v("New Document")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("v-divider", { staticClass: "mx-4" }),
-              _vm._v(" "),
               _c(
-                "v-card-text",
-                { staticClass: "font-weight-light document_record_card_text" },
-                [
-                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                    _vm._v("Create a new document for routing")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                { attrs: { align: "right", justify: "end" } },
+                "v-col",
+                { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
                 [
                   _c(
-                    "v-list-item",
-                    { staticClass: "grow" },
+                    "v-card",
+                    {
+                      staticClass: "mx-auto document_record_card",
+                      attrs: { color: "#E1EBEE" }
+                    },
                     [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "title font-weight-bold" }, [
+                          _vm._v("New Document")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("v-divider", { staticClass: "mx-4" }),
+                      _vm._v(" "),
                       _c(
-                        "v-row",
-                        { attrs: { "no-gutters": "" } },
+                        "v-card-text",
+                        {
+                          staticClass:
+                            "font-weight-light document_record_card_text"
+                        },
                         [
                           _c(
-                            "v-col",
-                            { attrs: { cols: "12" } },
+                            "span",
+                            { staticClass: "subtitle font-weight-bold" },
                             [
-                              _c(
-                                "v-btn",
-                                {
-                                  staticClass: "ma-2",
-                                  attrs: {
-                                    fab: "",
-                                    color: "#0D47A1",
-                                    dark: "",
-                                    link: ""
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.getNewDocumentPage($event)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("v-icon", [
-                                    _vm._v("mdi-file-document-multiple-outline")
-                                  ])
-                                ],
-                                1
+                              _vm._v(
+                                "\r\n                        Create a fresh document that will be added to the inter-office document list.\r\n                        Only create a new document if it does not exist in your office's document database or\r\n                        if your office is the original source of the document.\r\n                        If the document is from an outside office, you can add the document in the record by using this\r\n                        feature to include it in the list of documents that your office is working on.\r\n                    "
                               )
-                            ],
-                            1
+                            ]
                           )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-col",
-        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
-        [
-          _c(
-            "v-card",
-            { staticClass: "mx-auto", attrs: { color: "#E1EBEE" } },
-            [
-              _c("v-card-title", [
-                _c("span", { staticClass: "title font-weight-bold" }, [
-                  _vm._v("Receive Document")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("v-divider", { staticClass: "mx-4" }),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                { staticClass: "font-weight-light document_record_card_text" },
-                [
-                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                    _vm._v(
-                      "\r\n                    Receive an existing document routed to your office by scanning or entering the document\r\n                    routing number\r\n                "
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                { attrs: { align: "right", justify: "end" } },
-                [
-                  _c(
-                    "v-list-item",
-                    { staticClass: "grow" },
-                    [
+                        ]
+                      ),
+                      _vm._v(" "),
                       _c(
-                        "v-row",
-                        { attrs: { "no-gutters": "" } },
+                        "v-card-actions",
+                        { attrs: { align: "right", justify: "end" } },
                         [
                           _c(
-                            "v-col",
-                            { attrs: { cols: "9" } },
+                            "v-list-item",
+                            { staticClass: "grow" },
                             [
                               _c(
-                                "v-form",
-                                { ref: "form" },
+                                "v-row",
+                                { attrs: { "no-gutters": "" } },
                                 [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Routing Number",
-                                      clearable: ""
-                                    },
-                                    model: {
-                                      value: _vm.routing_number,
-                                      callback: function($$v) {
-                                        _vm.routing_number = $$v
-                                      },
-                                      expression: "routing_number"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "3" } },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  staticClass: "ma-2",
-                                  attrs: {
-                                    fab: "",
-                                    color: "#0D47A1",
-                                    dark: "",
-                                    link: ""
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.getReceiveDocumentPage($event)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("v-icon", [
-                                    _vm._v("mdi-email-open-outline")
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-col",
-        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
-        [
-          _c(
-            "v-card",
-            {
-              staticClass: "mx-auto",
-              attrs: { color: "#E1EBEE", "max-width": "100%" }
-            },
-            [
-              _c("v-card-title", [
-                _c("span", { staticClass: "title font-weight-bold" }, [
-                  _vm._v("Forward Document")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("v-divider", { staticClass: "mx-4" }),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                { staticClass: "font-weight-light document_record_card_text" },
-                [
-                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                    _vm._v("Forward an existing document to another office")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                { attrs: { align: "right", justify: "end" } },
-                [
-                  _c(
-                    "v-list-item",
-                    { staticClass: "grow" },
-                    [
-                      _c(
-                        "v-row",
-                        { attrs: { "no-gutters": "" } },
-                        [
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "9" } },
-                            [
-                              _c(
-                                "v-form",
-                                { ref: "form" },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Routing Number",
-                                      clearable: ""
-                                    },
-                                    model: {
-                                      value: _vm.routing_number,
-                                      callback: function($$v) {
-                                        _vm.routing_number = $$v
-                                      },
-                                      expression: "routing_number"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "3" } },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  staticClass: "ma-2",
-                                  attrs: {
-                                    fab: "",
-                                    color: "#0D47A1",
-                                    dark: "",
-                                    link: ""
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.getForwardDocumentPage($event)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("v-icon", [
-                                    _vm._v("mdi-email-send-outline")
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-col",
-        { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
-        [
-          _c(
-            "v-card",
-            {
-              staticClass: "mx-auto",
-              attrs: { color: "#E1EBEE", "max-width": "100%" }
-            },
-            [
-              _c("v-card-title", [
-                _c("span", { staticClass: "title font-weight-bold" }, [
-                  _vm._v("Set Document to Terminal")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("v-divider", { staticClass: "mx-4" }),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                { staticClass: "font-weight-light document_record_card_text" },
-                [
-                  _c("span", { staticClass: "subtitle font-weight-bold" }, [
-                    _vm._v("Set an existing document as terminal")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                { attrs: { align: "right", justify: "end" } },
-                [
-                  _c(
-                    "v-list-item",
-                    { staticClass: "grow" },
-                    [
-                      _c(
-                        "v-row",
-                        { attrs: { "no-gutters": "" } },
-                        [
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "9" } },
-                            [
-                              _c(
-                                "v-form",
-                                { ref: "form" },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Routing Number",
-                                      clearable: ""
-                                    },
-                                    model: {
-                                      value: _vm.routing_number,
-                                      callback: function($$v) {
-                                        _vm.routing_number = $$v
-                                      },
-                                      expression: "routing_number"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "3" } },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  staticClass: "ma-2",
-                                  attrs: {
-                                    fab: "",
-                                    color: "#0D47A1",
-                                    dark: "",
-                                    link: ""
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.getSetTerminalDocumentPage(
-                                        $event
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "ma-2",
+                                          attrs: {
+                                            fab: "",
+                                            color: "#0D47A1",
+                                            dark: "",
+                                            link: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getNewDocumentPage(
+                                                $event
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v(
+                                              "mdi-file-document-multiple-outline"
+                                            )
+                                          ])
+                                        ],
+                                        1
                                       )
-                                    }
-                                  }
-                                },
-                                [_c("v-icon", [_vm._v("mdi-close-outline")])],
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+                [
+                  _c(
+                    "v-card",
+                    { staticClass: "mx-auto", attrs: { color: "#E1EBEE" } },
+                    [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "title font-weight-bold" }, [
+                          _vm._v("Receive Document")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("v-divider", { staticClass: "mx-4" }),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass:
+                            "font-weight-light document_record_card_text"
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "subtitle font-weight-bold" },
+                            [
+                              _vm._v(
+                                "\r\n                        Receive an existing document routed to your office by scanning or entering the document\r\n                        routing number\r\n                    "
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        { attrs: { align: "right", justify: "end" } },
+                        [
+                          _c(
+                            "v-list-item",
+                            { staticClass: "grow" },
+                            [
+                              _c(
+                                "v-row",
+                                { attrs: { "no-gutters": "" } },
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "9" } },
+                                    [
+                                      _c(
+                                        "v-form",
+                                        { ref: "form" },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Routing Number",
+                                              clearable: ""
+                                            },
+                                            model: {
+                                              value: _vm.receive_routing_number,
+                                              callback: function($$v) {
+                                                _vm.receive_routing_number = $$v
+                                              },
+                                              expression:
+                                                "receive_routing_number"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "ma-2",
+                                          attrs: {
+                                            fab: "",
+                                            color: "#0D47A1",
+                                            dark: "",
+                                            link: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getReceiveDocumentPage(
+                                                $event
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-email-open-outline")
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "mx-auto",
+                      attrs: { color: "#E1EBEE", "max-width": "100%" }
+                    },
+                    [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "title font-weight-bold" }, [
+                          _vm._v("Forward Document")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("v-divider", { staticClass: "mx-4" }),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass:
+                            "font-weight-light document_record_card_text"
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "subtitle font-weight-bold" },
+                            [
+                              _vm._v(
+                                "Forward an existing document to another office"
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        { attrs: { align: "right", justify: "end" } },
+                        [
+                          _c(
+                            "v-list-item",
+                            { staticClass: "grow" },
+                            [
+                              _c(
+                                "v-row",
+                                { attrs: { "no-gutters": "" } },
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "9" } },
+                                    [
+                                      _c(
+                                        "v-form",
+                                        { ref: "form" },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Routing Number",
+                                              clearable: ""
+                                            },
+                                            model: {
+                                              value: _vm.forward_routing_number,
+                                              callback: function($$v) {
+                                                _vm.forward_routing_number = $$v
+                                              },
+                                              expression:
+                                                "forward_routing_number"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "ma-2",
+                                          attrs: {
+                                            fab: "",
+                                            color: "#0D47A1",
+                                            dark: "",
+                                            link: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getForwardDocumentPage(
+                                                $event
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-email-send-outline")
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", xl: "6", lg: "6", md: "6" } },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "mx-auto",
+                      attrs: { color: "#E1EBEE", "max-width": "100%" }
+                    },
+                    [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "title font-weight-bold" }, [
+                          _vm._v("Set Document to Terminal")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("v-divider", { staticClass: "mx-4" }),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        {
+                          staticClass:
+                            "font-weight-light document_record_card_text"
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "subtitle font-weight-bold" },
+                            [_vm._v("Set an existing document as terminal")]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        { attrs: { align: "right", justify: "end" } },
+                        [
+                          _c(
+                            "v-list-item",
+                            { staticClass: "grow" },
+                            [
+                              _c(
+                                "v-row",
+                                { attrs: { "no-gutters": "" } },
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "9" } },
+                                    [
+                                      _c(
+                                        "v-form",
+                                        { ref: "form" },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Routing Number",
+                                              clearable: ""
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.terminal_routing_number,
+                                              callback: function($$v) {
+                                                _vm.terminal_routing_number = $$v
+                                              },
+                                              expression:
+                                                "terminal_routing_number"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "ma-2",
+                                          attrs: {
+                                            fab: "",
+                                            color: "#0D47A1",
+                                            dark: "",
+                                            link: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.getSetTerminalDocumentPage(
+                                                $event
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-close-outline")
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
                                 1
                               )
                             ],
@@ -26483,9 +26693,13 @@ var render = function() {
             ],
             1
           )
-        ],
-        1
-      )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.home == false
+        ? _c("new-document", {
+            on: { "new-document-close": _vm.showDocumentRecordHome }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -26684,30 +26898,172 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-list-item",
+                    "v-list-group",
                     {
-                      attrs: { link: "" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.getDocumentRecords($event)
-                        }
-                      }
+                      attrs: {
+                        "prepend-icon": "mdi-file-document-multiple-outline",
+                        "no-action": ""
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "activator",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c("v-list-item-title", [
+                                      _vm._v("Document Records")
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        false,
+                        2140061977
+                      )
                     },
                     [
+                      _vm._v(" "),
                       _c(
-                        "v-list-item-icon",
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getNewDocumentRecordForm($event)
+                            }
+                          }
+                        },
                         [
-                          _c("v-icon", [
-                            _vm._v("mdi-file-document-multiple-outline")
-                          ])
+                          _c(
+                            "v-list-item-icon",
+                            [
+                              _c("v-icon", [
+                                _vm._v("mdi-file-document-edit-outline")
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("New Document")])
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
-                        "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("Document Records")])],
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getMasterListReport($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [
+                              _c("v-icon", [
+                                _vm._v("mdi-email-receive-outline")
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("Receive Document")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getMasterListReport($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [_c("v-icon", [_vm._v("mdi-email-send-outline")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("Forward Document")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getMasterListReport($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-icon",
+                            [
+                              _c("v-icon", [
+                                _vm._v("mdi-check-underline-circle-outline")
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("Terminal Document")])
+                        ],
                         1
                       )
                     ],
@@ -26901,405 +27257,18 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-main",
-            [
-              _c("router-view", {
-                attrs: { user: _vm.user },
-                on: {
-                  "update-parent-username": _vm.updateUsername,
-                  "update-parent-name": _vm.updateName
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      )
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/NewDocument.vue?vue&type=template&id=670a2142&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/NewDocument.vue?vue&type=template&id=670a2142& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { attrs: { flat: "" } },
-    [
-      _c("v-card-title", { attrs: { "primary-title": "" } }, [
-        _vm._v("\r\n        New Document\r\n    ")
-      ]),
-      _vm._v(" "),
-      _c(
-        "v-card-subtitle",
-        [
-          _c("v-breadcrumbs", {
-            attrs: { items: _vm.breadcrumbs },
-            scopedSlots: _vm._u([
-              {
-                key: "divider",
-                fn: function() {
-                  return [_c("v-icon", [_vm._v("mdi-arrow-right-thick")])]
-                },
-                proxy: true
-              }
-            ])
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-text",
-        [
-          _c(
-            "v-form",
+            { attrs: { fluid: "" } },
             [
               _c(
-                "v-row",
+                "v-container",
                 [
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "8", lg: "8", md: "12" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Document Title",
-                          "prepend-inner-icon": "mdi-format-title",
-                          outlined: "",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.form.document_title,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "document_title", $$v)
-                          },
-                          expression: "form.document_title"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "4", lg: "4", md: "12" } },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          items: _vm.document_types,
-                          "item-text": "name",
-                          "item-value": "id",
-                          label: "Document Type",
-                          "prepend-inner-icon":
-                            "mdi-file-document-multiple-outline",
-                          "return-object": "",
-                          outlined: "",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.form.document_type,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "document_type", $$v)
-                          },
-                          expression: "form.document_type"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "4", lg: "4", md: "12" } },
-                    [
-                      _c(
-                        "v-radio-group",
-                        {
-                          attrs: {
-                            row: "",
-                            mandatory: true,
-                            label: "Document Origin",
-                            "single-line": "",
-                            required: ""
-                          },
-                          model: {
-                            value: _vm.form.is_external,
-                            callback: function($$v) {
-                              _vm.$set(_vm.form, "is_external", $$v)
-                            },
-                            expression: "form.is_external"
-                          }
-                        },
-                        [
-                          _c("v-radio", {
-                            attrs: { label: "Internal", value: "false" }
-                          }),
-                          _vm._v(" "),
-                          _c("v-radio", {
-                            attrs: { label: "External", value: "true" }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "8", lg: "8", md: "12" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Originating Office",
-                          "prepend-inner-icon":
-                            "mdi-office-building-marker-outline",
-                          outlined: "",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.form.originating_office,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "originating_office", $$v)
-                          },
-                          expression: "form.originating_office"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "6", lg: "6", md: "12" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Sender Name",
-                          "prepend-inner-icon":
-                            "mdi-account-arrow-right-outline",
-                          outlined: ""
-                        },
-                        model: {
-                          value: _vm.form.sender_name,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "sender_name", $$v)
-                          },
-                          expression: "form.sender_name"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "6", lg: "6", md: "12" } },
-                    [
-                      _c(
-                        "v-menu",
-                        {
-                          attrs: {
-                            "close-on-content-click": false,
-                            "nudge-right": 40,
-                            transition: "scale-transition",
-                            "offset-y": "",
-                            "min-width": "290px"
-                          },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-text-field",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          attrs: {
-                                            label: "Date Filed",
-                                            "prepend-inner-icon":
-                                              "mdi-calendar",
-                                            readonly: "",
-                                            outlined: ""
-                                          },
-                                          model: {
-                                            value: _vm.form.date_filed,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.form,
-                                                "date_filed",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "form.date_filed"
-                                          }
-                                        },
-                                        "v-text-field",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    )
-                                  )
-                                ]
-                              }
-                            }
-                          ]),
-                          model: {
-                            value: _vm.menu,
-                            callback: function($$v) {
-                              _vm.menu = $$v
-                            },
-                            expression: "menu"
-                          }
-                        },
-                        [
-                          _vm._v(" "),
-                          _c("v-date-picker", {
-                            on: {
-                              input: function($event) {
-                                _vm.menu = false
-                              }
-                            },
-                            model: {
-                              value: _vm.form.date_filed,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "date_filed", $$v)
-                              },
-                              expression: "form.date_filed"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "6", lg: "6", md: "12" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Page Count",
-                          "prepend-inner-icon": "mdi-numeric",
-                          outlined: "",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.form.page_count,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "page_count", $$v)
-                          },
-                          expression: "form.page_count"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "6", lg: "6", md: "12" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Attachment Page Count",
-                          "prepend-inner-icon": "mdi-numeric",
-                          outlined: ""
-                        },
-                        model: {
-                          value: _vm.form.attachment_page_count,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "attachment_page_count", $$v)
-                          },
-                          expression: "form.attachment_page_count"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12", xl: "12", lg: "12", md: "12" } },
-                    [
-                      _c("v-textarea", {
-                        attrs: {
-                          clearable: "",
-                          outlined: "",
-                          "auto-grow": "",
-                          "clear-icon": "mdi-close-circle",
-                          "prepend-inner-icon": "mdi-comment-text-outline",
-                          label: "Remarks"
-                        },
-                        model: {
-                          value: _vm.form.remarks,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "remarks", $$v)
-                          },
-                          expression: "form.remarks"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-row",
-                [
-                  _c("v-col", [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "my-2",
-                        attrs: { align: "center", justify: "end" }
-                      },
-                      [
-                        _c(
-                          "v-btn",
-                          { attrs: { color: "primary", dark: "" } },
-                          [
-                            _c("v-icon", { attrs: { left: "", dark: "" } }, [
-                              _vm._v(
-                                "\r\n                                mdi-send\r\n                            "
-                              )
-                            ]),
-                            _vm._v(
-                              "\r\n                            Submit\r\n                        "
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ])
+                  _c("router-view", {
+                    attrs: { user: _vm.user },
+                    on: {
+                      "update-parent-username": _vm.updateUsername,
+                      "update-parent-name": _vm.updateName
+                    }
+                  })
                 ],
                 1
               )
@@ -27309,9 +27278,7 @@ var render = function() {
         ],
         1
       )
-    ],
-    1
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -27711,10 +27678,20 @@ var render = function() {
                                   }
                                 },
                                 [
+                                  _c(
+                                    "v-icon",
+                                    { attrs: { left: "", dark: "" } },
+                                    [
+                                      _vm._v(
+                                        "\n                        mdi-send-circle-outline\n                    "
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(
                                     "\n                    Submit\n                "
                                   )
-                                ]
+                                ],
+                                1
                               )
                             ],
                             1
@@ -27728,7 +27705,7 @@ var render = function() {
               ],
               null,
               false,
-              1060790235
+              3106034299
             )
           })
         ],
@@ -27992,10 +27969,20 @@ var render = function() {
                                   }
                                 },
                                 [
+                                  _c(
+                                    "v-icon",
+                                    { attrs: { left: "", dark: "" } },
+                                    [
+                                      _vm._v(
+                                        "\r\n                        mdi-send-circle-outline\r\n                    "
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(
                                     "\r\n                    Submit\r\n                "
                                   )
-                                ]
+                                ],
+                                1
                               )
                             ],
                             1
@@ -28113,7 +28100,7 @@ var render = function() {
               ],
               null,
               false,
-              317033936
+              4227584144
             )
           })
         ],
@@ -28293,10 +28280,20 @@ var render = function() {
                                   }
                                 },
                                 [
+                                  _c(
+                                    "v-icon",
+                                    { attrs: { left: "", dark: "" } },
+                                    [
+                                      _vm._v(
+                                        "\n                        mdi-send-circle-outline\n                    "
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(
                                     "\n                    Submit\n                "
                                   )
-                                ]
+                                ],
+                                1
                               )
                             ],
                             1
@@ -28419,9 +28416,775 @@ var render = function() {
               ],
               null,
               false,
-              134830754
+              2324267490
             )
           })
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/NewDocument.vue?vue&type=template&id=958963ea&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/NewDocument.vue?vue&type=template&id=958963ea& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.user
+    ? _c(
+        "v-card",
+        { attrs: { flat: "" } },
+        [
+          _c("v-card-title", { attrs: { "primary-title": "" } }, [
+            _vm._v("\r\n        Add New Document\r\n    ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c("ValidationObserver", {
+                ref: "observer",
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(ref) {
+                        var invalid = ref.invalid
+                        return [
+                          _c(
+                            "v-form",
+                            {
+                              ref: "form",
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addNewDocument($event)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "8",
+                                        lg: "8",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c("ValidationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                var valid = ref.valid
+                                                return [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      label: "Document Title",
+                                                      "prepend-inner-icon":
+                                                        "mdi-format-title",
+                                                      outlined: "",
+                                                      "error-messages": errors,
+                                                      success: valid,
+                                                      required: ""
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form.document_title,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.form,
+                                                          "document_title",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form.document_title"
+                                                    }
+                                                  })
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "4",
+                                        lg: "4",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c("ValidationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                var valid = ref.valid
+                                                return [
+                                                  _c("v-select", {
+                                                    attrs: {
+                                                      items: _vm.document_types,
+                                                      "item-text": "name",
+                                                      "item-value": "id",
+                                                      label: "Document Type",
+                                                      "prepend-inner-icon":
+                                                        "mdi-file-document-multiple-outline",
+                                                      "menu-props": {
+                                                        bottom: true,
+                                                        offsetY: true,
+                                                        transition:
+                                                          "slide-y-transition"
+                                                      },
+                                                      outlined: "",
+                                                      required: "",
+                                                      "error-messages": errors,
+                                                      success: valid
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form.document_type,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.form,
+                                                          "document_type",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form.document_type"
+                                                    }
+                                                  })
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "4",
+                                        lg: "4",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-radio-group",
+                                        {
+                                          attrs: {
+                                            row: "",
+                                            mandatory: true,
+                                            label: "Origin: ",
+                                            "single-line": "",
+                                            required: ""
+                                          },
+                                          on: {
+                                            change: _vm.originOfficeHandler
+                                          },
+                                          model: {
+                                            value: _vm.form.is_external,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.form,
+                                                "is_external",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "form.is_external"
+                                          }
+                                        },
+                                        [
+                                          _c("v-radio", {
+                                            attrs: {
+                                              label: "Internal",
+                                              value: "false"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("v-radio", {
+                                            attrs: {
+                                              label: "External",
+                                              value: "true"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.external_trigger == true
+                                    ? _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            xl: "8",
+                                            lg: "8",
+                                            md: "12"
+                                          }
+                                        },
+                                        [
+                                          _c("ValidationProvider", {
+                                            attrs: { rules: "required" },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "default",
+                                                  fn: function(ref) {
+                                                    var errors = ref.errors
+                                                    var valid = ref.valid
+                                                    return [
+                                                      _c("v-text-field", {
+                                                        attrs: {
+                                                          label:
+                                                            "External Office",
+                                                          "prepend-inner-icon":
+                                                            "mdi-office-building-marker-outline",
+                                                          outlined: "",
+                                                          "error-messages": errors,
+                                                          success: valid,
+                                                          required: ""
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.form
+                                                              .external_office_name,
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.form,
+                                                              "external_office_name",
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "form.external_office_name"
+                                                        }
+                                                      })
+                                                    ]
+                                                  }
+                                                }
+                                              ],
+                                              null,
+                                              true
+                                            )
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            xl: "8",
+                                            lg: "8",
+                                            md: "12"
+                                          }
+                                        },
+                                        [
+                                          _c("ValidationProvider", {
+                                            attrs: { rules: "required" },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "default",
+                                                  fn: function(ref) {
+                                                    var errors = ref.errors
+                                                    var valid = ref.valid
+                                                    return [
+                                                      _c("v-select", {
+                                                        attrs: {
+                                                          items:
+                                                            _vm.internal_originating_office,
+                                                          "item-text": "name",
+                                                          "item-value": "id",
+                                                          label:
+                                                            "Originating Office",
+                                                          "prepend-inner-icon":
+                                                            "mdi-office-building-marker-outline",
+                                                          "menu-props": {
+                                                            bottom: true,
+                                                            offsetY: true
+                                                          },
+                                                          outlined: "",
+                                                          "error-messages": errors,
+                                                          success: valid,
+                                                          required: ""
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.form
+                                                              .originating_office_id,
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.form,
+                                                              "originating_office_id",
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "form.originating_office_id"
+                                                        }
+                                                      })
+                                                    ]
+                                                  }
+                                                }
+                                              ],
+                                              null,
+                                              true
+                                            )
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "6",
+                                        lg: "6",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c("ValidationProvider", {
+                                        attrs: { rules: "required" },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                var valid = ref.valid
+                                                return [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      label: "Sender Name",
+                                                      "prepend-inner-icon":
+                                                        "mdi-account-arrow-right-outline",
+                                                      outlined: "",
+                                                      "error-messages": errors,
+                                                      success: valid
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form.sender_name,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.form,
+                                                          "sender_name",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form.sender_name"
+                                                    }
+                                                  })
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "6",
+                                        lg: "6",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-menu",
+                                        {
+                                          attrs: {
+                                            "close-on-content-click": false,
+                                            "nudge-right": 40,
+                                            transition: "scale-transition",
+                                            "offset-y": "",
+                                            "min-width": "290px"
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "activator",
+                                                fn: function(ref) {
+                                                  var on = ref.on
+                                                  var attrs = ref.attrs
+                                                  return [
+                                                    _c(
+                                                      "v-text-field",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            attrs: {
+                                                              label:
+                                                                "Date Filed",
+                                                              "prepend-inner-icon":
+                                                                "mdi-calendar",
+                                                              readonly: "",
+                                                              outlined: ""
+                                                            },
+                                                            model: {
+                                                              value:
+                                                                _vm.form
+                                                                  .date_filed,
+                                                              callback: function(
+                                                                $$v
+                                                              ) {
+                                                                _vm.$set(
+                                                                  _vm.form,
+                                                                  "date_filed",
+                                                                  $$v
+                                                                )
+                                                              },
+                                                              expression:
+                                                                "form.date_filed"
+                                                            }
+                                                          },
+                                                          "v-text-field",
+                                                          attrs,
+                                                          false
+                                                        ),
+                                                        on
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value: _vm.menu,
+                                            callback: function($$v) {
+                                              _vm.menu = $$v
+                                            },
+                                            expression: "menu"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(" "),
+                                          _c("v-date-picker", {
+                                            attrs: {
+                                              "show-current": _vm.current_date
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                _vm.menu = false
+                                              }
+                                            },
+                                            model: {
+                                              value: _vm.form.date_filed,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.form,
+                                                  "date_filed",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "form.date_filed"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "6",
+                                        lg: "6",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c("ValidationProvider", {
+                                        attrs: {
+                                          rules: "required|numeric|min:0"
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                var valid = ref.valid
+                                                return [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      label: "Page Count",
+                                                      "prepend-inner-icon":
+                                                        "mdi-numeric",
+                                                      outlined: "",
+                                                      "error-messages": errors,
+                                                      success: valid,
+                                                      required: "",
+                                                      type: "number",
+                                                      min: "0",
+                                                      onkeypress:
+                                                        "return event.charCode >= 48"
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form.page_count,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.form,
+                                                          "page_count",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form.page_count"
+                                                    }
+                                                  })
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "6",
+                                        lg: "6",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c("ValidationProvider", {
+                                        attrs: {
+                                          rules: "required|numeric|min:0"
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var errors = ref.errors
+                                                var valid = ref.valid
+                                                return [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      label:
+                                                        "Attachment Page Count",
+                                                      "prepend-inner-icon":
+                                                        "mdi-numeric",
+                                                      outlined: "",
+                                                      "error-messages": errors,
+                                                      success: valid,
+                                                      required: "",
+                                                      type: "number",
+                                                      min: "0",
+                                                      onkeypress:
+                                                        "return event.charCode >= 48"
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form
+                                                          .attachment_page_count,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.form,
+                                                          "attachment_page_count",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form.attachment_page_count"
+                                                    }
+                                                  })
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "12",
+                                        lg: "12",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: {
+                                          clearable: "",
+                                          outlined: "",
+                                          "auto-grow": "",
+                                          "clear-icon": "mdi-close-circle",
+                                          "prepend-inner-icon":
+                                            "mdi-comment-text-outline",
+                                          label: "Remarks"
+                                        },
+                                        model: {
+                                          value: _vm.form.remarks,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.form, "remarks", $$v)
+                                          },
+                                          expression: "form.remarks"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-col", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "my-2",
+                                        attrs: {
+                                          align: "center",
+                                          justify: "end"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "v-btn",
+                                          {
+                                            attrs: {
+                                              color: "primary",
+                                              dark: !invalid,
+                                              disabled: invalid,
+                                              type: "submit"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "v-icon",
+                                              { attrs: { left: "", dark: "" } },
+                                              [
+                                                _vm._v(
+                                                  "\r\n                                    mdi-send-circle-outline\r\n                                "
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(
+                                              "\r\n                                Submit\r\n                            "
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  4251653268
+                )
+              })
+            ],
+            1
+          )
         ],
         1
       )
@@ -88144,75 +88907,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/user/NewDocument.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/user/NewDocument.vue ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NewDocument_vue_vue_type_template_id_670a2142___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewDocument.vue?vue&type=template&id=670a2142& */ "./resources/js/components/user/NewDocument.vue?vue&type=template&id=670a2142&");
-/* harmony import */ var _NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewDocument.vue?vue&type=script&lang=js& */ "./resources/js/components/user/NewDocument.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _NewDocument_vue_vue_type_template_id_670a2142___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _NewDocument_vue_vue_type_template_id_670a2142___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/user/NewDocument.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/user/NewDocument.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/user/NewDocument.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewDocument.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/NewDocument.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/user/NewDocument.vue?vue&type=template&id=670a2142&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/user/NewDocument.vue?vue&type=template&id=670a2142& ***!
-  \*************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_670a2142___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewDocument.vue?vue&type=template&id=670a2142& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/NewDocument.vue?vue&type=template&id=670a2142&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_670a2142___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_670a2142___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/user/ReportAging.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/user/ReportAging.vue ***!
@@ -88627,6 +89321,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/components/NewDocument.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/user/components/NewDocument.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewDocument.vue?vue&type=template&id=958963ea& */ "./resources/js/components/user/components/NewDocument.vue?vue&type=template&id=958963ea&");
+/* harmony import */ var _NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewDocument.vue?vue&type=script&lang=js& */ "./resources/js/components/user/components/NewDocument.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/components/NewDocument.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/NewDocument.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/user/components/NewDocument.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./NewDocument.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/NewDocument.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/NewDocument.vue?vue&type=template&id=958963ea&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/NewDocument.vue?vue&type=template&id=958963ea& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./NewDocument.vue?vue&type=template&id=958963ea& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/NewDocument.vue?vue&type=template&id=958963ea&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -88640,7 +89403,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_user_DocumentRecords__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/user/DocumentRecords */ "./resources/js/components/user/DocumentRecords.vue");
 /* harmony import */ var _components_user_Reports__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/user/Reports */ "./resources/js/components/user/Reports.vue");
 /* harmony import */ var _components_user_AccountSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/user/AccountSettings */ "./resources/js/components/user/AccountSettings.vue");
-/* harmony import */ var _components_user_NewDocument__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/user/NewDocument */ "./resources/js/components/user/NewDocument.vue");
+/* harmony import */ var _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/user/components/NewDocument */ "./resources/js/components/user/components/NewDocument.vue");
 /* harmony import */ var _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/user/DocumentAction */ "./resources/js/components/user/DocumentAction.vue");
 /* harmony import */ var _components_user_ReportAging__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/user/ReportAging */ "./resources/js/components/user/ReportAging.vue");
 /* harmony import */ var _components_user_ReportMasterList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/user/ReportMasterList */ "./resources/js/components/user/ReportMasterList.vue");
@@ -88682,7 +89445,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     children: [{
-      path: '/',
+      path: '',
       component: _components_user_Dashboard__WEBPACK_IMPORTED_MODULE_0__["default"],
       name: 'Dashboard'
     }, {
@@ -88695,7 +89458,7 @@ __webpack_require__.r(__webpack_exports__);
       name: 'Account Settings'
     }, {
       path: 'new_document',
-      component: _components_user_NewDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
+      component: _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
       name: 'New Document'
     }, {
       path: 'receive_document/:routing_number',
@@ -88767,6 +89530,9 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('password', {
 });
 Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('alpha_spaces', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["alpha_spaces"]), {}, {
   message: 'Suffix may only contain alphabetic characters'
+}));
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('numeric', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["numeric"]), {}, {
+  message: 'This field must only contain numerical values'
 }));
 
 /***/ }),

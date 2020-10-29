@@ -50,6 +50,9 @@
                         :disabled="invalid"
                         @click="dialog = true"
                     >
+                        <v-icon left dark>
+                            mdi-send-circle-outline
+                        </v-icon>
                         Submit
                     </v-btn>
                 </v-col>
