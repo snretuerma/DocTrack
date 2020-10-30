@@ -228,7 +228,7 @@ export default {
             })
         },
         getNewDocumentRecordForm() {
-            axios.post('new_document').then(() => {
+            axios.get('new_document').then(() => {
                 if(this.$route.name !== 'New Document') {
                     this.$router.push({ name: "New Document"});
                 }

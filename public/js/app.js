@@ -2941,7 +2941,7 @@ __webpack_require__.r(__webpack_exports__);
     getNewDocumentRecordForm: function getNewDocumentRecordForm() {
       var _this3 = this;
 
-      axios.post('new_document').then(function () {
+      axios.get('new_document').then(function () {
         if (_this3.$route.name !== 'New Document') {
           _this3.$router.push({
             name: "New Document"
@@ -3991,8 +3991,15 @@ __webpack_require__.r(__webpack_exports__);
       this.form.external_office_name = '';
     },
     addNewDocument: function addNewDocument() {
+      var _this3 = this;
+
+      // FIXME: Bug on the external_trigger when form is submitted where the trigger function changed places
       this.sanitizeInputs();
-      axios.post('add_new_document', this.form).then(function (response) {});
+      axios.post('add_new_document', this.form).then(function (response) {
+        _this3.$refs.form.reset();
+
+        _this3.$refs.observer.reset();
+      });
     }
   },
   mounted: function mounted() {
@@ -28662,7 +28669,7 @@ var render = function() {
                                     1
                                   ),
                                   _vm._v(" "),
-                                  _vm.external_trigger == true
+                                  _vm.external_trigger
                                     ? _c(
                                         "v-col",
                                         {
@@ -29179,7 +29186,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  4251653268
+                  4254947266
                 )
               })
             ],

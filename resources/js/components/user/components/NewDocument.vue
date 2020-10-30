@@ -57,7 +57,7 @@
                             ></v-radio>
                         </v-radio-group>
                     </v-col>
-                    <v-col cols="12" xl="8" lg="8" md="12" v-if="external_trigger == true">
+                    <v-col cols="12" xl="8" lg="8" md="12" v-if="external_trigger">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.external_office_name"
@@ -249,7 +249,8 @@ export default {
         sanitizeInputs() {
             this.form.tracking_id = this.generateTrackingCode(this.form);
             this.form.document_title = this.form.document_title.toString();
-            this.form.external_office_name = this.form.external_office_name != null && typeof this.form.external_office_name != 'undefined' ?
+            this.form.external_office_name = this.form.external_office_name != null &&
+                typeof this.form.external_office_name != 'undefined' ?
                 this.form.external_office_name.toString() : null;
             this.form.sender_name = this.form.sender_name.toString();
             this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ?
@@ -273,9 +274,11 @@ export default {
 
         },
         addNewDocument() {
+            // FIXME: Bug on the external_trigger when form is submitted where the trigger function changed places
             this.sanitizeInputs();
             axios.post('add_new_document', this.form).then((response) => {
-
+                this.$refs.form.reset();
+                this.$refs.observer.reset();
             });
         },
     },
