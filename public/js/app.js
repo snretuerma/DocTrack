@@ -3917,6 +3917,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
@@ -26921,7 +26930,7 @@ var render = function() {
                                   "v-list-item-content",
                                   [
                                     _c("v-list-item-title", [
-                                      _vm._v("Document Records")
+                                      _vm._v("Document")
                                     ])
                                   ],
                                   1
@@ -26933,7 +26942,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        2140061977
+                        2607729639
                       )
                     },
                     [
@@ -26968,7 +26977,7 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c("v-list-item-title", [_vm._v("New Document")])
+                          _c("v-list-item-title", [_vm._v("Create")])
                         ],
                         1
                       ),
@@ -27003,7 +27012,7 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c("v-list-item-title", [_vm._v("Receive Document")])
+                          _c("v-list-item-title", [_vm._v("Receive")])
                         ],
                         1
                       ),
@@ -27034,7 +27043,7 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c("v-list-item-title", [_vm._v("Forward Document")])
+                          _c("v-list-item-title", [_vm._v("Forward")])
                         ],
                         1
                       ),
@@ -27069,7 +27078,7 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c("v-list-item-title", [_vm._v("Terminal Document")])
+                          _c("v-list-item-title", [_vm._v("Terminal")])
                         ],
                         1
                       )
@@ -28465,6 +28474,20 @@ var render = function() {
           _c(
             "v-card-text",
             [
+              _c(
+                "v-alert",
+                {
+                  attrs: {
+                    text: "",
+                    dense: "",
+                    color: "teal",
+                    icon: "mdi-clock-fast",
+                    border: "left"
+                  }
+                },
+                [_vm._v("\r\n            Success\r\n        ")]
+              ),
+              _vm._v(" "),
               _c("ValidationObserver", {
                 ref: "observer",
                 scopedSlots: _vm._u(

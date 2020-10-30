@@ -54,32 +54,32 @@
             >
                 <template v-slot:activator>
                     <v-list-item-content>
-                        <v-list-item-title>Document Records</v-list-item-title>
+                        <v-list-item-title>Document</v-list-item-title>
                     </v-list-item-content>
                 </template>
                 <v-list-item link @click.prevent="getNewDocumentRecordForm" v-ripple="{ class: 'primary--text' }">
                     <v-list-item-icon>
                     <v-icon>mdi-file-document-edit-outline</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>New Document</v-list-item-title>
+                    <v-list-item-title>Create</v-list-item-title>
                 </v-list-item>
                 <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
                     <v-list-item-icon>
                     <v-icon>mdi-email-receive-outline</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Receive Document</v-list-item-title>
+                    <v-list-item-title>Receive</v-list-item-title>
                 </v-list-item>
                 <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
                     <v-list-item-icon>
                     <v-icon>mdi-email-send-outline</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Forward Document</v-list-item-title>
+                    <v-list-item-title>Forward</v-list-item-title>
                 </v-list-item>
                 <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
                     <v-list-item-icon>
                     <v-icon>mdi-check-underline-circle-outline</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Terminal Document</v-list-item-title>
+                    <v-list-item-title>Terminal</v-list-item-title>
                 </v-list-item>
             </v-list-group>
 

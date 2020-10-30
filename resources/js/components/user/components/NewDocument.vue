@@ -4,6 +4,15 @@
         Add New Document
     </v-card-title>
     <v-card-text>
+        <v-alert
+            text
+            dense
+            color="teal"
+            icon="mdi-clock-fast"
+            border="left"
+        >
+            Success
+        </v-alert>
         <ValidationObserver ref="observer" v-slot="{ invalid }">
             <v-form ref="form" @submit.prevent="addNewDocument">
                 <v-row>
