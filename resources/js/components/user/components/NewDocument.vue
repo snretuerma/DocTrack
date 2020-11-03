@@ -4,17 +4,39 @@
         Add New Document
     </v-card-title>
     <v-card-text>
-        <v-alert
-            text
-            dense
-            color="teal"
-            icon="mdi-clock-fast"
-            border="left"
-        >
-            Success
-        </v-alert>
+            <v-scroll-x-transition>
+                <v-alert
+                    outlined
+                    :type="alert_type"
+                    icon="mdi-check-bold"
+                    prominent
+                    border="left"
+                    text
+                    v-if="alert"
+                >
+                    <v-row align="center">
+                        <v-col class="grow">
+                            <v-row>
+                                <v-col>{{alert_message}}</v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col>{{alert_server_message}}</v-col>
+                            </v-row>
+                        </v-col>
+                        <v-col class="shrink">
+                            <v-btn
+                                icon
+                                :color="alert_type"
+                                @click="closeAlert"
+                            >
+                                <v-icon>mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-alert>
+            </v-scroll-x-transition>
         <ValidationObserver ref="observer" v-slot="{ invalid }">
-            <v-form ref="form" @submit.prevent="addNewDocument">
+            <v-form ref="form" @submit.prevent="createNewDocument">
                 <v-row>
                     <v-col cols="12" xl="8" lg="8" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
@@ -58,28 +80,15 @@
                         >
                             <v-radio
                                 label="Internal"
-                                value="false"
+                                value=false
                             ></v-radio>
                             <v-radio
                                 label="External"
-                                value="true"
+                                value=true
                             ></v-radio>
                         </v-radio-group>
                     </v-col>
                     <v-col cols="12" xl="8" lg="8" md="12" v-if="external_trigger">
-                        <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                            <v-text-field
-                                v-model="form.external_office_name"
-                                label="External Office"
-                                prepend-inner-icon="mdi-office-building-marker-outline"
-                                outlined
-                                :error-messages="errors"
-                                :success="valid"
-                                required
-                            ></v-text-field>
-                        </ValidationProvider>
-                    </v-col>
-                    <v-col cols="12" xl="8" lg="8" md="12" v-else>
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-select
                                     v-model="form.originating_office_id"
@@ -96,6 +105,19 @@
                             ></v-select>
                         </ValidationProvider>
                     </v-col>
+                    <v-col cols="12" xl="8" lg="8" md="12" v-else>
+                        <ValidationProvider rules="required" v-slot="{ errors, valid }">
+                            <v-text-field
+                                v-model="form.external_office_name"
+                                label="External Office"
+                                prepend-inner-icon="mdi-office-building-marker-outline"
+                                outlined
+                                :error-messages="errors"
+                                :success="valid"
+                                required
+                            ></v-text-field>
+                        </ValidationProvider>
+                    </v-col>
                     <v-col cols="12" xl="6" lg="6" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-text-field
@@ -109,33 +131,99 @@
                         </ValidationProvider>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="12">
-                        <v-menu
-                            v-model="menu"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="290px"
+                        <v-dialog
+                            ref="date_dialog"
+                            v-model="datepicker_modal"
+                            :return-value.sync="form.date_filed"
+                            persistent
+                            width="290px"
                         >
                             <template v-slot:activator="{ on, attrs }">
-                                <v-text-field
-                                    v-model="form.date_filed"
-                                    label="Date Filed"
-                                    prepend-inner-icon="mdi-calendar"
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    outlined
-                                ></v-text-field>
+                                <ValidationProvider rules="required" v-slot="{ errors, valid }">
+                                    <v-text-field
+                                        v-model="form.date_filed"
+                                        label="Date Filed"
+                                        prepend-inner-icon="mdi-calendar"
+                                        readonly
+                                        outlined
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        :error-messages="errors"
+                                        :success="valid"
+                                    ></v-text-field>
+                                </ValidationProvider>
                             </template>
                             <v-date-picker
                                 v-model="form.date_filed"
-                                :show-current="current_date"
-                                @input="menu = false"
-                            ></v-date-picker>
-                        </v-menu>
+                                scrollable
+                            >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="datepicker_modal = false"
+                                >
+                                    Cancel
+                                </v-btn>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="$refs.date_dialog.save(form.date_filed)"
+                                >
+                                    OK
+                                </v-btn>
+                            </v-date-picker>
+                        </v-dialog>
                     </v-col>
+
                     <v-col cols="12" xl="6" lg="6" md="12">
+                        <v-dialog
+                            ref="time_dialog"
+                            v-model="timepicker_modal"
+                            :return-value.sync="form.time_filed"
+                            persistent
+                            width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <ValidationProvider rules="required" v-slot="{ errors, valid }">
+                                    <v-text-field
+                                        v-model="form.time_filed"
+                                        label="Time Filed"
+                                        prepend-inner-icon="mdi-clock-time-four-outline"
+                                        readonly
+                                        outlined
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        :error-messages="errors"
+                                        :success="valid"
+                                    ></v-text-field>
+                                </ValidationProvider>
+                            </template>
+                            <v-time-picker
+                                v-if="timepicker_modal"
+                                v-model="form.time_filed"
+                                full-width
+                            >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="timepicker_modal = false"
+                                >
+                                    Cancel
+                                </v-btn>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="$refs.time_dialog.save(form.time_filed)"
+                                >
+                                    OK
+                                </v-btn>
+                            </v-time-picker>
+                        </v-dialog>
+                        </v-col>
+
+                    <v-col cols="12" xl="3" lg="3" md="12">
                         <ValidationProvider rules="required|numeric|min:0" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.page_count"
@@ -151,7 +239,7 @@
                             ></v-text-field>
                         </ValidationProvider>
                     </v-col>
-                    <v-col cols="12" xl="6" lg="6" md="12">
+                    <v-col cols="12" xl="3" lg="3" md="12">
                         <ValidationProvider rules="required|numeric|min:0" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.attachment_page_count"
@@ -193,9 +281,9 @@
                                 type="submit"
                             >
                                 <v-icon left dark>
-                                    mdi-send-circle-outline
+                                    mdi-plus
                                 </v-icon>
-                                Submit
+                                Create
                             </v-btn>
                         </div>
                     </v-col>
@@ -218,9 +306,15 @@ export default {
         return {
             document_types: [],
             internal_originating_office: [],
-            external_trigger: true,
-            menu: false,
+            external_trigger: false,
             current_date: new Date().toISOString().substr(0, 10),
+            datepicker_modal: false,
+            timepicker_modal: false,
+            alert: false,
+            alert_type: '',
+            alert_message: '',
+            alert_server_message: '',
+            alert_icon: '',
             form: {
                 tracking_id: '',
                 document_title: '',
@@ -231,7 +325,8 @@ export default {
                 page_count: '',
                 attachment_page_count: '',
                 is_external: false,
-                date_filed: new Date().toISOString().substr(0, 10),
+                date_filed: '',
+                time_filed: '',
                 remarks: '',
             }
         }
@@ -247,15 +342,17 @@ export default {
             if(document_data.is_external) {
                 origin = 'E'
             }
+            var date_stripped = document_data.date_filed.split('-');
             tracking_number = tracking_number +
                 origin + '-' +
                 this.user.office.office_code + '-' +
-                document_data.date_filed.split('-')[0] + '-' +
+                date_stripped[0]+date_stripped[1]+date_stripped[2] + '-' +
                 salt + '-' +
                 document_data.attachment_page_count;
             return tracking_number;
         },
         sanitizeInputs() {
+            this.form.is_external = this.form.is_external == 'true' ? true : false;
             this.form.tracking_id = this.generateTrackingCode(this.form);
             this.form.document_title = this.form.document_title.toString();
             this.form.external_office_name = this.form.external_office_name != null &&
@@ -264,7 +361,6 @@ export default {
             this.form.sender_name = this.form.sender_name.toString();
             this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ?
                 this.form.remarks.toString() : null;
-            this.form.is_external = this.form.is_external == 'true' ? true : false;
         },
         getDocumentTypes() {
             axios.get('document_type_list').then((response) => {
@@ -280,15 +376,45 @@ export default {
             this.external_trigger = !this.external_trigger;
             this.form.originating_office_id = '';
             this.form.external_office_name = '';
-
         },
-        addNewDocument() {
-            // FIXME: Bug on the external_trigger when form is submitted where the trigger function changed places
+        createNewDocument() {
+            console.log("Submitting");
             this.sanitizeInputs();
-            axios.post('add_new_document', this.form).then((response) => {
+            axios.post('add_new_document', this.form)
+            .then((response) => {
                 this.$refs.form.reset();
                 this.$refs.observer.reset();
+
+                this.form.is_external = false;
+                this.external_trigger = false;
+                this.alert = true;
+                this.alert_type = 'success';
+                this.alert_server_message = `Server Success Message : ${response.data}`;
+                this.alert_message = "The document creation completed";
+                setTimeout(()=>{
+                    this.alert=false
+                },5000);
+            })
+            .catch(error => {
+                this.form.is_external = false;
+                this.external_trigger = false;
+                this.alert = true;
+                this.alert_type = 'error';
+                this.alert_server_message = `Server Error Message : ${error.message}`;
+                this.alert_message = "The document creation failed. Please check your inputs. \
+                    If error persists, contact the administrator";
+                setTimeout(()=>{
+                    this.alert=false
+                },5000);
             });
+        },
+        createAndForward() {
+            // TODO: Create new document then forward to office
+        },
+        closeAlert() {
+            this.alert = false;
+            this.alert_type = '';
+            this.alert_message = '';
         },
     },
     mounted() {

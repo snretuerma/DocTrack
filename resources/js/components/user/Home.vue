@@ -38,16 +38,6 @@
             </v-list-item-content>
             </v-list-item>
 
-            <!-- <v-list-item link @click.prevent="getDocumentRecords">
-                <v-list-item-icon>
-                    <v-icon>mdi-file-document-multiple-outline</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                    <v-list-item-title>Document Records</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item> -->
-
             <v-list-group
                 prepend-icon="mdi-file-document-multiple-outline"
                 no-action
@@ -57,6 +47,12 @@
                         <v-list-item-title>Document</v-list-item-title>
                     </v-list-item-content>
                 </template>
+                <v-list-item link @click.prevent="getNewDocumentRecordForm" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-book-search-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>View</v-list-item-title>
+                </v-list-item>
                 <v-list-item link @click.prevent="getNewDocumentRecordForm" v-ripple="{ class: 'primary--text' }">
                     <v-list-item-icon>
                     <v-icon>mdi-file-document-edit-outline</v-icon>
@@ -151,11 +147,13 @@
     </v-app-bar>
     <v-main fluid>
         <v-container>
-            <router-view
-                :user="user"
-                @update-parent-username="updateUsername"
-                @update-parent-name="updateName"
-            ></router-view>
+            <v-scroll-x-transition mode="out-in" :hide-on-leave="Boolean(true)">
+                <router-view
+                    :user="user"
+                    @update-parent-username="updateUsername"
+                    @update-parent-name="updateName"
+                ></router-view>
+            </v-scroll-x-transition>
         </v-container>
     </v-main>
 </div>

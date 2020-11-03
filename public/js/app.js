@@ -2875,8 +2875,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   computed: {
@@ -3926,6 +3924,94 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
@@ -3937,9 +4023,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       document_types: [],
       internal_originating_office: [],
-      external_trigger: true,
-      menu: false,
+      external_trigger: false,
       current_date: new Date().toISOString().substr(0, 10),
+      datepicker_modal: false,
+      timepicker_modal: false,
+      alert: false,
+      alert_type: '',
+      alert_message: '',
+      alert_server_message: '',
+      alert_icon: '',
       form: {
         tracking_id: '',
         document_title: '',
@@ -3950,7 +4042,8 @@ __webpack_require__.r(__webpack_exports__);
         page_count: '',
         attachment_page_count: '',
         is_external: false,
-        date_filed: new Date().toISOString().substr(0, 10),
+        date_filed: '',
+        time_filed: '',
         remarks: ''
       }
     };
@@ -3969,16 +4062,17 @@ __webpack_require__.r(__webpack_exports__);
         origin = 'E';
       }
 
-      tracking_number = tracking_number + origin + '-' + this.user.office.office_code + '-' + document_data.date_filed.split('-')[0] + '-' + salt + '-' + document_data.attachment_page_count;
+      var date_stripped = document_data.date_filed.split('-');
+      tracking_number = tracking_number + origin + '-' + this.user.office.office_code + '-' + date_stripped[0] + date_stripped[1] + date_stripped[2] + '-' + salt + '-' + document_data.attachment_page_count;
       return tracking_number;
     },
     sanitizeInputs: function sanitizeInputs() {
+      this.form.is_external = this.form.is_external == 'true' ? true : false;
       this.form.tracking_id = this.generateTrackingCode(this.form);
       this.form.document_title = this.form.document_title.toString();
       this.form.external_office_name = this.form.external_office_name != null && typeof this.form.external_office_name != 'undefined' ? this.form.external_office_name.toString() : null;
       this.form.sender_name = this.form.sender_name.toString();
       this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ? this.form.remarks.toString() : null;
-      this.form.is_external = this.form.is_external == 'true' ? true : false;
     },
     getDocumentTypes: function getDocumentTypes() {
       var _this = this;
@@ -3999,16 +4093,44 @@ __webpack_require__.r(__webpack_exports__);
       this.form.originating_office_id = '';
       this.form.external_office_name = '';
     },
-    addNewDocument: function addNewDocument() {
+    createNewDocument: function createNewDocument() {
       var _this3 = this;
 
-      // FIXME: Bug on the external_trigger when form is submitted where the trigger function changed places
+      console.log("Submitting");
       this.sanitizeInputs();
       axios.post('add_new_document', this.form).then(function (response) {
         _this3.$refs.form.reset();
 
         _this3.$refs.observer.reset();
+
+        _this3.form.is_external = false;
+        _this3.external_trigger = false;
+        _this3.alert = true;
+        _this3.alert_type = 'success';
+        _this3.alert_server_message = "Server Success Message : ".concat(response.data);
+        _this3.alert_message = "The document creation completed";
+        setTimeout(function () {
+          _this3.alert = false;
+        }, 5000);
+      })["catch"](function (error) {
+        _this3.form.is_external = false;
+        _this3.external_trigger = false;
+        _this3.alert = true;
+        _this3.alert_type = 'error';
+        _this3.alert_server_message = "Server Error Message : ".concat(error.message);
+        _this3.alert_message = "The document creation failed. Please check your inputs. \
+                    If error persists, contact the administrator";
+        setTimeout(function () {
+          _this3.alert = false;
+        }, 5000);
       });
+    },
+    createAndForward: function createAndForward() {// TODO: Create new document then forward to office
+    },
+    closeAlert: function closeAlert() {
+      this.alert = false;
+      this.alert_type = '';
+      this.alert_message = '';
     }
   },
   mounted: function mounted() {
@@ -25453,7 +25575,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-app", [_c("router-view")], 1)
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-scroll-x-transition",
+        { attrs: { "hide-on-leave": Boolean(true) } },
+        [_c("router-view")],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -26969,6 +27102,37 @@ var render = function() {
                         [
                           _c(
                             "v-list-item-icon",
+                            [_c("v-icon", [_vm._v("mdi-book-search-outline")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-title", [_vm._v("View")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        {
+                          directives: [
+                            {
+                              name: "ripple",
+                              rawName: "v-ripple",
+                              value: { class: "primary--text" },
+                              expression: "{ class: 'primary--text' }"
+                            }
+                          ],
+                          attrs: { link: "" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.getNewDocumentRecordForm($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-icon",
                             [
                               _c("v-icon", [
                                 _vm._v("mdi-file-document-edit-outline")
@@ -27278,13 +27442,22 @@ var render = function() {
               _c(
                 "v-container",
                 [
-                  _c("router-view", {
-                    attrs: { user: _vm.user },
-                    on: {
-                      "update-parent-username": _vm.updateUsername,
-                      "update-parent-name": _vm.updateName
-                    }
-                  })
+                  _c(
+                    "v-scroll-x-transition",
+                    {
+                      attrs: { mode: "out-in", "hide-on-leave": Boolean(true) }
+                    },
+                    [
+                      _c("router-view", {
+                        attrs: { user: _vm.user },
+                        on: {
+                          "update-parent-username": _vm.updateUsername,
+                          "update-parent-name": _vm.updateName
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -28475,17 +28648,81 @@ var render = function() {
             "v-card-text",
             [
               _c(
-                "v-alert",
-                {
-                  attrs: {
-                    text: "",
-                    dense: "",
-                    color: "teal",
-                    icon: "mdi-clock-fast",
-                    border: "left"
-                  }
-                },
-                [_vm._v("\r\n            Success\r\n        ")]
+                "v-scroll-x-transition",
+                [
+                  _vm.alert
+                    ? _c(
+                        "v-alert",
+                        {
+                          attrs: {
+                            outlined: "",
+                            type: _vm.alert_type,
+                            icon: "mdi-check-bold",
+                            prominent: "",
+                            border: "left",
+                            text: ""
+                          }
+                        },
+                        [
+                          _c(
+                            "v-row",
+                            { attrs: { align: "center" } },
+                            [
+                              _c(
+                                "v-col",
+                                { staticClass: "grow" },
+                                [
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c("v-col", [
+                                        _vm._v(_vm._s(_vm.alert_message))
+                                      ])
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c("v-col", [
+                                        _vm._v(_vm._s(_vm.alert_server_message))
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { staticClass: "shrink" },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        icon: "",
+                                        color: _vm.alert_type
+                                      },
+                                      on: { click: _vm.closeAlert }
+                                    },
+                                    [_c("v-icon", [_vm._v("mdi-close")])],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
               ),
               _vm._v(" "),
               _c("ValidationObserver", {
@@ -28504,7 +28741,7 @@ var render = function() {
                               on: {
                                 submit: function($event) {
                                   $event.preventDefault()
-                                  return _vm.addNewDocument($event)
+                                  return _vm.createNewDocument($event)
                                 }
                               }
                             },
@@ -28714,66 +28951,6 @@ var render = function() {
                                                     var errors = ref.errors
                                                     var valid = ref.valid
                                                     return [
-                                                      _c("v-text-field", {
-                                                        attrs: {
-                                                          label:
-                                                            "External Office",
-                                                          "prepend-inner-icon":
-                                                            "mdi-office-building-marker-outline",
-                                                          outlined: "",
-                                                          "error-messages": errors,
-                                                          success: valid,
-                                                          required: ""
-                                                        },
-                                                        model: {
-                                                          value:
-                                                            _vm.form
-                                                              .external_office_name,
-                                                          callback: function(
-                                                            $$v
-                                                          ) {
-                                                            _vm.$set(
-                                                              _vm.form,
-                                                              "external_office_name",
-                                                              $$v
-                                                            )
-                                                          },
-                                                          expression:
-                                                            "form.external_office_name"
-                                                        }
-                                                      })
-                                                    ]
-                                                  }
-                                                }
-                                              ],
-                                              null,
-                                              true
-                                            )
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    : _c(
-                                        "v-col",
-                                        {
-                                          attrs: {
-                                            cols: "12",
-                                            xl: "8",
-                                            lg: "8",
-                                            md: "12"
-                                          }
-                                        },
-                                        [
-                                          _c("ValidationProvider", {
-                                            attrs: { rules: "required" },
-                                            scopedSlots: _vm._u(
-                                              [
-                                                {
-                                                  key: "default",
-                                                  fn: function(ref) {
-                                                    var errors = ref.errors
-                                                    var valid = ref.valid
-                                                    return [
                                                       _c("v-select", {
                                                         attrs: {
                                                           items:
@@ -28808,6 +28985,66 @@ var render = function() {
                                                           },
                                                           expression:
                                                             "form.originating_office_id"
+                                                        }
+                                                      })
+                                                    ]
+                                                  }
+                                                }
+                                              ],
+                                              null,
+                                              true
+                                            )
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            xl: "8",
+                                            lg: "8",
+                                            md: "12"
+                                          }
+                                        },
+                                        [
+                                          _c("ValidationProvider", {
+                                            attrs: { rules: "required" },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "default",
+                                                  fn: function(ref) {
+                                                    var errors = ref.errors
+                                                    var valid = ref.valid
+                                                    return [
+                                                      _c("v-text-field", {
+                                                        attrs: {
+                                                          label:
+                                                            "External Office",
+                                                          "prepend-inner-icon":
+                                                            "mdi-office-building-marker-outline",
+                                                          outlined: "",
+                                                          "error-messages": errors,
+                                                          success: valid,
+                                                          required: ""
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.form
+                                                              .external_office_name,
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.form,
+                                                              "external_office_name",
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "form.external_office_name"
                                                         }
                                                       })
                                                     ]
@@ -28890,14 +29127,33 @@ var render = function() {
                                     },
                                     [
                                       _c(
-                                        "v-menu",
+                                        "v-dialog",
                                         {
+                                          ref: "date_dialog",
                                           attrs: {
-                                            "close-on-content-click": false,
-                                            "nudge-right": 40,
-                                            transition: "scale-transition",
-                                            "offset-y": "",
-                                            "min-width": "290px"
+                                            "return-value": _vm.form.date_filed,
+                                            persistent: "",
+                                            width: "290px"
+                                          },
+                                          on: {
+                                            "update:returnValue": function(
+                                              $event
+                                            ) {
+                                              return _vm.$set(
+                                                _vm.form,
+                                                "date_filed",
+                                                $event
+                                              )
+                                            },
+                                            "update:return-value": function(
+                                              $event
+                                            ) {
+                                              return _vm.$set(
+                                                _vm.form,
+                                                "date_filed",
+                                                $event
+                                              )
+                                            }
                                           },
                                           scopedSlots: _vm._u(
                                             [
@@ -28907,43 +29163,70 @@ var render = function() {
                                                   var on = ref.on
                                                   var attrs = ref.attrs
                                                   return [
-                                                    _c(
-                                                      "v-text-field",
-                                                      _vm._g(
-                                                        _vm._b(
+                                                    _c("ValidationProvider", {
+                                                      attrs: {
+                                                        rules: "required"
+                                                      },
+                                                      scopedSlots: _vm._u(
+                                                        [
                                                           {
-                                                            attrs: {
-                                                              label:
-                                                                "Date Filed",
-                                                              "prepend-inner-icon":
-                                                                "mdi-calendar",
-                                                              readonly: "",
-                                                              outlined: ""
-                                                            },
-                                                            model: {
-                                                              value:
-                                                                _vm.form
-                                                                  .date_filed,
-                                                              callback: function(
-                                                                $$v
-                                                              ) {
-                                                                _vm.$set(
-                                                                  _vm.form,
-                                                                  "date_filed",
-                                                                  $$v
+                                                            key: "default",
+                                                            fn: function(ref) {
+                                                              var errors =
+                                                                ref.errors
+                                                              var valid =
+                                                                ref.valid
+                                                              return [
+                                                                _c(
+                                                                  "v-text-field",
+                                                                  _vm._g(
+                                                                    _vm._b(
+                                                                      {
+                                                                        attrs: {
+                                                                          label:
+                                                                            "Date Filed",
+                                                                          "prepend-inner-icon":
+                                                                            "mdi-calendar",
+                                                                          readonly:
+                                                                            "",
+                                                                          outlined:
+                                                                            "",
+                                                                          "error-messages": errors,
+                                                                          success: valid
+                                                                        },
+                                                                        model: {
+                                                                          value:
+                                                                            _vm
+                                                                              .form
+                                                                              .date_filed,
+                                                                          callback: function(
+                                                                            $$v
+                                                                          ) {
+                                                                            _vm.$set(
+                                                                              _vm.form,
+                                                                              "date_filed",
+                                                                              $$v
+                                                                            )
+                                                                          },
+                                                                          expression:
+                                                                            "form.date_filed"
+                                                                        }
+                                                                      },
+                                                                      "v-text-field",
+                                                                      attrs,
+                                                                      false
+                                                                    ),
+                                                                    on
+                                                                  )
                                                                 )
-                                                              },
-                                                              expression:
-                                                                "form.date_filed"
+                                                              ]
                                                             }
-                                                          },
-                                                          "v-text-field",
-                                                          attrs,
-                                                          false
-                                                        ),
-                                                        on
+                                                          }
+                                                        ],
+                                                        null,
+                                                        true
                                                       )
-                                                    )
+                                                    })
                                                   ]
                                                 }
                                               }
@@ -28952,36 +29235,78 @@ var render = function() {
                                             true
                                           ),
                                           model: {
-                                            value: _vm.menu,
+                                            value: _vm.datepicker_modal,
                                             callback: function($$v) {
-                                              _vm.menu = $$v
+                                              _vm.datepicker_modal = $$v
                                             },
-                                            expression: "menu"
+                                            expression: "datepicker_modal"
                                           }
                                         },
                                         [
                                           _vm._v(" "),
-                                          _c("v-date-picker", {
-                                            attrs: {
-                                              "show-current": _vm.current_date
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                _vm.menu = false
+                                          _c(
+                                            "v-date-picker",
+                                            {
+                                              attrs: { scrollable: "" },
+                                              model: {
+                                                value: _vm.form.date_filed,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "date_filed",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression: "form.date_filed"
                                               }
                                             },
-                                            model: {
-                                              value: _vm.form.date_filed,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.form,
-                                                  "date_filed",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "form.date_filed"
-                                            }
-                                          })
+                                            [
+                                              _c("v-spacer"),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    text: "",
+                                                    color: "primary"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.datepicker_modal = false
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\r\n                                    Cancel\r\n                                "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    text: "",
+                                                    color: "primary"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.$refs.date_dialog.save(
+                                                        _vm.form.date_filed
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\r\n                                    OK\r\n                                "
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
                                         ],
                                         1
                                       )
@@ -28996,6 +29321,212 @@ var render = function() {
                                         cols: "12",
                                         xl: "6",
                                         lg: "6",
+                                        md: "12"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-dialog",
+                                        {
+                                          ref: "time_dialog",
+                                          attrs: {
+                                            "return-value": _vm.form.time_filed,
+                                            persistent: "",
+                                            width: "290px"
+                                          },
+                                          on: {
+                                            "update:returnValue": function(
+                                              $event
+                                            ) {
+                                              return _vm.$set(
+                                                _vm.form,
+                                                "time_filed",
+                                                $event
+                                              )
+                                            },
+                                            "update:return-value": function(
+                                              $event
+                                            ) {
+                                              return _vm.$set(
+                                                _vm.form,
+                                                "time_filed",
+                                                $event
+                                              )
+                                            }
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "activator",
+                                                fn: function(ref) {
+                                                  var on = ref.on
+                                                  var attrs = ref.attrs
+                                                  return [
+                                                    _c("ValidationProvider", {
+                                                      attrs: {
+                                                        rules: "required"
+                                                      },
+                                                      scopedSlots: _vm._u(
+                                                        [
+                                                          {
+                                                            key: "default",
+                                                            fn: function(ref) {
+                                                              var errors =
+                                                                ref.errors
+                                                              var valid =
+                                                                ref.valid
+                                                              return [
+                                                                _c(
+                                                                  "v-text-field",
+                                                                  _vm._g(
+                                                                    _vm._b(
+                                                                      {
+                                                                        attrs: {
+                                                                          label:
+                                                                            "Time Filed",
+                                                                          "prepend-inner-icon":
+                                                                            "mdi-clock-time-four-outline",
+                                                                          readonly:
+                                                                            "",
+                                                                          outlined:
+                                                                            "",
+                                                                          "error-messages": errors,
+                                                                          success: valid
+                                                                        },
+                                                                        model: {
+                                                                          value:
+                                                                            _vm
+                                                                              .form
+                                                                              .time_filed,
+                                                                          callback: function(
+                                                                            $$v
+                                                                          ) {
+                                                                            _vm.$set(
+                                                                              _vm.form,
+                                                                              "time_filed",
+                                                                              $$v
+                                                                            )
+                                                                          },
+                                                                          expression:
+                                                                            "form.time_filed"
+                                                                        }
+                                                                      },
+                                                                      "v-text-field",
+                                                                      attrs,
+                                                                      false
+                                                                    ),
+                                                                    on
+                                                                  )
+                                                                )
+                                                              ]
+                                                            }
+                                                          }
+                                                        ],
+                                                        null,
+                                                        true
+                                                      )
+                                                    })
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value: _vm.timepicker_modal,
+                                            callback: function($$v) {
+                                              _vm.timepicker_modal = $$v
+                                            },
+                                            expression: "timepicker_modal"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(" "),
+                                          _vm.timepicker_modal
+                                            ? _c(
+                                                "v-time-picker",
+                                                {
+                                                  attrs: { "full-width": "" },
+                                                  model: {
+                                                    value: _vm.form.time_filed,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.form,
+                                                        "time_filed",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "form.time_filed"
+                                                  }
+                                                },
+                                                [
+                                                  _c("v-spacer"),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-btn",
+                                                    {
+                                                      attrs: {
+                                                        text: "",
+                                                        color: "primary"
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          _vm.timepicker_modal = false
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\r\n                                    Cancel\r\n                                "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "v-btn",
+                                                    {
+                                                      attrs: {
+                                                        text: "",
+                                                        color: "primary"
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.$refs.time_dialog.save(
+                                                            _vm.form.time_filed
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\r\n                                    OK\r\n                                "
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            : _vm._e()
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    {
+                                      attrs: {
+                                        cols: "12",
+                                        xl: "3",
+                                        lg: "3",
                                         md: "12"
                                       }
                                     },
@@ -29057,8 +29588,8 @@ var render = function() {
                                     {
                                       attrs: {
                                         cols: "12",
-                                        xl: "6",
-                                        lg: "6",
+                                        xl: "3",
+                                        lg: "3",
                                         md: "12"
                                       }
                                     },
@@ -29183,12 +29714,12 @@ var render = function() {
                                               { attrs: { left: "", dark: "" } },
                                               [
                                                 _vm._v(
-                                                  "\r\n                                    mdi-send-circle-outline\r\n                                "
+                                                  "\r\n                                    mdi-plus\r\n                                "
                                                 )
                                               ]
                                             ),
                                             _vm._v(
-                                              "\r\n                                Submit\r\n                            "
+                                              "\r\n                                Create\r\n                            "
                                             )
                                           ],
                                           1
@@ -29209,7 +29740,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  4254947266
+                  3947217221
                 )
               })
             ],

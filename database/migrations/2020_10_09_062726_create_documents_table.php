@@ -24,10 +24,10 @@ class CreateDocumentsTable extends Migration
             $table->foreignId('current_office_id')->nullable()->constrained('offices');
             $table->string('sender_name')->nullable();
             $table->unsignedInteger('page_count');
-            $table->date('date_filed');
+            $table->dateTime('date_filed');
             $table->unsignedTinyInteger('is_terminal')->default(0);
             $table->string('remarks')->nullable();
-            $table->unsignedTinyInteger('attachment_page_count')->default(0);
+            $table->unsignedInteger('attachment_page_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
