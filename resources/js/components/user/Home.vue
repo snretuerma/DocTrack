@@ -47,7 +47,7 @@
                         <v-list-item-title>Document</v-list-item-title>
                     </v-list-item-content>
                 </template>
-                <v-list-item link @click.prevent="getNewDocumentRecordForm" v-ripple="{ class: 'primary--text' }">
+                <v-list-item link @click.prevent="getAllDocuments" v-ripple="{ class: 'primary--text' }">
                     <v-list-item-icon>
                     <v-icon>mdi-book-search-outline</v-icon>
                     </v-list-item-icon>
@@ -239,6 +239,13 @@ export default {
         //         }
         //     })
         // },
+        getAllDocuments() {
+            axios.get('all_documents').then(() => {
+                if(this.$route.name !== 'All Documents') {
+                    this.$router.push({ name: "All Documents"});
+                }
+            });
+        },
         getAgingReport() {
             axios.get('reports/aging').then(()=>{
                 if(this.$route.name !== 'Document Aging Report') {

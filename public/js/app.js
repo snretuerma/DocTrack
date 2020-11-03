@@ -2954,37 +2954,48 @@ __webpack_require__.r(__webpack_exports__);
     //         }
     //     })
     // },
-    getAgingReport: function getAgingReport() {
+    getAllDocuments: function getAllDocuments() {
       var _this4 = this;
 
-      axios.get('reports/aging').then(function () {
-        if (_this4.$route.name !== 'Document Aging Report') {
+      axios.get('all_documents').then(function () {
+        if (_this4.$route.name !== 'All Documents') {
           _this4.$router.push({
+            name: "All Documents"
+          });
+        }
+      });
+    },
+    getAgingReport: function getAgingReport() {
+      var _this5 = this;
+
+      axios.get('reports/aging').then(function () {
+        if (_this5.$route.name !== 'Document Aging Report') {
+          _this5.$router.push({
             name: "Document Aging Report"
           });
         }
       });
     },
     getMasterListReport: function getMasterListReport() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('reports/master_list').then(function () {
-        if (_this5.$route.name !== 'Document Master List') {
-          _this5.$router.push({
+        if (_this6.$route.name !== 'Document Master List') {
+          _this6.$router.push({
             name: "Document Master List"
           });
         }
       });
     },
     getAccountSettings: function getAccountSettings() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get('account_settings').then(function () {
-        if (_this6.$route.name !== 'Account Settings') {
-          _this6.$router.push({
+        if (_this7.$route.name !== 'Account Settings') {
+          _this7.$router.push({
             name: "Account Settings",
             params: {
-              user: _this6.user
+              user: _this7.user
             }
           });
         }
@@ -3166,6 +3177,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/AllDocument.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/AllDocument.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      documents: []
+    };
+  },
+  methods: {
+    getAllDocuments: function getAllDocuments() {
+      var _this = this;
+
+      axios.get('office_list').then(function (response) {
+        _this.documents = response.data;
+        console.log(_this.documents);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getAllDocuments();
+  }
+});
 
 /***/ }),
 
@@ -27095,7 +27142,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.getNewDocumentRecordForm($event)
+                              return _vm.getAllDocuments($event)
                             }
                           }
                         },
@@ -27573,6 +27620,30 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [_vm._v("Document Reports")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/AllDocument.vue?vue&type=template&id=1286248c&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/components/AllDocument.vue?vue&type=template&id=1286248c& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("VIEW ALL DOCUMENTS")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -89675,6 +89746,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/components/AllDocument.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/user/components/AllDocument.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AllDocument_vue_vue_type_template_id_1286248c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllDocument.vue?vue&type=template&id=1286248c& */ "./resources/js/components/user/components/AllDocument.vue?vue&type=template&id=1286248c&");
+/* harmony import */ var _AllDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllDocument.vue?vue&type=script&lang=js& */ "./resources/js/components/user/components/AllDocument.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AllDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AllDocument_vue_vue_type_template_id_1286248c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AllDocument_vue_vue_type_template_id_1286248c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/components/AllDocument.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/AllDocument.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/user/components/AllDocument.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AllDocument.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/AllDocument.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/components/AllDocument.vue?vue&type=template&id=1286248c&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/user/components/AllDocument.vue?vue&type=template&id=1286248c& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllDocument_vue_vue_type_template_id_1286248c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AllDocument.vue?vue&type=template&id=1286248c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/components/AllDocument.vue?vue&type=template&id=1286248c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllDocument_vue_vue_type_template_id_1286248c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllDocument_vue_vue_type_template_id_1286248c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/user/components/ChangeAccountDetailsForm.vue":
 /*!******************************************************************************!*\
   !*** ./resources/js/components/user/components/ChangeAccountDetailsForm.vue ***!
@@ -89964,13 +90104,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_user_DocumentRecords__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/user/DocumentRecords */ "./resources/js/components/user/DocumentRecords.vue");
 /* harmony import */ var _components_user_Reports__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/user/Reports */ "./resources/js/components/user/Reports.vue");
 /* harmony import */ var _components_user_AccountSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/user/AccountSettings */ "./resources/js/components/user/AccountSettings.vue");
-/* harmony import */ var _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/user/components/NewDocument */ "./resources/js/components/user/components/NewDocument.vue");
-/* harmony import */ var _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/user/DocumentAction */ "./resources/js/components/user/DocumentAction.vue");
-/* harmony import */ var _components_user_ReportAging__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/user/ReportAging */ "./resources/js/components/user/ReportAging.vue");
-/* harmony import */ var _components_user_ReportMasterList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/user/ReportMasterList */ "./resources/js/components/user/ReportMasterList.vue");
-/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.vue");
-/* harmony import */ var _components_HomeContainer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/HomeContainer */ "./resources/js/components/HomeContainer.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_user_components_AllDocument__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/user/components/AllDocument */ "./resources/js/components/user/components/AllDocument.vue");
+/* harmony import */ var _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/user/components/NewDocument */ "./resources/js/components/user/components/NewDocument.vue");
+/* harmony import */ var _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/user/DocumentAction */ "./resources/js/components/user/DocumentAction.vue");
+/* harmony import */ var _components_user_ReportAging__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/user/ReportAging */ "./resources/js/components/user/ReportAging.vue");
+/* harmony import */ var _components_user_ReportMasterList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/user/ReportMasterList */ "./resources/js/components/user/ReportMasterList.vue");
+/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.vue");
+/* harmony import */ var _components_HomeContainer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/HomeContainer */ "./resources/js/components/HomeContainer.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+
 
 
 
@@ -89988,14 +90130,14 @@ __webpack_require__.r(__webpack_exports__);
   mode: 'history',
   routes: [{
     path: '*',
-    component: _components_NotFound__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _components_NotFound__WEBPACK_IMPORTED_MODULE_11__["default"]
   }, {
     path: '/',
-    component: _components_Login__WEBPACK_IMPORTED_MODULE_8__["default"],
+    component: _components_Login__WEBPACK_IMPORTED_MODULE_9__["default"],
     name: 'Login'
   }, {
     path: '/',
-    component: _components_HomeContainer__WEBPACK_IMPORTED_MODULE_9__["default"],
+    component: _components_HomeContainer__WEBPACK_IMPORTED_MODULE_10__["default"],
     beforeEnter: function beforeEnter(to, form, next) {
       axios.get('/api/authenticated').then(function (response) {
         next();
@@ -90019,27 +90161,31 @@ __webpack_require__.r(__webpack_exports__);
       name: 'Account Settings'
     }, {
       path: 'new_document',
-      component: _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
+      component: _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_5__["default"],
       name: 'New Document'
     }, {
+      path: 'all_document',
+      component: _components_user_components_AllDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
+      name: 'All Documents'
+    }, {
       path: 'receive_document/:routing_number',
-      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__["default"],
+      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__["default"],
       name: 'Receive Document'
     }, {
       path: 'forward_document/:routing_number',
-      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__["default"],
+      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__["default"],
       name: 'Forward Document'
     }, {
       path: 'terminal_document/:routing_number',
-      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_5__["default"],
+      component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__["default"],
       name: 'Terminal Document'
     }, {
       path: 'reports/aging',
-      component: _components_user_ReportAging__WEBPACK_IMPORTED_MODULE_6__["default"],
+      component: _components_user_ReportAging__WEBPACK_IMPORTED_MODULE_7__["default"],
       name: 'Document Aging Report'
     }, {
       path: 'reports/master_list',
-      component: _components_user_ReportMasterList__WEBPACK_IMPORTED_MODULE_7__["default"],
+      component: _components_user_ReportMasterList__WEBPACK_IMPORTED_MODULE_8__["default"],
       name: 'Document Master List'
     }]
   }]

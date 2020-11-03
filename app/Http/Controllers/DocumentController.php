@@ -29,6 +29,11 @@ class DocumentController extends Controller
         return Office::get();
     }
 
+    public function getAllDocuments()
+    {
+        return Document::where('current_office_id', Auth::user()->office_id)->get();
+    }
+
     // TODO: Validation, logging and error message
     public function addNewDocument(Request $request)
     {
