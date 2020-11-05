@@ -160,11 +160,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
     props: [
         'user'
     ],
     computed: {
+        ...mapGetters(["auth_user_full_name"]),
         username: {
             get () {
                 return this.user.username;
@@ -232,13 +234,7 @@ export default {
                 }
             });
         },
-        // getDocumentRecords() {
-        //     axios.get('document_records').then(()=>{
-        //         if(this.$route.name !== 'Document Records') {
-        //             this.$router.push({ name: "Document Records"})
-        //         }
-        //     })
-        // },
+
         getAllDocuments() {
             axios.get('all_documents').then(() => {
                 if(this.$route.name !== 'All Documents') {

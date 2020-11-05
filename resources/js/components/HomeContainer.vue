@@ -1,41 +1,33 @@
 <template>
     <div>
-        <div v-if="user">
-            <div v-if="user.role_id === 1">
+        <div v-if="auth_user">
+            <div v-if="auth_user.role_id === 1">
                 <!-- <admin-dashboard-component :user="user"></admin-dashboard-component> -->
             </div>
-            <div v-if="user.role_id === 2">
-                <user-home-component :user="user"></user-home-component>
+            <div v-if="auth_user.role_id === 2">
+                <user-home-component :user="auth_user"></user-home-component>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import UserHomeComponent from './user/Home';
 export default {
+    name: "HomeContainer",
     components: {
         UserHomeComponent
     },
-    data() {
-        return {
-            user: null,
-            title: null,
-            var_user: null,
-        }
-    },
+    computed: mapGetters(["auth_user"]),
     methods: {
-        getUser() {
-            axios.get('/api/users').then((response) => {
-                this.user = response.data;
-            });
-        }
+        ...mapActions(["getAuthUser"]),
     },
     created() {
 
     },
     mounted() {
-        this.getUser();
+        this.getAuthUser();
     }
 }
 </script>

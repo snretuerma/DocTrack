@@ -1,7 +1,6 @@
 <template>
     <v-form
         ref="form"
-        v-if="user"
         @submit.prevent="updateAccountDetails"
     >
         <ValidationObserver ref="observer" v-slot="{ invalid }">
@@ -78,9 +77,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
-    props:['user'],
+    computed: mapGetters(["auth_user"]),
     components: {
         ValidationProvider,
         ValidationObserver
@@ -112,7 +112,7 @@ export default {
                     last_name: null,
                     suffix: null
                 }
-                axios.put('/api/users/'  + this.user.id, this.name_form)
+                axios.put(`/api/users/${this.auth_user.id}`, this.name_form)
                 .then(response => {
                     if(response.data.code == 'Success') {
                         response_data.snackbar = true;
