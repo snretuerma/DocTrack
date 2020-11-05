@@ -1,5 +1,5 @@
 <template>
-<div v-if="user">
+<div v-if="auth_user">
     <v-navigation-drawer app v-model="drawer">
         <template v-slot:prepend>
             <v-list-item two-line>
@@ -14,12 +14,12 @@
                                 v-bind="attrs"
                                 v-on="on"
                             >
-                                {{fullName}}
+                                {{auth_user_full_name}}
                             </v-list-item-title>
                         </template>
-                        <span>{{fullName}}</span>
+                        <span>{{auth_user_full_name}}</span>
                     </v-tooltip>
-                    <v-list-item-subtitle>{{username}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{auth_user.username}}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </template>
@@ -149,7 +149,7 @@
         <v-container>
             <v-scroll-x-transition mode="out-in" :hide-on-leave="Boolean(true)">
                 <router-view
-                    :user="user"
+                    :user="auth_user"
                     @update-parent-username="updateUsername"
                     @update-parent-name="updateName"
                 ></router-view>
@@ -160,57 +160,30 @@
 </template>
 
 <script>
+// TODO: Migrate to Vuex
 import { mapGetters, mapActions } from "vuex";
 export default {
-    props: [
-        'user'
-    ],
     computed: {
-        ...mapGetters(["auth_user_full_name"]),
-        username: {
-            get () {
-                return this.user.username;
-            },
-            set (new_username) {
-                this.user.username = new_username;
-            }
-        },
-        fullName: {
-            get() {
-                return this.buildName(
-                    this.user.first_name,
-                    this.user.middle_name,
-                    this.user.last_name,
-                    this.user.suffix
-                );
-            },
-            set(new_value) {
-                this.user.first_name = new_value.first_name;
-                this.user.middle_name = new_value.middle_name;
-                this.user.last_name = new_value.last_name;
-                this.user.suffix = new_value.suffix;
-            }
-        },
+        ...mapGetters(["auth_user", "auth_user_full_name"]),
         currentRouteName() {
             return this.$route.name;
         },
         placeholderImage() {
-            return 'https://randomuser.me/api/portraits/' +
-                (Math.floor(Math.random() * 2) + 1 == 1 ? 'men' : 'women') + '/' +
-                (Math.floor(Math.random() * 10) + 1) + '.jpg';
+            return `${this.image_source+(this.getRandomInt(0,2) == 1 ? 'men':'women')}/${this.getRandomInt(1, 100)}.jpg`;
         }
     },
     data() {
         return {
             drawer: true,
             group: null,
+            image_source: 'https://randomuser.me/api/portraits/'
         }
     },
     methods: {
+        ...mapActions(["removeAuthUser"]),
         logout(){
-            axios.post('/api/logout').then(()=>{
-                this.$router.push({ name: "Login"})
-            })
+            this.removeAuthUser();
+            this.$router.push({ name: "Login"})
         },
         buildName(first_name, middle_name, last_name, suffix) {
             var name =  this.capitalize(this.user.first_name.trim()) + ' '
@@ -271,6 +244,11 @@ export default {
         },
         capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+        getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min);
         }
     },
     mounted() {

@@ -77,10 +77,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
-    computed: mapGetters(["auth_user"]),
+    computed: mapGetters(["auth_user", "request_status", "status_message"]),
     components: {
         ValidationProvider,
         ValidationObserver
@@ -99,6 +99,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(["editUserCompleteName"]),
         updateAccountDetails() {
             this[this.loader] = !this[this.loader];
             const isValid = this.$refs.observer.validate();
@@ -112,37 +113,44 @@ export default {
                     last_name: null,
                     suffix: null
                 }
-                axios.put(`/api/users/${this.auth_user.id}`, this.name_form)
-                .then(response => {
-                    if(response.data.code == 'Success') {
-                        response_data.snackbar = true;
-                        response_data.snackbar_text = response.data.message;
-                        response_data.snackbar_color = 'success';
-                        response_data.first_name = this.name_form.first_name;
-                        response_data.middle_name = this.name_form.middle_name;
-                        response_data.last_name = this.name_form.last_name;
-                        response_data.suffix = this.name_form.name_suffix;
-                        this.$refs.form.reset();
-                        this.$refs.observer.reset();
-                        this[this.loader] = false
-                        this.loader = null;
-                    } else {
-                        response_data.snackbar = true;
-                        response_data.snackbar_text = response.data.message;
-                        response_data.snackbar_color = 'error';
-                        this[this.loader] = false
-                        this.loader = null;
-                    }
-                    this.$emit('update-details', response_data);
-                })
-                .catch(error => {
-                    response_data.snackbar = true;
-                    response_data.snackbar_text = error.message;
-                    response_data.snackbar_color = 'error';
-                    this[this.loader] = false
-                    this.loader = null;
-                    this.$emit('update-details', response_data);
+                this.editUserCompleteName({
+                    id: this.auth_user.id,
+                    form: this.name_form
                 });
+
+                // TODO: Notification and update UI for successful or failed requests
+
+                // axios.put(`/api/users/${this.auth_user.id}`, this.name_form)
+                // .then(response => {
+                //     if(response.data.code == 'Success') {
+                //         response_data.snackbar = true;
+                //         response_data.snackbar_text = response.data.message;
+                //         response_data.snackbar_color = 'success';
+                //         response_data.first_name = this.name_form.first_name;
+                //         response_data.middle_name = this.name_form.middle_name;
+                //         response_data.last_name = this.name_form.last_name;
+                //         response_data.suffix = this.name_form.name_suffix;
+                //         this.$refs.form.reset();
+                //         this.$refs.observer.reset();
+                //         this[this.loader] = false
+                //         this.loader = null;
+                //     } else {
+                //         response_data.snackbar = true;
+                //         response_data.snackbar_text = response.data.message;
+                //         response_data.snackbar_color = 'error';
+                //         this[this.loader] = false
+                //         this.loader = null;
+                //     }
+                //     this.$emit('update-details', response_data);
+                // })
+                // .catch(error => {
+                //     response_data.snackbar = true;
+                //     response_data.snackbar_text = error.message;
+                //     response_data.snackbar_color = 'error';
+                //     this[this.loader] = false
+                //     this.loader = null;
+                //     this.$emit('update-details', response_data);
+                // });
             }
         }
     }

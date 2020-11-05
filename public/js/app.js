@@ -1922,12 +1922,6 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _user_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user/Home */ "./resources/js/components/user/Home.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -1949,8 +1943,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     UserHomeComponent: _user_Home__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user"]),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["getAuthUser"])),
-  created: function created() {},
+  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["getAuthUser"]),
   mounted: function mounted() {
     this.getAuthUser();
   }
@@ -2889,50 +2882,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+// TODO: Migrate to Vuex
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user_full_name"])), {}, {
-    username: {
-      get: function get() {
-        return this.user.username;
-      },
-      set: function set(new_username) {
-        this.user.username = new_username;
-      }
-    },
-    fullName: {
-      get: function get() {
-        return this.buildName(this.user.first_name, this.user.middle_name, this.user.last_name, this.user.suffix);
-      },
-      set: function set(new_value) {
-        this.user.first_name = new_value.first_name;
-        this.user.middle_name = new_value.middle_name;
-        this.user.last_name = new_value.last_name;
-        this.user.suffix = new_value.suffix;
-      }
-    },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user", "auth_user_full_name"])), {}, {
     currentRouteName: function currentRouteName() {
       return this.$route.name;
     },
     placeholderImage: function placeholderImage() {
-      return 'https://randomuser.me/api/portraits/' + (Math.floor(Math.random() * 2) + 1 == 1 ? 'men' : 'women') + '/' + (Math.floor(Math.random() * 10) + 1) + '.jpg';
+      return "".concat(this.image_source + (this.getRandomInt(0, 2) == 1 ? 'men' : 'women'), "/").concat(this.getRandomInt(1, 100), ".jpg");
     }
   }),
   data: function data() {
     return {
       drawer: true,
-      group: null
+      group: null,
+      image_source: 'https://randomuser.me/api/portraits/'
     };
   },
-  methods: {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["removeAuthUser"])), {}, {
     logout: function logout() {
-      var _this = this;
-
-      axios.post('/api/logout').then(function () {
-        _this.$router.push({
-          name: "Login"
-        });
+      this.removeAuthUser();
+      this.$router.push({
+        name: "Login"
       });
     },
     buildName: function buildName(first_name, middle_name, last_name, suffix) {
@@ -2941,69 +2913,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return name.trim();
     },
     getDashboard: function getDashboard() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get('/').then(function () {
-        if (_this2.$route.name !== 'Dashboard') {
-          _this2.$router.push({
+        if (_this.$route.name !== 'Dashboard') {
+          _this.$router.push({
             name: "Dashboard"
           });
         }
       });
     },
     getNewDocumentRecordForm: function getNewDocumentRecordForm() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.get('new_document').then(function () {
-        if (_this3.$route.name !== 'New Document') {
-          _this3.$router.push({
+        if (_this2.$route.name !== 'New Document') {
+          _this2.$router.push({
             name: "New Document"
           });
         }
       });
     },
     getAllDocuments: function getAllDocuments() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get('all_documents').then(function () {
-        if (_this4.$route.name !== 'All Documents') {
-          _this4.$router.push({
+        if (_this3.$route.name !== 'All Documents') {
+          _this3.$router.push({
             name: "All Documents"
           });
         }
       });
     },
     getAgingReport: function getAgingReport() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.get('reports/aging').then(function () {
-        if (_this5.$route.name !== 'Document Aging Report') {
-          _this5.$router.push({
+        if (_this4.$route.name !== 'Document Aging Report') {
+          _this4.$router.push({
             name: "Document Aging Report"
           });
         }
       });
     },
     getMasterListReport: function getMasterListReport() {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.get('reports/master_list').then(function () {
-        if (_this6.$route.name !== 'Document Master List') {
-          _this6.$router.push({
+        if (_this5.$route.name !== 'Document Master List') {
+          _this5.$router.push({
             name: "Document Master List"
           });
         }
       });
     },
     getAccountSettings: function getAccountSettings() {
-      var _this7 = this;
+      var _this6 = this;
 
       axios.get('account_settings').then(function () {
-        if (_this7.$route.name !== 'Account Settings') {
-          _this7.$router.push({
+        if (_this6.$route.name !== 'Account Settings') {
+          _this6.$router.push({
             name: "Account Settings",
             params: {
-              user: _this7.user
+              user: _this6.user
             }
           });
         }
@@ -3017,8 +2989,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     capitalize: function capitalize(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    getRandomInt: function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min);
     }
-  },
+  }),
   mounted: function mounted() {}
 });
 
@@ -3235,6 +3212,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3316,7 +3299,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user"]),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user", "request_status", "status_message"]),
   components: {
     ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationProvider"],
     ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationObserver"]
@@ -3334,10 +3317,8 @@ __webpack_require__.r(__webpack_exports__);
       loading_edit_details: false
     };
   },
-  methods: {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["editUserCompleteName"])), {}, {
     updateAccountDetails: function updateAccountDetails() {
-      var _this = this;
-
       this[this.loader] = !this[this.loader];
       var isValid = this.$refs.observer.validate();
 
@@ -3351,43 +3332,44 @@ __webpack_require__.r(__webpack_exports__);
           last_name: null,
           suffix: null
         };
-        axios.put("/api/users/".concat(this.auth_user.id), this.name_form).then(function (response) {
-          if (response.data.code == 'Success') {
-            response_data.snackbar = true;
-            response_data.snackbar_text = response.data.message;
-            response_data.snackbar_color = 'success';
-            response_data.first_name = _this.name_form.first_name;
-            response_data.middle_name = _this.name_form.middle_name;
-            response_data.last_name = _this.name_form.last_name;
-            response_data.suffix = _this.name_form.name_suffix;
-
-            _this.$refs.form.reset();
-
-            _this.$refs.observer.reset();
-
-            _this[_this.loader] = false;
-            _this.loader = null;
-          } else {
-            response_data.snackbar = true;
-            response_data.snackbar_text = response.data.message;
-            response_data.snackbar_color = 'error';
-            _this[_this.loader] = false;
-            _this.loader = null;
-          }
-
-          _this.$emit('update-details', response_data);
-        })["catch"](function (error) {
-          response_data.snackbar = true;
-          response_data.snackbar_text = error.message;
-          response_data.snackbar_color = 'error';
-          _this[_this.loader] = false;
-          _this.loader = null;
-
-          _this.$emit('update-details', response_data);
-        });
+        this.editUserCompleteName({
+          id: this.auth_user.id,
+          form: this.name_form
+        }); // TODO: Notification and update UI for successful or failed requests
+        // axios.put(`/api/users/${this.auth_user.id}`, this.name_form)
+        // .then(response => {
+        //     if(response.data.code == 'Success') {
+        //         response_data.snackbar = true;
+        //         response_data.snackbar_text = response.data.message;
+        //         response_data.snackbar_color = 'success';
+        //         response_data.first_name = this.name_form.first_name;
+        //         response_data.middle_name = this.name_form.middle_name;
+        //         response_data.last_name = this.name_form.last_name;
+        //         response_data.suffix = this.name_form.name_suffix;
+        //         this.$refs.form.reset();
+        //         this.$refs.observer.reset();
+        //         this[this.loader] = false
+        //         this.loader = null;
+        //     } else {
+        //         response_data.snackbar = true;
+        //         response_data.snackbar_text = response.data.message;
+        //         response_data.snackbar_color = 'error';
+        //         this[this.loader] = false
+        //         this.loader = null;
+        //     }
+        //     this.$emit('update-details', response_data);
+        // })
+        // .catch(error => {
+        //     response_data.snackbar = true;
+        //     response_data.snackbar_text = error.message;
+        //     response_data.snackbar_color = 'error';
+        //     this[this.loader] = false
+        //     this.loader = null;
+        //     this.$emit('update-details', response_data);
+        // });
       }
     }
-  }
+  })
 });
 
 /***/ }),
@@ -27287,11 +27269,7 @@ var render = function() {
           _vm.auth_user.role_id === 1 ? _c("div") : _vm._e(),
           _vm._v(" "),
           _vm.auth_user.role_id === 2
-            ? _c(
-                "div",
-                [_c("user-home-component", { attrs: { user: _vm.auth_user } })],
-                1
-              )
+            ? _c("div", [_c("user-home-component")], 1)
             : _vm._e()
         ])
       : _vm._e()
@@ -28891,7 +28869,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.user
+  return _vm.auth_user
     ? _c(
         "div",
         [
@@ -28944,7 +28922,9 @@ var render = function() {
                                                 [
                                                   _vm._v(
                                                     "\r\n                                " +
-                                                      _vm._s(_vm.fullName) +
+                                                      _vm._s(
+                                                        _vm.auth_user_full_name
+                                                      ) +
                                                       "\r\n                            "
                                                   )
                                                 ]
@@ -28955,17 +28935,19 @@ var render = function() {
                                       ],
                                       null,
                                       false,
-                                      2455703430
+                                      3646244960
                                     )
                                   },
                                   [
                                     _vm._v(" "),
-                                    _c("span", [_vm._v(_vm._s(_vm.fullName))])
+                                    _c("span", [
+                                      _vm._v(_vm._s(_vm.auth_user_full_name))
+                                    ])
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c("v-list-item-subtitle", [
-                                  _vm._v(_vm._s(_vm.username))
+                                  _vm._v(_vm._s(_vm.auth_user.username))
                                 ])
                               ],
                               1
@@ -29018,7 +29000,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                4036779590
+                1432734241
               ),
               model: {
                 value: _vm.drawer,
@@ -29465,7 +29447,7 @@ var render = function() {
                     },
                     [
                       _c("router-view", {
-                        attrs: { user: _vm.user },
+                        attrs: { user: _vm.auth_user },
                         on: {
                           "update-parent-username": _vm.updateUsername,
                           "update-parent-name": _vm.updateName
@@ -92076,7 +92058,6 @@ Vue.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 Vue.component('welcome-component', __webpack_require__(/*! ./components/Welcome.vue */ "./resources/js/components/Welcome.vue")["default"]);
 Vue.component('login-component', __webpack_require__(/*! ./components/Login.vue */ "./resources/js/components/Login.vue")["default"]);
-Vue.component('user-home-component', __webpack_require__(/*! ./components/user/Home.vue */ "./resources/js/components/user/Home.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -93483,15 +93464,41 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+
+function buildName(first_name, middle_name, last_name, suffix) {
+  var f_name = '',
+      m_name = '',
+      l_name = '',
+      s_name = '';
+  f_name = first_name.trim().charAt(0).toUpperCase() + first_name.trim().slice(1);
+  m_name = middle_name.trim().charAt(0).toUpperCase() + middle_name.trim().slice(1);
+  l_name = last_name.trim().charAt(0).toUpperCase() + last_name.trim().slice(1);
+
+  if (suffix != null && typeof suffix !== 'undefined') {
+    s_name = suffix.trim().charAt(0).toUpperCase() + suffix.trim().slice(1);
+  }
+
+  return "".concat(f_name, " ").concat(m_name, " ").concat(l_name, " ").concat(s_name);
+}
+
 var state = {
-  user: {}
+  user: {},
+  user_full_name: '',
+  request_status: '',
+  status_message: ''
 };
 var getters = {
   auth_user: function auth_user(state) {
     return state.user;
   },
   auth_user_full_name: function auth_user_full_name(state) {
-    state.user.first_name, state.user.middle_name, state.user.last_name, state.user.suffix;
+    return state.user_full_name;
+  },
+  request_status: function request_status(state) {
+    return state.request_status;
+  },
+  status_message: function status_message(state) {
+    return state.status_message;
   }
 };
 var actions = {
@@ -93518,39 +93525,93 @@ var actions = {
       }, _callee);
     }))();
   },
-  editUserCompleteName: function editUserCompleteName(_ref2, updates) {
+  removeAuthUser: function removeAuthUser(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("/api/users/".concat(updates.id), updates.form);
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/logout');
 
             case 3:
-              response = _context2.sent;
-              commit('updateStateUserCompleteName', updates.form);
+              commit('unsetAuthUser');
 
-            case 5:
+            case 4:
             case "end":
               return _context2.stop();
           }
         }
       }, _callee2);
     }))();
+  },
+  editUserCompleteName: function editUserCompleteName(_ref3, updates) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("/api/users/".concat(updates.id), updates.form);
+
+            case 3:
+              response = _context3.sent;
+              commit('updateStateUserCompleteName', {
+                response: response.data,
+                form: updates.form
+              });
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  updateResponseMessage: function updateResponseMessage(_ref4) {// commit('');
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+
+            case 1:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
   }
 };
 var mutations = {
   setAuthUser: function setAuthUser(state, user) {
-    return state.user = user;
+    state.user = user;
+    state.user_full_name = buildName(user.first_name, user.middle_name, user.last_name, user.suffix);
   },
-  updateStateUserCompleteName: function updateStateUserCompleteName(state, updates) {
-    state.first_name = updates.first_name;
-    state.middle_name = updates.middle_name;
-    state.last_name = updates.last_name;
-    state.suffix = updates.suffix;
+  unsetAuthUser: function unsetAuthUser(state) {
+    state.user = {};
+    state.user_full_name = '';
+  },
+  updateStateUserCompleteName: function updateStateUserCompleteName(state, data) {
+    if (data.response.code == "Success") {
+      state.first_name = response.form.first_name;
+      state.middle_name = response.form.middle_name;
+      state.last_name = response.form.last_name;
+      state.suffix = response.form.name_suffix;
+      state.user_full_name = buildName(data.form.first_name, data.form.middle_name, data.form.last_name, data.form.name_suffix);
+    }
+
+    state.request_status = data.response.code;
+    state.status_message = data.response.message;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

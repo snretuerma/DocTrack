@@ -89,11 +89,11 @@ class UserController extends Controller
             }
 
             $user = User::where('id', $userId)->first();
-            $user->first_name = ucfirst($request->first_name);
-            $user->middle_name = ucfirst($request->middle_name);
-            $user->last_name = ucfirst($request->last_name);
+            $user->first_name = ucfirst(trim($request->first_name));
+            $user->middle_name = ucfirst(trim($request->middle_name));
+            $user->last_name = ucfirst(trim($request->last_name));
             if($request->name_suffix) {
-                $user->suffix = ucfirst($request->name_suffix);
+                $user->suffix = ucfirst(trim($request->name_suffix));
             }
             $user->save();
             return response()->json([

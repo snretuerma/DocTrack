@@ -29,7 +29,6 @@ Vue.use(Vuex);
 
 Vue.component('welcome-component', require('./components/Welcome.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
-Vue.component('user-home-component', require('./components/user/Home.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
