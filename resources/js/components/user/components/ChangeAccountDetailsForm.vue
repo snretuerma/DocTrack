@@ -80,7 +80,7 @@
 import { mapGetters, mapActions } from "vuex";
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
-    computed: mapGetters(["auth_user", "request_status", "status_message"]),
+    computed: mapGetters(["auth_user", "form_requests_status"]),
     components: {
         ValidationProvider,
         ValidationObserver
@@ -99,58 +99,35 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["editUserCompleteName"]),
+        ...mapActions(["editUserCredentials"]),
         updateAccountDetails() {
             this[this.loader] = !this[this.loader];
             const isValid = this.$refs.observer.validate();
-            if(isValid){
-                var response_data = {
-                    snackbar : false,
-                    snackbar_text: null,
-                    snackbar_color: null,
-                    first_name: null,
-                    middle_name: null,
-                    last_name: null,
-                    suffix: null
-                }
-                this.editUserCompleteName({
+            if(isValid) {
+                this.editUserCredentials({
                     id: this.auth_user.id,
                     form: this.name_form
+                }).then(() => {
+                    if(this.form_requests_status.request_status == "SUCCESS") {
+                        this.$store.dispatch('setSnackbar', {
+                            showing: true,
+                            text: this.form_requests_status.status_message,
+                            color: '#43A047',
+                            icon: 'mdi-check-bold',
+                        });
+                        this.$refs.form.reset();
+                        this.$refs.observer.reset();
+                    }else {
+                        this.$store.dispatch('setSnackbar', {
+                            showing: true,
+                            text: this.form_requests_status.status_message,
+                            color: '#D32F2F',
+                            icon: 'mdi-close-thick',
+                        });
+                    }
+                    this[this.loader] = false
+                    this.loader = null;
                 });
-
-                // TODO: Notification and update UI for successful or failed requests
-
-                // axios.put(`/api/users/${this.auth_user.id}`, this.name_form)
-                // .then(response => {
-                //     if(response.data.code == 'Success') {
-                //         response_data.snackbar = true;
-                //         response_data.snackbar_text = response.data.message;
-                //         response_data.snackbar_color = 'success';
-                //         response_data.first_name = this.name_form.first_name;
-                //         response_data.middle_name = this.name_form.middle_name;
-                //         response_data.last_name = this.name_form.last_name;
-                //         response_data.suffix = this.name_form.name_suffix;
-                //         this.$refs.form.reset();
-                //         this.$refs.observer.reset();
-                //         this[this.loader] = false
-                //         this.loader = null;
-                //     } else {
-                //         response_data.snackbar = true;
-                //         response_data.snackbar_text = response.data.message;
-                //         response_data.snackbar_color = 'error';
-                //         this[this.loader] = false
-                //         this.loader = null;
-                //     }
-                //     this.$emit('update-details', response_data);
-                // })
-                // .catch(error => {
-                //     response_data.snackbar = true;
-                //     response_data.snackbar_text = error.message;
-                //     response_data.snackbar_color = 'error';
-                //     this[this.loader] = false
-                //     this.loader = null;
-                //     this.$emit('update-details', response_data);
-                // });
             }
         }
     }

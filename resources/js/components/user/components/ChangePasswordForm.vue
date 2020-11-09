@@ -1,8 +1,5 @@
 <template>
-<v-form
-    v-if="user"
-    ref="form"
->
+<v-form ref="form">
     <ValidationObserver ref="observer" v-slot="{ invalid }">
         <v-row>
             <v-col cols="12">
@@ -105,7 +102,7 @@
                         <v-btn
                             color="primary darken-1"
                             text
-                            @click.prevent="editPassword"
+                            @click.prevent="handleEditPassword"
                         >
                             Confirm
                         </v-btn>
@@ -118,6 +115,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
     props: ['user'],
@@ -125,6 +123,7 @@ export default {
         ValidationProvider,
         ValidationObserver
     },
+    computed: mapGetters(["auth_user", "form_requests_status"]),
     data() {
         return {
             dialog: false,
@@ -140,35 +139,31 @@ export default {
         }
     },
     methods: {
-        editPassword() {
+        ...mapActions(["editUserCredentials"]),
+        handleEditPassword() {
             const isValid = this.$refs.observer.validate();
             if(isValid) {
-                var response_data = {
-                    snackbar : false,
-                    snackbar_text: null,
-                    snackbar_color: null,
-                }
-                axios.put('/api/users/'  + this.user.id, this.password_form)
-                .then(response => {
-                    if(response.data.code == 'Success') {
-                        response_data.snackbar = true;
-                        response_data.snackbar_text = response.data.message;
-                        response_data.snackbar_color = 'success';
+                this.editUserCredentials({
+                    id: this.auth_user.id,
+                    form: this.password_form
+                }).then(() => {
+                    if(this.form_requests_status.request_status == "SUCCESS") {
+                        this.$store.dispatch('setSnackbar', {
+                            showing: true,
+                            text: this.form_requests_status.status_message,
+                            color: '#43A047',
+                            icon: 'mdi-check-bold',
+                        });
                         this.$refs.form.reset();
                         this.$refs.observer.reset();
                     } else {
-                        response_data.snackbar = true;
-                        response_data.snackbar_text = response.data.message;
-                        response_data.snackbar_color = 'error';
+                        this.$store.dispatch('setSnackbar', {
+                            showing: true,
+                            text: this.form_requests_status.status_message,
+                            color: '#D32F2F',
+                            icon: 'mdi-close-thick',
+                        });
                     }
-                    this.$emit('update-password', response_data);
-                    this.dialog = false;
-                })
-                .catch(error => {
-                    response_data.snackbar = true;
-                    response_data.snackbar_text = error.message;
-                    response_data.snackbar_color = 'error';
-                    this.$emit('update-password', response_data);
                     this.dialog = false;
                 });
             }

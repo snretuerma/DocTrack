@@ -14,50 +14,73 @@ function buildName(first_name, middle_name, last_name, suffix) {
 const state = {
     user: {},
     user_full_name: '',
-    request_status: '',
-    status_message: '',
+    form_requests : {
+        request_form_type: '',
+        request_status: '',
+        status_message: '',
+    },
 }
 
 const getters = {
     auth_user: state => state.user,
     auth_user_full_name: state => state.user_full_name,
-    request_status: state => state.request_status,
-    status_message: state => state.status_message,
+    form_requests_status: state => state.form_requests,
 }
 
 const actions = {
     async getAuthUser({ commit }) {
         const response = await axios.get('/api/users');
-        commit('setAuthUser', response.data);
+        commit('SET_AUTH_USER', response.data);
     },
     async removeAuthUser({ commit }) {
         await axios.post('/api/logout');
-        commit('unsetAuthUser');
+        commit('UNSET_AUTH_USER');
     },
-    async editUserCompleteName({ commit }, updates) {
+    async editUserCredentials({ commit }, updates) {
         const response = await axios.put(`/api/users/${updates.id}`, updates.form);
-        commit('updateStateUserCompleteName', {response: response.data, form: updates.form});
+        if(updates.form.form_type == 'account_details') {
+            commit('UPDATE_USER_COMPLETE_NAME', {response: response.data, form: updates.form});
+        } else if(updates.form.form_type == 'account_username') {
+            commit('UPDATE_USERNAME', {response: response.data, form: updates.form});
+        } else if(updates.form.form_type == 'account_password') {
+            commit('UPDATE_PASSWORD', {response: response.data, form_type: updates.form_type});
+        }
     },
-    async updateResponseMessage({ commit }) {
-        // commit('');
+    // TODO: Clean, remove if no problems occur
+    // async editUserCompleteName({ commit }, updates) {
+    //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
+    //     commit('UPDATE_USER_COMPLETE_NAME', {response: response.data, form: updates.form});
+    // },
+    // async editUsername({ commit }, updates) {
+    //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
+    //     commit('UPDATE_USERNAME', {response: response.data, form: updates.form});
+    // },
+    // async editPassword({ commit }, updates) {
+    //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
+    //     commit('UPDATE_PASSWORD', {response: response.data, form_type: updates.form_type});
+    // },
+    async removeRequestStatus({commit}) {
+        commit('UNSET_REQUEST_STATUS');
     }
 }
 
 const mutations = {
-    setAuthUser: (state, user) => {
+    SET_AUTH_USER: (state, user) => {
         state.user = user
         state.user_full_name = buildName(user.first_name, user.middle_name, user.last_name, user.suffix);
+        state.username = user.username;
     },
-    unsetAuthUser: (state) => {
+    UNSET_AUTH_USER: (state) => {
         state.user = {};
         state.user_full_name = '';
+
     },
-    updateStateUserCompleteName: (state, data) => {
-        if(data.response.code == "Success") {
-            state.first_name = response.form.first_name;
-            state.middle_name = response.form.middle_name;
-            state.last_name = response.form.last_name;
-            state.suffix = response.form.name_suffix;
+    UPDATE_USER_COMPLETE_NAME: (state, data) => {
+        if(data.response.code == "SUCCESS") {
+            state.first_name = data.form.first_name;
+            state.middle_name = data.form.middle_name;
+            state.last_name = data.form.last_name;
+            state.suffix = data.form.name_suffix;
             state.user_full_name = buildName(
                 data.form.first_name,
                 data.form.middle_name,
@@ -65,9 +88,28 @@ const mutations = {
                 data.form.name_suffix
             );
         }
-        state.request_status = data.response.code;
-        state.status_message = data.response.message;
+        state.form_requests.request_form_type = data.form.form_type;
+        state.form_requests.request_status = data.response.code;
+        state.form_requests.status_message = data.response.message;
     },
+    UPDATE_USERNAME: (state, data) => {
+        if(data.response.code == "SUCCESS") {
+            state.user.username = data.form.new_username;
+        }
+        state.form_requests.request_form_type = data.form.form_type;
+        state.form_requests.request_status = data.response.code;
+        state.form_requests.status_message = data.response.message;
+    },
+    UPDATE_PASSWORD: (state, data) => {
+        state.form_requests.request_form_type = data.form_type;
+        state.form_requests.request_status = data.response.code;
+        state.form_requests.status_message = data.response.message;
+    },
+    UNSET_REQUEST_STATUS: (state) => {
+        state.form_requests.request_form_type = '';
+        state.form_requests.request_status = '';
+        state.form_requests.status_message = '';
+    }
 }
 
 export default {

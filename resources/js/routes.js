@@ -39,7 +39,7 @@ export default {
             },
             children: [
                 {
-                    path: '',
+                    path: 'dashboard',
                     component: Dashboard,
                     name: 'Dashboard',
                 },

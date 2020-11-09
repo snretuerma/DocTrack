@@ -183,7 +183,8 @@ export default {
         ...mapActions(["removeAuthUser"]),
         logout(){
             this.removeAuthUser();
-            this.$router.push({ name: "Login"})
+            this.$store.dispatch('unsetSnackbar');
+            this.$router.push({ name: "Login"});
         },
         buildName(first_name, middle_name, last_name, suffix) {
             var name =  this.capitalize(this.user.first_name.trim()) + ' '
