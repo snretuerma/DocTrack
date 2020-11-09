@@ -8,14 +8,15 @@
                 <user-home-component></user-home-component>
             </div>
         </div>
-        <v-snackbar
-            :timeout="5000"
-            v-model="snackbar.showing"
-            :vertical="true"
-            :color="snackbar.color"
-            right
-            top
-        >
+        <v-scroll-x-transition>
+            <v-snackbar
+                :timeout="5000"
+                v-model="snackbar.showing"
+                :vertical="true"
+                :color="snackbar.color"
+                right
+                top
+            >
                 <v-alert
                     dense
                     prominent
@@ -24,16 +25,17 @@
                 >
                     {{snackbar.text}}
                 </v-alert>
-            <template v-slot:action="{ attrs }">
-                <v-btn
-                    text
-                    v-bind="attrs"
-                    @click="snackbar.showing = false"
-                >
-                    Close
-                </v-btn>
-            </template>
-        </v-snackbar>
+                <template v-slot:action="{ attrs }">
+                    <v-btn
+                        text
+                        v-bind="attrs"
+                        @click="snackbar.showing = false"
+                    >
+                        Close
+                    </v-btn>
+                </template>
+            </v-snackbar>
+        </v-scroll-x-transition>
     </div>
 </template>
 

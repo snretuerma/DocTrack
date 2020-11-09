@@ -1,5 +1,5 @@
 <template>
-<v-card flat v-if="user">
+<v-card flat>
     <v-card-title primary-title>
         Add New Document
     </v-card-title>
@@ -295,13 +295,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
-    props: ['user'],
     components: {
         ValidationProvider,
         ValidationObserver
     },
+    computed: mapGetters(["auth_user"]),
     data() {
         return {
             document_types: [],
@@ -345,7 +346,7 @@ export default {
             var date_stripped = document_data.date_filed.split('-');
             tracking_number = tracking_number +
                 origin + '-' +
-                this.user.office.office_code + '-' +
+                this.auth_user.office.office_code + '-' +
                 date_stripped[0]+date_stripped[1]+date_stripped[2] + '-' +
                 salt + '-' +
                 document_data.attachment_page_count;
@@ -378,7 +379,6 @@ export default {
             this.form.external_office_name = '';
         },
         createNewDocument() {
-            console.log("Submitting");
             this.sanitizeInputs();
             axios.post('add_new_document', this.form)
             .then((response) => {

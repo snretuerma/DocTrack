@@ -3,22 +3,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-    data() {
-        return {
-            documents: [],
-        }
-    },
     methods: {
-        getAllDocuments() {
-            axios.get('office_list').then((response) => {
-                this.documents = response.data;
-                console.log(this.documents);
-            });
-        },
+        ...mapActions(["getDocuments"]),
     },
     mounted() {
-        this.getAllDocuments();
+        this.getDocuments();
     }
 }
 </script>

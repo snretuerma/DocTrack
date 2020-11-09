@@ -73,7 +73,9 @@ const mutations = {
     UNSET_AUTH_USER: (state) => {
         state.user = {};
         state.user_full_name = '';
-
+        state.form_requests.request_form_type = '';
+        state.form_requests.request_status = '';
+        state.form_requests.status_message = '';
     },
     UPDATE_USER_COMPLETE_NAME: (state, data) => {
         if(data.response.code == "SUCCESS") {

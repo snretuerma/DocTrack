@@ -20,7 +20,7 @@ Route::post('logout', 'App\Http\Controllers\LoginController@logout');
 Route::resource('/users', App\Http\Controllers\UserController::class);
 Route::get('document_type_list', 'App\Http\Controllers\DocumentController@getDocumentTypes');
 Route::get('office_list', 'App\Http\Controllers\DocumentController@getOfficeList');
-Route::get('get_all_document', 'App\Http\Controllers\DocumentController@getAllDocuments');
+Route::get('get_all_documents', 'App\Http\Controllers\DocumentController@getAllDocuments');
 Route::post('add_new_document', 'App\Http\Controllers\DocumentController@addNewDocument');
 
 Route::middleware(['auth:sanctum'])->group(function () {
