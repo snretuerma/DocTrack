@@ -4,37 +4,6 @@
         Add New Document
     </v-card-title>
     <v-card-text>
-            <v-scroll-x-transition>
-                <v-alert
-                    outlined
-                    :type="alert_type"
-                    icon="mdi-check-bold"
-                    prominent
-                    border="left"
-                    text
-                    v-if="alert"
-                >
-                    <v-row align="center">
-                        <v-col class="grow">
-                            <v-row>
-                                <v-col>{{alert_message}}</v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col>{{alert_server_message}}</v-col>
-                            </v-row>
-                        </v-col>
-                        <v-col class="shrink">
-                            <v-btn
-                                icon
-                                :color="alert_type"
-                                @click="closeAlert"
-                            >
-                                <v-icon>mdi-close</v-icon>
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                </v-alert>
-            </v-scroll-x-transition>
         <ValidationObserver ref="observer" v-slot="{ invalid }">
             <v-form ref="form" @submit.prevent="createNewDocument">
                 <v-row>
@@ -92,7 +61,7 @@
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-select
                                     v-model="form.originating_office_id"
-                                    :items="internal_originating_office"
+                                    :items="offices"
                                     item-text="name"
                                     item-value="id"
                                     label="Originating Office"
@@ -288,6 +257,25 @@
                         </div>
                     </v-col>
                 </v-row>
+                <v-row>
+                    <v-col>
+                        <div
+                            class="my-2"
+                            align="center"
+                            justify="end"
+                        >
+                            <v-btn
+                                color="primary"
+                                type="submit"
+                            >
+                                <v-icon left dark>
+                                    mdi-plus
+                                </v-icon>
+                                Create Debug
+                            </v-btn>
+                        </div>
+                    </v-col>
+                </v-row>
             </v-form>
         </ValidationObserver>
     </v-card-text>
@@ -295,18 +283,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
     components: {
         ValidationProvider,
         ValidationObserver
     },
-    computed: mapGetters(["auth_user"]),
+    computed: mapGetters(['auth_user', 'document_types', 'offices', 'form_requests']),
     data() {
         return {
-            document_types: [],
-            internal_originating_office: [],
             external_trigger: false,
             current_date: new Date().toISOString().substr(0, 10),
             datepicker_modal: false,
@@ -317,6 +303,7 @@ export default {
             alert_server_message: '',
             alert_icon: '',
             form: {
+                form_type: 'new_document',
                 tracking_id: '',
                 document_title: '',
                 document_type: '',
@@ -363,16 +350,6 @@ export default {
             this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ?
                 this.form.remarks.toString() : null;
         },
-        getDocumentTypes() {
-            axios.get('document_type_list').then((response) => {
-                this.document_types = response.data;
-            });
-        },
-        getOffices() {
-            axios.get('office_list').then((response) => {
-                this.internal_originating_office = response.data;
-            });
-        },
         originOfficeHandler() {
             this.external_trigger = !this.external_trigger;
             this.form.originating_office_id = '';
@@ -380,32 +357,26 @@ export default {
         },
         createNewDocument() {
             this.sanitizeInputs();
-            axios.post('add_new_document', this.form)
-            .then((response) => {
-                this.$refs.form.reset();
-                this.$refs.observer.reset();
-
+            this.$store.dispatch('createNewDocument', this.form).then(() => {
+                if(this.form_requests.request_status == 'SUCCESS') {
+                    this.$store.dispatch('setSnackbar', {
+                            showing: true,
+                            text: this.form_requests.status_message,
+                            color: '#43A047',
+                            icon: 'mdi-check-bold',
+                        });
+                        this.$refs.form.reset();
+                        this.$refs.observer.reset();
+                } else {
+                    this.$store.dispatch('setSnackbar', {
+                        showing: true,
+                        text: this.form_requests.status_message,
+                        color: '#D32F2F',
+                        icon: 'mdi-close-thick',
+                    });
+                }
                 this.form.is_external = false;
                 this.external_trigger = false;
-                this.alert = true;
-                this.alert_type = 'success';
-                this.alert_server_message = `Server Success Message : ${response.data}`;
-                this.alert_message = "The document creation completed";
-                setTimeout(()=>{
-                    this.alert=false
-                },5000);
-            })
-            .catch(error => {
-                this.form.is_external = false;
-                this.external_trigger = false;
-                this.alert = true;
-                this.alert_type = 'error';
-                this.alert_server_message = `Server Error Message : ${error.message}`;
-                this.alert_message = "The document creation failed. Please check your inputs. \
-                    If error persists, contact the administrator";
-                setTimeout(()=>{
-                    this.alert=false
-                },5000);
             });
         },
         createAndForward() {
@@ -418,8 +389,8 @@ export default {
         },
     },
     mounted() {
-        this.getDocumentTypes();
-        this.getOffices();
+        this.$store.dispatch('getDocumentTypes');
+        this.$store.dispatch('getOffices');
     }
 }
 </script>

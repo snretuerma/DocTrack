@@ -2845,10 +2845,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 // TODO: Migrate to Vuex
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3983,18 +3979,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4002,11 +3986,9 @@ __webpack_require__.r(__webpack_exports__);
     ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationProvider"],
     ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationObserver"]
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user"]),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth_user', 'document_types', 'offices', 'form_requests']),
   data: function data() {
     return {
-      document_types: [],
-      internal_originating_office: [],
       external_trigger: false,
       current_date: new Date().toISOString().substr(0, 10),
       datepicker_modal: false,
@@ -4017,6 +3999,7 @@ __webpack_require__.r(__webpack_exports__);
       alert_server_message: '',
       alert_icon: '',
       form: {
+        form_type: 'new_document',
         tracking_id: '',
         document_title: '',
         document_type: '',
@@ -4058,54 +4041,38 @@ __webpack_require__.r(__webpack_exports__);
       this.form.sender_name = this.form.sender_name.toString();
       this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ? this.form.remarks.toString() : null;
     },
-    getDocumentTypes: function getDocumentTypes() {
-      var _this = this;
-
-      axios.get('document_type_list').then(function (response) {
-        _this.document_types = response.data;
-      });
-    },
-    getOffices: function getOffices() {
-      var _this2 = this;
-
-      axios.get('office_list').then(function (response) {
-        _this2.internal_originating_office = response.data;
-      });
-    },
     originOfficeHandler: function originOfficeHandler() {
       this.external_trigger = !this.external_trigger;
       this.form.originating_office_id = '';
       this.form.external_office_name = '';
     },
     createNewDocument: function createNewDocument() {
-      var _this3 = this;
+      var _this = this;
 
       this.sanitizeInputs();
-      axios.post('add_new_document', this.form).then(function (response) {
-        _this3.$refs.form.reset();
+      this.$store.dispatch('createNewDocument', this.form).then(function () {
+        if (_this.form_requests.request_status == 'SUCCESS') {
+          _this.$store.dispatch('setSnackbar', {
+            showing: true,
+            text: _this.form_requests.status_message,
+            color: '#43A047',
+            icon: 'mdi-check-bold'
+          });
 
-        _this3.$refs.observer.reset();
+          _this.$refs.form.reset();
 
-        _this3.form.is_external = false;
-        _this3.external_trigger = false;
-        _this3.alert = true;
-        _this3.alert_type = 'success';
-        _this3.alert_server_message = "Server Success Message : ".concat(response.data);
-        _this3.alert_message = "The document creation completed";
-        setTimeout(function () {
-          _this3.alert = false;
-        }, 5000);
-      })["catch"](function (error) {
-        _this3.form.is_external = false;
-        _this3.external_trigger = false;
-        _this3.alert = true;
-        _this3.alert_type = 'error';
-        _this3.alert_server_message = "Server Error Message : ".concat(error.message);
-        _this3.alert_message = "The document creation failed. Please check your inputs. \
-                    If error persists, contact the administrator";
-        setTimeout(function () {
-          _this3.alert = false;
-        }, 5000);
+          _this.$refs.observer.reset();
+        } else {
+          _this.$store.dispatch('setSnackbar', {
+            showing: true,
+            text: _this.form_requests.status_message,
+            color: '#D32F2F',
+            icon: 'mdi-close-thick'
+          });
+        }
+
+        _this.form.is_external = false;
+        _this.external_trigger = false;
       });
     },
     createAndForward: function createAndForward() {// TODO: Create new document then forward to office
@@ -4117,8 +4084,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getDocumentTypes();
-    this.getOffices();
+    this.$store.dispatch('getDocumentTypes');
+    this.$store.dispatch('getOffices');
   }
 });
 
@@ -29384,15 +29351,7 @@ var render = function() {
                     {
                       attrs: { mode: "out-in", "hide-on-leave": Boolean(true) }
                     },
-                    [
-                      _c("router-view", {
-                        attrs: { user: _vm.auth_user },
-                        on: {
-                          "update-parent-username": _vm.updateUsername,
-                          "update-parent-name": _vm.updateName
-                        }
-                      })
-                    ],
+                    [_c("router-view")],
                     1
                   )
                 ],
@@ -30555,81 +30514,6 @@ var render = function() {
       _c(
         "v-card-text",
         [
-          _c(
-            "v-scroll-x-transition",
-            [
-              _vm.alert
-                ? _c(
-                    "v-alert",
-                    {
-                      attrs: {
-                        outlined: "",
-                        type: _vm.alert_type,
-                        icon: "mdi-check-bold",
-                        prominent: "",
-                        border: "left",
-                        text: ""
-                      }
-                    },
-                    [
-                      _c(
-                        "v-row",
-                        { attrs: { align: "center" } },
-                        [
-                          _c(
-                            "v-col",
-                            { staticClass: "grow" },
-                            [
-                              _c(
-                                "v-row",
-                                [
-                                  _c("v-col", [
-                                    _vm._v(_vm._s(_vm.alert_message))
-                                  ])
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-row",
-                                [
-                                  _c("v-col", [
-                                    _vm._v(_vm._s(_vm.alert_server_message))
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { staticClass: "shrink" },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { icon: "", color: _vm.alert_type },
-                                  on: { click: _vm.closeAlert }
-                                },
-                                [_c("v-icon", [_vm._v("mdi-close")])],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ],
-            1
-          ),
-          _vm._v(" "),
           _c("ValidationObserver", {
             ref: "observer",
             scopedSlots: _vm._u([
@@ -30848,8 +30732,7 @@ var render = function() {
                                               return [
                                                 _c("v-select", {
                                                   attrs: {
-                                                    items:
-                                                      _vm.internal_originating_office,
+                                                    items: _vm.offices,
                                                     "item-text": "name",
                                                     "item-value": "id",
                                                     label: "Originating Office",
@@ -31574,6 +31457,49 @@ var render = function() {
                                       ),
                                       _vm._v(
                                         "\r\n                                Create\r\n                            "
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-row",
+                          [
+                            _c("v-col", [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "my-2",
+                                  attrs: { align: "center", justify: "end" }
+                                },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        color: "primary",
+                                        type: "submit"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { left: "", dark: "" } },
+                                        [
+                                          _vm._v(
+                                            "\r\n                                    mdi-plus\r\n                                "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(
+                                        "\r\n                                Create Debug\r\n                            "
                                       )
                                     ],
                                     1
@@ -93252,6 +93178,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_documents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/documents */ "./resources/js/store/modules/documents.js");
 /* harmony import */ var _modules_users__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/users */ "./resources/js/store/modules/users.js");
 /* harmony import */ var _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/snackbars */ "./resources/js/store/modules/snackbars.js");
+/* harmony import */ var _modules_offices__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/offices */ "./resources/js/store/modules/offices.js");
+
 
 
 
@@ -93259,7 +93187,8 @@ __webpack_require__.r(__webpack_exports__);
   modules: {
     users: _modules_users__WEBPACK_IMPORTED_MODULE_1__["default"],
     documents: _modules_documents__WEBPACK_IMPORTED_MODULE_0__["default"],
-    snackbars: _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__["default"]
+    snackbars: _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__["default"],
+    offices: _modules_offices__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -93283,12 +93212,23 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var state = {
-  documents: {},
-  document_types: {}
+  documents: [],
+  document_types: [],
+  form_requests: {
+    request_form_type: '',
+    request_status: '',
+    status_message: ''
+  }
 };
 var getters = {
   documents: function documents(state) {
     return state.documents;
+  },
+  document_types: function document_types(state) {
+    return state.document_types;
+  },
+  form_requests: function form_requests(state) {
+    return state.form_requests;
   }
 };
 var actions = {
@@ -93314,12 +93254,148 @@ var actions = {
         }
       }, _callee);
     }))();
+  },
+  getDocumentTypes: function getDocumentTypes(_ref2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.get('document_type_list');
+
+            case 3:
+              response = _context2.sent;
+              commit('GET_ALL_DOCUMENT_TYPES', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  createNewDocument: function createNewDocument(_ref3, form) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios.post('add_new_document', form).then(function (response) {
+                var data = {
+                  form_type: form.form_type,
+                  code: 'SUCCESS',
+                  message: "Document ".concat(form.tracking_id, " created!"),
+                  response_data: response.data
+                };
+                commit('UPDATE_DOCUMENT_LIST', data);
+              })["catch"](function (error) {
+                var error_data = {
+                  form_type: form.form_type,
+                  code: 'FAILED',
+                  message: "The server replied with an error! Please Contact your administrator\nException Type : ".concat(error.response.data.exception)
+                };
+                commit('THROW_SERVER_ERROR', error_data);
+              });
+
+            case 3:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
   }
 };
 var mutations = {
   GET_ALL_DOCUMENTS: function GET_ALL_DOCUMENTS(state, response) {
     state.documents = response.data;
+  },
+  GET_ALL_DOCUMENT_TYPES: function GET_ALL_DOCUMENT_TYPES(state, document_types) {
+    state.document_types = document_types;
+  },
+  UPDATE_DOCUMENT_LIST: function UPDATE_DOCUMENT_LIST(state, data) {
+    // TODO: Update documents list and document tracking list
+    state.form_requests.request_form_type = data.form_type;
+    state.form_requests.request_status = data.code;
+    state.form_requests.status_message = data.message;
+  },
+  THROW_SERVER_ERROR: function THROW_SERVER_ERROR(state, error) {
+    state.form_requests.request_form_type = error.form_type;
+    state.form_requests.request_status = error.code;
+    state.form_requests.status_message = error.message;
   }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/offices.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/modules/offices.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var state = {
+  offices: []
+};
+var getters = {
+  offices: function offices(state) {
+    return state.offices;
+  }
+};
+var actions = {
+  getOffices: function getOffices(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get('office_list');
+
+            case 3:
+              response = _context.sent;
+              commit('GET_ALL_OFFICES', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
+};
+var mutations = {
+  GET_ALL_OFFICES: function GET_ALL_OFFICES(state, offices) {
+    state.offices = offices;
+  },
+  EDIT_OFFICE: function EDIT_OFFICE() {}
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: state,
@@ -93681,8 +93757,8 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('numeric', _objectSp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

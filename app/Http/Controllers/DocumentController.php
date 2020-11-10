@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 use DB;
 use App\Models\Document;
 use App\Models\DocumentType;
-use App\Models\Office;
 use Illuminate\Http\Request;
 use App\Models\TrackingRecord;
 
@@ -24,18 +23,13 @@ class DocumentController extends Controller
         return DocumentType::get();
     }
 
-    public function getOfficeList(): Collection
-    {
-        return Office::get();
-    }
-
-    public function getAllDocuments()
+    public function getAllDocuments(): Collection
     {
         return Document::where('current_office_id', Auth::user()->office_id)->get();
     }
 
     // TODO: Validation, logging and error message
-    public function addNewDocument(Request $request)
+    public function addNewDocument(Request $request): Array
     {
         DB::beginTransaction();
         try {
@@ -73,6 +67,6 @@ class DocumentController extends Controller
             throw $error;
         }
         DB::commit();
-        return 'Successfully added document with tracking number : '.$document->tracking_code;
+        return [$document, $tracking_record];
     }
 }

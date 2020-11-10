@@ -148,11 +148,7 @@
     <v-main fluid>
         <v-container>
             <v-scroll-x-transition mode="out-in" :hide-on-leave="Boolean(true)">
-                <router-view
-                    :user="auth_user"
-                    @update-parent-username="updateUsername"
-                    @update-parent-name="updateName"
-                ></router-view>
+                <router-view/>
             </v-scroll-x-transition>
         </v-container>
     </v-main>
