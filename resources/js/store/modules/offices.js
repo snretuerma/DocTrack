@@ -1,9 +1,11 @@
 const state = {
-    offices: []
+    offices: [],
+    office_list_loading: true,
 }
 
 const getters = {
-    offices: state => state.offices
+    offices: state => state.offices,
+    offices_loading: state => state.office_list_loading,
 }
 
 const actions = {
@@ -15,6 +17,7 @@ const actions = {
 
 const mutations = {
     GET_ALL_OFFICES (state, offices) {
+        state.office_list_loading = false;
         state.offices = offices;
     },
     EDIT_OFFICE () {

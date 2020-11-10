@@ -6,6 +6,8 @@ const state = {
         request_status: '',
         status_message: '',
     },
+    document_loading: false,
+    document_type_loading: false,
 }
 
 const getters = {

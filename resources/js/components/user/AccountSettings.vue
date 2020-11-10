@@ -75,5 +75,8 @@ export default {
             panel: [0],
         }
     },
+    mounted() {
+        this.$store.dispatch('unsetLoader');
+    }
 }
 </script>

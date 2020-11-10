@@ -144,6 +144,15 @@
             <v-icon>mdi-menu</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
+        <v-progress-linear
+            :active="page_loader"
+            color="#A83F39"
+            height="8"
+            indeterminate
+            striped
+            absolute
+            bottom
+        />
     </v-app-bar>
     <v-main fluid>
         <v-container>
@@ -160,7 +169,7 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
     computed: {
-        ...mapGetters(["auth_user", "auth_user_full_name"]),
+        ...mapGetters(['auth_user', 'auth_user_full_name', 'page_loader']),
         currentRouteName() {
             return this.$route.name;
         },
@@ -176,71 +185,61 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["removeAuthUser"]),
+        ...mapActions(['removeAuthUser', 'unsetLoader']),
         logout(){
             this.removeAuthUser();
             this.$store.dispatch('unsetSnackbar');
+            this.$store.dispatch('setLoader');
             this.$router.push({ name: "Login"});
         },
-        buildName(first_name, middle_name, last_name, suffix) {
-            var name =  this.capitalize(this.user.first_name.trim()) + ' '
-                + this.capitalize(this.user.middle_name.trim()) + ' '
-                + this.capitalize(this.user.last_name.trim());
-            this.user.suffix != null && typeof this.user.suffix !== 'undefined' ?
-                name = name + ' ' + this.capitalize(this.user.suffix.trim()) : null;
-            return name.trim();
-        },
         getDashboard() {
-            axios.get('/').then(()=>{
-                if(this.$route.name !== 'Dashboard') {
-                    this.$router.push({ name: "Dashboard"})
-                }
-            })
+            if(this.$route.name !== 'Dashboard') {
+                this.$store.dispatch('setLoader');
+                axios.get('/').then(()=>{
+                    this.$router.push({ name: "Dashboard"});
+                })
+            }
         },
         getNewDocumentRecordForm() {
-            axios.get('new_document').then(() => {
-                if(this.$route.name !== 'New Document') {
+            if(this.$route.name !== 'New Document') {
+                this.$store.dispatch('setLoader');
+                axios.get('new_document').then(() => {
                     this.$router.push({ name: "New Document"});
-                }
-            });
+                });
+            }
         },
 
         getAllDocuments() {
-            axios.get('all_documents').then(() => {
-                if(this.$route.name !== 'All Documents') {
+            if(this.$route.name !== 'All Documents') {
+                this.$store.dispatch('setLoader');
+                axios.get('all_documents').then(() => {
                     this.$router.push({ name: "All Documents"});
-                }
-            });
+                });
+            }
         },
         getAgingReport() {
-            axios.get('reports/aging').then(()=>{
-                if(this.$route.name !== 'Document Aging Report') {
+            if(this.$route.name !== 'Document Aging Report') {
+                this.$store.dispatch('setLoader');
+                axios.get('reports/aging').then(()=>{
                     this.$router.push({ name: "Document Aging Report"});
-                }
-            });
+                });
+            }
         },
         getMasterListReport() {
-            axios.get('reports/master_list').then(()=>{
-                if(this.$route.name !== 'Document Master List') {
-                    this.$router.push({ name: "Document Master List"})
-                }
-            });
+            if(this.$route.name !== 'Document Master List') {
+                this.$store.dispatch('setLoader');
+                axios.get('reports/master_list').then(()=>{
+                    this.$router.push({ name: "Document Master List"});
+                });
+            }
         },
         getAccountSettings() {
-            axios.get('account_settings').then(()=>{
-                if(this.$route.name !== 'Account Settings') {
-                    this.$router.push({ name: "Account Settings",  params: { user: this.user }})
-                }
-            })
-        },
-        updateUsername(response) {
-            this.username = response;
-        },
-        updateName(response) {
-            this.fullName = response;
-        },
-        capitalize(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
+            if(this.$route.name !== 'Account Settings') {
+                this.$store.dispatch('setLoader');
+                axios.get('account_settings').then(()=>{
+                    this.$router.push({ name: "Account Settings",  params: { user: this.user }});
+                })
+            }
         },
         getRandomInt(min, max) {
             min = Math.ceil(min);

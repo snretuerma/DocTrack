@@ -2211,6 +2211,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       panel: [0]
     };
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('unsetLoader');
   }
 });
 
@@ -2229,7 +2232,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.$store.dispatch('unsetLoader');
+  }
+});
 
 /***/ }),
 
@@ -2845,10 +2852,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // TODO: Migrate to Vuex
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user", "auth_user_full_name"])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth_user', 'auth_user_full_name', 'page_loader'])), {}, {
     currentRouteName: function currentRouteName() {
       return this.$route.name;
     },
@@ -2863,96 +2879,89 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       image_source: 'https://randomuser.me/api/portraits/'
     };
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["removeAuthUser"])), {}, {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['removeAuthUser', 'unsetLoader'])), {}, {
     logout: function logout() {
       this.removeAuthUser();
       this.$store.dispatch('unsetSnackbar');
+      this.$store.dispatch('setLoader');
       this.$router.push({
         name: "Login"
       });
     },
-    buildName: function buildName(first_name, middle_name, last_name, suffix) {
-      var name = this.capitalize(this.user.first_name.trim()) + ' ' + this.capitalize(this.user.middle_name.trim()) + ' ' + this.capitalize(this.user.last_name.trim());
-      this.user.suffix != null && typeof this.user.suffix !== 'undefined' ? name = name + ' ' + this.capitalize(this.user.suffix.trim()) : null;
-      return name.trim();
-    },
     getDashboard: function getDashboard() {
       var _this = this;
 
-      axios.get('/').then(function () {
-        if (_this.$route.name !== 'Dashboard') {
+      if (this.$route.name !== 'Dashboard') {
+        this.$store.dispatch('setLoader');
+        axios.get('/').then(function () {
           _this.$router.push({
             name: "Dashboard"
           });
-        }
-      });
+        });
+      }
     },
     getNewDocumentRecordForm: function getNewDocumentRecordForm() {
       var _this2 = this;
 
-      axios.get('new_document').then(function () {
-        if (_this2.$route.name !== 'New Document') {
+      if (this.$route.name !== 'New Document') {
+        this.$store.dispatch('setLoader');
+        axios.get('new_document').then(function () {
           _this2.$router.push({
             name: "New Document"
           });
-        }
-      });
+        });
+      }
     },
     getAllDocuments: function getAllDocuments() {
       var _this3 = this;
 
-      axios.get('all_documents').then(function () {
-        if (_this3.$route.name !== 'All Documents') {
+      if (this.$route.name !== 'All Documents') {
+        this.$store.dispatch('setLoader');
+        axios.get('all_documents').then(function () {
           _this3.$router.push({
             name: "All Documents"
           });
-        }
-      });
+        });
+      }
     },
     getAgingReport: function getAgingReport() {
       var _this4 = this;
 
-      axios.get('reports/aging').then(function () {
-        if (_this4.$route.name !== 'Document Aging Report') {
+      if (this.$route.name !== 'Document Aging Report') {
+        this.$store.dispatch('setLoader');
+        axios.get('reports/aging').then(function () {
           _this4.$router.push({
             name: "Document Aging Report"
           });
-        }
-      });
+        });
+      }
     },
     getMasterListReport: function getMasterListReport() {
       var _this5 = this;
 
-      axios.get('reports/master_list').then(function () {
-        if (_this5.$route.name !== 'Document Master List') {
+      if (this.$route.name !== 'Document Master List') {
+        this.$store.dispatch('setLoader');
+        axios.get('reports/master_list').then(function () {
           _this5.$router.push({
             name: "Document Master List"
           });
-        }
-      });
+        });
+      }
     },
     getAccountSettings: function getAccountSettings() {
       var _this6 = this;
 
-      axios.get('account_settings').then(function () {
-        if (_this6.$route.name !== 'Account Settings') {
+      if (this.$route.name !== 'Account Settings') {
+        this.$store.dispatch('setLoader');
+        axios.get('account_settings').then(function () {
           _this6.$router.push({
             name: "Account Settings",
             params: {
               user: _this6.user
             }
           });
-        }
-      });
-    },
-    updateUsername: function updateUsername(response) {
-      this.username = response;
-    },
-    updateName: function updateName(response) {
-      this.fullName = response;
-    },
-    capitalize: function capitalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+        });
+      }
     },
     getRandomInt: function getRandomInt(min, max) {
       min = Math.ceil(min);
@@ -3088,6 +3097,9 @@ __webpack_require__.r(__webpack_exports__);
         iron: '6%'
       }]
     };
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('unsetLoader');
   }
 });
 
@@ -3108,7 +3120,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.$store.dispatch('unsetLoader');
+  }
+});
 
 /***/ }),
 
@@ -3125,7 +3141,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.$store.dispatch('unsetLoader');
+  }
+});
 
 /***/ }),
 
@@ -3151,8 +3171,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["getDocuments"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getDocuments', 'unsetLoader'])),
   mounted: function mounted() {
+    this.unsetLoader();
     this.getDocuments();
   }
 });
@@ -3979,6 +4000,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/**
+ * TODO: Use combobox instead of using internal or external triggers for offices
+ *       Use combobox for typing sender name
+ **/
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3993,16 +4041,14 @@ __webpack_require__.r(__webpack_exports__);
       current_date: new Date().toISOString().substr(0, 10),
       datepicker_modal: false,
       timepicker_modal: false,
-      alert: false,
-      alert_type: '',
-      alert_message: '',
-      alert_server_message: '',
-      alert_icon: '',
+      button_loader: null,
+      loading_create_new_document: false,
       form: {
         form_type: 'new_document',
         tracking_id: '',
         document_title: '',
         document_type: '',
+        originating_office: '',
         originating_office_id: '',
         external_office_name: '',
         sender_name: '',
@@ -4046,10 +4092,17 @@ __webpack_require__.r(__webpack_exports__);
       this.form.originating_office_id = '';
       this.form.external_office_name = '';
     },
+    unsetFormTriggers: function unsetFormTriggers() {
+      this.external_trigger = false;
+      this.form.is_external = false;
+      this[this.button_loader] = false;
+      this.button_loader = null;
+    },
     createNewDocument: function createNewDocument() {
       var _this = this;
 
       this.sanitizeInputs();
+      this[this.button_loader] = !this[this.button_loader];
       this.$store.dispatch('createNewDocument', this.form).then(function () {
         if (_this.form_requests.request_status == 'SUCCESS') {
           _this.$store.dispatch('setSnackbar', {
@@ -4057,22 +4110,23 @@ __webpack_require__.r(__webpack_exports__);
             text: _this.form_requests.status_message,
             color: '#43A047',
             icon: 'mdi-check-bold'
+          }).then(function () {
+            _this.unsetFormTriggers();
+
+            _this.$refs.form.reset();
+
+            _this.$refs.observer.reset();
           });
-
-          _this.$refs.form.reset();
-
-          _this.$refs.observer.reset();
         } else {
           _this.$store.dispatch('setSnackbar', {
             showing: true,
             text: _this.form_requests.status_message,
             color: '#D32F2F',
             icon: 'mdi-close-thick'
+          }).then(function () {
+            _this.unsetFormTriggers();
           });
         }
-
-        _this.form.is_external = false;
-        _this.external_trigger = false;
       });
     },
     createAndForward: function createAndForward() {// TODO: Create new document then forward to office
@@ -4086,6 +4140,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.$store.dispatch('getDocumentTypes');
     this.$store.dispatch('getOffices');
+    this.$store.dispatch('unsetLoader');
   }
 });
 
@@ -29334,7 +29389,19 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-toolbar-title", [_vm._v(_vm._s(_vm.currentRouteName))])
+              _c("v-toolbar-title", [_vm._v(_vm._s(_vm.currentRouteName))]),
+              _vm._v(" "),
+              _c("v-progress-linear", {
+                attrs: {
+                  active: _vm.page_loader,
+                  color: "#A83F39",
+                  height: "8",
+                  indeterminate: "",
+                  striped: "",
+                  absolute: "",
+                  bottom: ""
+                }
+              })
             ],
             1
           ),
@@ -30714,8 +30781,8 @@ var render = function() {
                                   {
                                     attrs: {
                                       cols: "12",
-                                      xl: "8",
-                                      lg: "8",
+                                      xl: "12",
+                                      lg: "12",
                                       md: "12"
                                     }
                                   },
@@ -30730,19 +30797,19 @@ var render = function() {
                                               var errors = ref.errors
                                               var valid = ref.valid
                                               return [
-                                                _c("v-select", {
+                                                _c("v-combobox", {
                                                   attrs: {
                                                     items: _vm.offices,
                                                     "item-text": "name",
                                                     "item-value": "id",
+                                                    clearable: "",
+                                                    "hide-selected": "",
+                                                    outlined: "",
+                                                    "persistent-hint": "",
+                                                    "small-chips": "",
                                                     label: "Originating Office",
                                                     "prepend-inner-icon":
                                                       "mdi-office-building-marker-outline",
-                                                    "menu-props": {
-                                                      bottom: true,
-                                                      offsetY: true
-                                                    },
-                                                    outlined: "",
                                                     "error-messages": errors,
                                                     success: valid,
                                                     required: ""
@@ -30750,16 +30817,16 @@ var render = function() {
                                                   model: {
                                                     value:
                                                       _vm.form
-                                                        .originating_office_id,
+                                                        .originating_office,
                                                     callback: function($$v) {
                                                       _vm.$set(
                                                         _vm.form,
-                                                        "originating_office_id",
+                                                        "originating_office",
                                                         $$v
                                                       )
                                                     },
                                                     expression:
-                                                      "form.originating_office_id"
+                                                      "form.originating_office"
                                                   }
                                                 })
                                               ]
@@ -30773,63 +30840,7 @@ var render = function() {
                                   ],
                                   1
                                 )
-                              : _c(
-                                  "v-col",
-                                  {
-                                    attrs: {
-                                      cols: "12",
-                                      xl: "8",
-                                      lg: "8",
-                                      md: "12"
-                                    }
-                                  },
-                                  [
-                                    _c("ValidationProvider", {
-                                      attrs: { rules: "required" },
-                                      scopedSlots: _vm._u(
-                                        [
-                                          {
-                                            key: "default",
-                                            fn: function(ref) {
-                                              var errors = ref.errors
-                                              var valid = ref.valid
-                                              return [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    label: "External Office",
-                                                    "prepend-inner-icon":
-                                                      "mdi-office-building-marker-outline",
-                                                    outlined: "",
-                                                    "error-messages": errors,
-                                                    success: valid,
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.form
-                                                        .external_office_name,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "external_office_name",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "form.external_office_name"
-                                                  }
-                                                })
-                                              ]
-                                            }
-                                          }
-                                        ],
-                                        null,
-                                        true
-                                      )
-                                    })
-                                  ],
-                                  1
-                                ),
+                              : _vm._e(),
                             _vm._v(" "),
                             _c(
                               "v-col",
@@ -31442,7 +31453,15 @@ var render = function() {
                                         color: "primary",
                                         dark: !invalid,
                                         disabled: invalid,
+                                        loading:
+                                          _vm.loading_create_new_document,
                                         type: "submit"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.button_loader =
+                                            "loading_create_new_document"
+                                        }
                                       }
                                     },
                                     [
@@ -93178,7 +93197,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_documents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/documents */ "./resources/js/store/modules/documents.js");
 /* harmony import */ var _modules_users__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/users */ "./resources/js/store/modules/users.js");
 /* harmony import */ var _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/snackbars */ "./resources/js/store/modules/snackbars.js");
-/* harmony import */ var _modules_offices__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/offices */ "./resources/js/store/modules/offices.js");
+/* harmony import */ var _modules_loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/loader */ "./resources/js/store/modules/loader.js");
+/* harmony import */ var _modules_offices__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/offices */ "./resources/js/store/modules/offices.js");
+
 
 
 
@@ -93187,8 +93208,9 @@ __webpack_require__.r(__webpack_exports__);
   modules: {
     users: _modules_users__WEBPACK_IMPORTED_MODULE_1__["default"],
     documents: _modules_documents__WEBPACK_IMPORTED_MODULE_0__["default"],
+    offices: _modules_offices__WEBPACK_IMPORTED_MODULE_4__["default"],
     snackbars: _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__["default"],
-    offices: _modules_offices__WEBPACK_IMPORTED_MODULE_3__["default"]
+    loader: _modules_loader__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -93218,7 +93240,9 @@ var state = {
     request_form_type: '',
     request_status: '',
     status_message: ''
-  }
+  },
+  document_loading: false,
+  document_type_loading: false
 };
 var getters = {
   documents: function documents(state) {
@@ -93341,6 +93365,50 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/store/modules/loader.js":
+/*!**********************************************!*\
+  !*** ./resources/js/store/modules/loader.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  page_loader: true
+};
+var getters = {
+  page_loader: function page_loader(state) {
+    return state.page_loader;
+  }
+};
+var actions = {
+  setLoader: function setLoader(_ref) {
+    var commit = _ref.commit;
+    commit('SET_PAGE_LOADER');
+  },
+  unsetLoader: function unsetLoader(_ref2) {
+    var commit = _ref2.commit;
+    commit('UNSET_PAGE_LOADER');
+  }
+};
+var mutations = {
+  SET_PAGE_LOADER: function SET_PAGE_LOADER(state) {
+    state.page_loader = true;
+  },
+  UNSET_PAGE_LOADER: function UNSET_PAGE_LOADER(state) {
+    state.page_loader = false;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/modules/offices.js":
 /*!***********************************************!*\
   !*** ./resources/js/store/modules/offices.js ***!
@@ -93359,11 +93427,15 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var state = {
-  offices: []
+  offices: [],
+  office_list_loading: true
 };
 var getters = {
   offices: function offices(state) {
     return state.offices;
+  },
+  offices_loading: function offices_loading(state) {
+    return state.office_list_loading;
   }
 };
 var actions = {
@@ -93393,6 +93465,7 @@ var actions = {
 };
 var mutations = {
   GET_ALL_OFFICES: function GET_ALL_OFFICES(state, offices) {
+    state.office_list_loading = false;
     state.offices = offices;
   },
   EDIT_OFFICE: function EDIT_OFFICE() {}

@@ -6,9 +6,10 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
     methods: {
-        ...mapActions(["getDocuments"]),
+        ...mapActions(['getDocuments', 'unsetLoader']),
     },
     mounted() {
+        this.unsetLoader();
         this.getDocuments();
     }
 }

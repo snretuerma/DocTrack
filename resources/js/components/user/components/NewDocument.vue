@@ -57,7 +57,27 @@
                             ></v-radio>
                         </v-radio-group>
                     </v-col>
-                    <v-col cols="12" xl="8" lg="8" md="12" v-if="external_trigger">
+                    <v-col cols="12" xl="12" lg="12" md="12" v-if="external_trigger">
+                        <ValidationProvider rules="required" v-slot="{ errors, valid }">
+                            <v-combobox
+                                v-model="form.originating_office"
+                                :items="offices"
+                                item-text="name"
+                                item-value="id"
+                                clearable
+                                hide-selected
+                                outlined
+                                persistent-hint
+                                small-chips
+                                label="Originating Office"
+                                prepend-inner-icon="mdi-office-building-marker-outline"
+                                :error-messages="errors"
+                                :success="valid"
+                                required
+                            ></v-combobox>
+                        </ValidationProvider>
+                    </v-col>
+                    <!-- <v-col cols="12" xl="8" lg="8" md="12" v-if="external_trigger">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-select
                                     v-model="form.originating_office_id"
@@ -86,7 +106,7 @@
                                 required
                             ></v-text-field>
                         </ValidationProvider>
-                    </v-col>
+                    </v-col> -->
                     <v-col cols="12" xl="6" lg="6" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-text-field
@@ -247,6 +267,8 @@
                                 color="primary"
                                 :dark="!invalid"
                                 :disabled="invalid"
+                                :loading="loading_create_new_document"
+                                @click="button_loader = 'loading_create_new_document'"
                                 type="submit"
                             >
                                 <v-icon left dark>
@@ -283,6 +305,10 @@
 </template>
 
 <script>
+/**
+ * TODO: Use combobox instead of using internal or external triggers for offices
+ *       Use combobox for typing sender name
+ **/
 import { mapGetters } from 'vuex';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
@@ -297,16 +323,14 @@ export default {
             current_date: new Date().toISOString().substr(0, 10),
             datepicker_modal: false,
             timepicker_modal: false,
-            alert: false,
-            alert_type: '',
-            alert_message: '',
-            alert_server_message: '',
-            alert_icon: '',
+            button_loader: null,
+            loading_create_new_document: false,
             form: {
                 form_type: 'new_document',
                 tracking_id: '',
                 document_title: '',
                 document_type: '',
+                originating_office: '',
                 originating_office_id: '',
                 external_office_name: '',
                 sender_name: '',
@@ -355,28 +379,39 @@ export default {
             this.form.originating_office_id = '';
             this.form.external_office_name = '';
         },
+        unsetFormTriggers() {
+            this.external_trigger = false;
+            this.form.is_external = false;
+            this[this.button_loader] = false
+            this.button_loader = null;
+        },
         createNewDocument() {
             this.sanitizeInputs();
+            this[this.button_loader] = !this[this.button_loader];
             this.$store.dispatch('createNewDocument', this.form).then(() => {
                 if(this.form_requests.request_status == 'SUCCESS') {
                     this.$store.dispatch('setSnackbar', {
-                            showing: true,
-                            text: this.form_requests.status_message,
-                            color: '#43A047',
-                            icon: 'mdi-check-bold',
-                        });
+                        showing: true,
+                        text: this.form_requests.status_message,
+                        color: '#43A047',
+                        icon: 'mdi-check-bold',
+                    })
+                    .then(() => {
+                        this.unsetFormTriggers();
                         this.$refs.form.reset();
                         this.$refs.observer.reset();
+                    });
                 } else {
                     this.$store.dispatch('setSnackbar', {
                         showing: true,
                         text: this.form_requests.status_message,
                         color: '#D32F2F',
                         icon: 'mdi-close-thick',
+                    })
+                    .then(() => {
+                        this.unsetFormTriggers();
                     });
                 }
-                this.form.is_external = false;
-                this.external_trigger = false;
             });
         },
         createAndForward() {
@@ -391,6 +426,7 @@ export default {
     mounted() {
         this.$store.dispatch('getDocumentTypes');
         this.$store.dispatch('getOffices');
+        this.$store.dispatch('unsetLoader');
     }
 }
 </script>
