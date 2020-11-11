@@ -7,7 +7,7 @@
         <ValidationObserver ref="observer" v-slot="{ invalid }">
             <v-form ref="form" @submit.prevent="createNewDocument">
                 <v-row>
-                    <v-col cols="12" xl="8" lg="8" md="12">
+                    <v-col cols="12" xl="12" lg="12" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.document_title"
@@ -20,7 +20,7 @@
                             ></v-text-field>
                         </ValidationProvider>
                     </v-col>
-                    <v-col cols="12" xl="4" lg="4" md="12">
+                    <v-col cols="12" xl="8" lg="8" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-select
                                 v-model="form.document_type"
@@ -57,7 +57,7 @@
                             ></v-radio>
                         </v-radio-group>
                     </v-col>
-                    <v-col cols="12" xl="12" lg="12" md="12" v-if="external_trigger">
+                    <v-col cols="12" xl="12" lg="12" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-combobox
                                 v-model="form.originating_office"
@@ -68,7 +68,6 @@
                                 hide-selected
                                 outlined
                                 persistent-hint
-                                small-chips
                                 label="Originating Office"
                                 prepend-inner-icon="mdi-office-building-marker-outline"
                                 :error-messages="errors"
@@ -77,46 +76,23 @@
                             ></v-combobox>
                         </ValidationProvider>
                     </v-col>
-                    <!-- <v-col cols="12" xl="8" lg="8" md="12" v-if="external_trigger">
+                    <v-col cols="12" xl="6" lg="6" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                            <v-select
-                                    v-model="form.originating_office_id"
-                                    :items="offices"
-                                    item-text="name"
-                                    item-value="id"
-                                    label="Originating Office"
-                                    prepend-inner-icon="mdi-office-building-marker-outline"
-                                    :menu-props="{ bottom: true, offsetY: true }"
-                                    outlined
-                                    :error-messages="errors"
-                                    :success="valid"
-                                    required
-                            ></v-select>
-                        </ValidationProvider>
-                    </v-col>
-                    <v-col cols="12" xl="8" lg="8" md="12" v-else>
-                        <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                            <v-text-field
-                                v-model="form.external_office_name"
-                                label="External Office"
-                                prepend-inner-icon="mdi-office-building-marker-outline"
+                            <v-combobox
+                                v-model="form.sender_name"
+                                :items="offices"
+                                item-text="name"
+                                item-value="id"
+                                clearable
+                                hide-selected
                                 outlined
+                                persistent-hint
+                                label="Sender Name"
+                                prepend-inner-icon="mdi-account-arrow-right-outline"
                                 :error-messages="errors"
                                 :success="valid"
                                 required
-                            ></v-text-field>
-                        </ValidationProvider>
-                    </v-col> -->
-                    <v-col cols="12" xl="6" lg="6" md="12">
-                        <ValidationProvider rules="required" v-slot="{ errors, valid }">
-                            <v-text-field
-                                v-model="form.sender_name"
-                                label="Sender Name"
-                                prepend-inner-icon="mdi-account-arrow-right-outline"
-                                outlined
-                                :error-messages="errors"
-                                :success="valid"
-                            ></v-text-field>
+                            ></v-combobox>
                         </ValidationProvider>
                     </v-col>
                     <v-col cols="12" xl="6" lg="6" md="12">
@@ -308,7 +284,7 @@
 /**
  * TODO: Use combobox instead of using internal or external triggers for offices
  *       Use combobox for typing sender name
- **/
+**/
 import { mapGetters } from 'vuex';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
@@ -316,7 +292,7 @@ export default {
         ValidationProvider,
         ValidationObserver
     },
-    computed: mapGetters(['auth_user', 'document_types', 'offices', 'form_requests']),
+    computed: mapGetters(['auth_user', 'document_types', 'offices', 'form_requests', 'all_users']),
     data() {
         return {
             external_trigger: false,
@@ -424,6 +400,7 @@ export default {
         },
     },
     mounted() {
+        this.$store.dispatch('getAllUsers');
         this.$store.dispatch('getDocumentTypes');
         this.$store.dispatch('getOffices');
         this.$store.dispatch('unsetLoader');

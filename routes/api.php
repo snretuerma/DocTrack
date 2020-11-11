@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 // TODO: Fix backend post route not read post request in the frontend
 Route::post('login', 'App\Http\Controllers\LoginController@login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout');
-Route::resource('/users', App\Http\Controllers\UserController::class);
+// Route::resource('/users', App\Http\Controllers\UserController::class);
+Route::get('auth_user', 'App\Http\Controllers\UserController@getAuthUser');
+Route::get('all_users', 'App\Http\Controllers\UserController@getAllUsers');
+Route::put('update_user/{id}', 'App\Http\Controllers\UserController@updateUser');
 Route::get('document_type_list', 'App\Http\Controllers\DocumentController@getDocumentTypes');
 Route::get('office_list', 'App\Http\Controllers\OfficeController@getOfficeList');
 Route::get('get_all_documents', 'App\Http\Controllers\DocumentController@getAllDocuments');

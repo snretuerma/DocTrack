@@ -13,6 +13,7 @@ function buildName(first_name, middle_name, last_name, suffix) {
 
 const state = {
     user: {},
+    all_users: [],
     user_full_name: '',
     form_requests : {
         request_form_type: '',
@@ -25,19 +26,27 @@ const getters = {
     auth_user: state => state.user,
     auth_user_full_name: state => state.user_full_name,
     form_requests_status: state => state.form_requests,
+    all_users: state => state.all_users,
 }
 
 const actions = {
     async getAuthUser({ commit }) {
-        const response = await axios.get('/api/users');
+        const response = await axios.get('/api/auth_user');
         commit('SET_AUTH_USER', response.data);
     },
     async removeAuthUser({ commit }) {
         await axios.post('/api/logout');
         commit('UNSET_AUTH_USER');
     },
+    async getAllUsers({ commit }) {
+        await axios.get('/api/all_users').then(response => {
+            console.log(response.data);
+            commit('FETCH_ALL_USERS', response.data);
+        });
+
+    },
     async editUserCredentials({ commit }, updates) {
-        const response = await axios.put(`/api/users/${updates.id}`, updates.form);
+        const response = await axios.put(`/api/update_user/${updates.id}`, updates.form);
         if(updates.form.form_type == 'account_details') {
             commit('UPDATE_USER_COMPLETE_NAME', {response: response.data, form: updates.form});
         } else if(updates.form.form_type == 'account_username') {
@@ -76,6 +85,10 @@ const mutations = {
         state.form_requests.request_form_type = '';
         state.form_requests.request_status = '';
         state.form_requests.status_message = '';
+    },
+    FETCH_ALL_USERS: (state, users) => {
+        console.log(users);
+        state.all_users = users;
     },
     UPDATE_USER_COMPLETE_NAME: (state, data) => {
         if(data.response.code == "SUCCESS") {

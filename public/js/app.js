@@ -3998,35 +3998,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /**
  * TODO: Use combobox instead of using internal or external triggers for offices
  *       Use combobox for typing sender name
- **/
+**/
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4034,7 +4010,7 @@ __webpack_require__.r(__webpack_exports__);
     ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationProvider"],
     ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationObserver"]
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth_user', 'document_types', 'offices', 'form_requests']),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth_user', 'document_types', 'offices', 'form_requests', 'all_users']),
   data: function data() {
     return {
       external_trigger: false,
@@ -4138,6 +4114,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.$store.dispatch('getAllUsers');
     this.$store.dispatch('getDocumentTypes');
     this.$store.dispatch('getOffices');
     this.$store.dispatch('unsetLoader');
@@ -30609,8 +30586,8 @@ var render = function() {
                               {
                                 attrs: {
                                   cols: "12",
-                                  xl: "8",
-                                  lg: "8",
+                                  xl: "12",
+                                  lg: "12",
                                   md: "12"
                                 }
                               },
@@ -30665,8 +30642,8 @@ var render = function() {
                               {
                                 attrs: {
                                   cols: "12",
-                                  xl: "4",
-                                  lg: "4",
+                                  xl: "8",
+                                  lg: "8",
                                   md: "12"
                                 }
                               },
@@ -30775,72 +30752,68 @@ var render = function() {
                               1
                             ),
                             _vm._v(" "),
-                            _vm.external_trigger
-                              ? _c(
-                                  "v-col",
-                                  {
-                                    attrs: {
-                                      cols: "12",
-                                      xl: "12",
-                                      lg: "12",
-                                      md: "12"
-                                    }
-                                  },
-                                  [
-                                    _c("ValidationProvider", {
-                                      attrs: { rules: "required" },
-                                      scopedSlots: _vm._u(
-                                        [
-                                          {
-                                            key: "default",
-                                            fn: function(ref) {
-                                              var errors = ref.errors
-                                              var valid = ref.valid
-                                              return [
-                                                _c("v-combobox", {
-                                                  attrs: {
-                                                    items: _vm.offices,
-                                                    "item-text": "name",
-                                                    "item-value": "id",
-                                                    clearable: "",
-                                                    "hide-selected": "",
-                                                    outlined: "",
-                                                    "persistent-hint": "",
-                                                    "small-chips": "",
-                                                    label: "Originating Office",
-                                                    "prepend-inner-icon":
-                                                      "mdi-office-building-marker-outline",
-                                                    "error-messages": errors,
-                                                    success: valid,
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.form
-                                                        .originating_office,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.form,
-                                                        "originating_office",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "form.originating_office"
-                                                  }
-                                                })
-                                              ]
-                                            }
-                                          }
-                                        ],
-                                        null,
-                                        true
-                                      )
-                                    })
-                                  ],
-                                  1
-                                )
-                              : _vm._e(),
+                            _c(
+                              "v-col",
+                              {
+                                attrs: {
+                                  cols: "12",
+                                  xl: "12",
+                                  lg: "12",
+                                  md: "12"
+                                }
+                              },
+                              [
+                                _c("ValidationProvider", {
+                                  attrs: { rules: "required" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "default",
+                                        fn: function(ref) {
+                                          var errors = ref.errors
+                                          var valid = ref.valid
+                                          return [
+                                            _c("v-combobox", {
+                                              attrs: {
+                                                items: _vm.offices,
+                                                "item-text": "name",
+                                                "item-value": "id",
+                                                clearable: "",
+                                                "hide-selected": "",
+                                                outlined: "",
+                                                "persistent-hint": "",
+                                                label: "Originating Office",
+                                                "prepend-inner-icon":
+                                                  "mdi-office-building-marker-outline",
+                                                "error-messages": errors,
+                                                success: valid,
+                                                required: ""
+                                              },
+                                              model: {
+                                                value:
+                                                  _vm.form.originating_office,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "originating_office",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "form.originating_office"
+                                              }
+                                            })
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                })
+                              ],
+                              1
+                            ),
                             _vm._v(" "),
                             _c(
                               "v-col",
@@ -30863,14 +30836,21 @@ var render = function() {
                                           var errors = ref.errors
                                           var valid = ref.valid
                                           return [
-                                            _c("v-text-field", {
+                                            _c("v-combobox", {
                                               attrs: {
+                                                items: _vm.offices,
+                                                "item-text": "name",
+                                                "item-value": "id",
+                                                clearable: "",
+                                                "hide-selected": "",
+                                                outlined: "",
+                                                "persistent-hint": "",
                                                 label: "Sender Name",
                                                 "prepend-inner-icon":
                                                   "mdi-account-arrow-right-outline",
-                                                outlined: "",
                                                 "error-messages": errors,
-                                                success: valid
+                                                success: valid,
+                                                required: ""
                                               },
                                               model: {
                                                 value: _vm.form.sender_name,
@@ -93571,6 +93551,7 @@ function buildName(first_name, middle_name, last_name, suffix) {
 
 var state = {
   user: {},
+  all_users: [],
   user_full_name: '',
   form_requests: {
     request_form_type: '',
@@ -93587,6 +93568,9 @@ var getters = {
   },
   form_requests_status: function form_requests_status(state) {
     return state.form_requests;
+  },
+  all_users: function all_users(state) {
+    return state.all_users;
   }
 };
 var actions = {
@@ -93599,7 +93583,7 @@ var actions = {
             case 0:
               commit = _ref.commit;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/users');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/auth_user');
 
             case 3:
               response = _context.sent;
@@ -93635,19 +93619,41 @@ var actions = {
       }, _callee2);
     }))();
   },
-  editUserCredentials: function editUserCredentials(_ref3, updates) {
+  getAllUsers: function getAllUsers(_ref3) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("/api/users/".concat(updates.id), updates.form);
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/all_users').then(function (response) {
+                console.log(response.data);
+                commit('FETCH_ALL_USERS', response.data);
+              });
 
             case 3:
-              response = _context3.sent;
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  editUserCredentials: function editUserCredentials(_ref4, updates) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("/api/update_user/".concat(updates.id), updates.form);
+
+            case 3:
+              response = _context4.sent;
 
               if (updates.form.form_type == 'account_details') {
                 commit('UPDATE_USER_COMPLETE_NAME', {
@@ -93668,10 +93674,10 @@ var actions = {
 
             case 5:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   },
   // TODO: Clean, remove if no problems occur
@@ -93687,22 +93693,22 @@ var actions = {
   //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
   //     commit('UPDATE_PASSWORD', {response: response.data, form_type: updates.form_type});
   // },
-  removeRequestStatus: function removeRequestStatus(_ref4) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+  removeRequestStatus: function removeRequestStatus(_ref5) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              commit = _ref4.commit;
+              commit = _ref5.commit;
               commit('UNSET_REQUEST_STATUS');
 
             case 2:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 };
@@ -93718,6 +93724,10 @@ var mutations = {
     state.form_requests.request_form_type = '';
     state.form_requests.request_status = '';
     state.form_requests.status_message = '';
+  },
+  FETCH_ALL_USERS: function FETCH_ALL_USERS(state, users) {
+    console.log(users);
+    state.all_users = users;
   },
   UPDATE_USER_COMPLETE_NAME: function UPDATE_USER_COMPLETE_NAME(state, data) {
     if (data.response.code == "SUCCESS") {
@@ -93830,8 +93840,8 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('numeric', _objectSp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
