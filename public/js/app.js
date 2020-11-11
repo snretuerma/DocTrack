@@ -3716,8 +3716,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-//
-//
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -4013,7 +4013,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth_user', 'document_types', 'offices', 'form_requests', 'all_users']),
   data: function data() {
     return {
-      external_trigger: false,
       current_date: new Date().toISOString().substr(0, 10),
       datepicker_modal: false,
       timepicker_modal: false,
@@ -4025,8 +4024,6 @@ __webpack_require__.r(__webpack_exports__);
         document_title: '',
         document_type: '',
         originating_office: '',
-        originating_office_id: '',
-        external_office_name: '',
         sender_name: '',
         page_count: '',
         attachment_page_count: '',
@@ -4059,20 +4056,21 @@ __webpack_require__.r(__webpack_exports__);
       this.form.is_external = this.form.is_external == 'true' ? true : false;
       this.form.tracking_id = this.generateTrackingCode(this.form);
       this.form.document_title = this.form.document_title.toString();
-      this.form.external_office_name = this.form.external_office_name != null && typeof this.form.external_office_name != 'undefined' ? this.form.external_office_name.toString() : null;
+
+      if (_typeof(this.form.originating_office) === 'object' && this.form.originating_office !== null) {
+        this.form.originating_office = this.form.originating_office.id;
+      } else {
+        this.form.originating_office = this.form.originating_office.toString();
+      }
+
+      if (_typeof(this.form.sender_name) === 'object' && this.form.sender_name !== null) {
+        this.form.sender_name = this.form.sender_name.id;
+      } else {
+        this.form.sender_name = this.form.sender_name.toString();
+      }
+
       this.form.sender_name = this.form.sender_name.toString();
       this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ? this.form.remarks.toString() : null;
-    },
-    originOfficeHandler: function originOfficeHandler() {
-      this.external_trigger = !this.external_trigger;
-      this.form.originating_office_id = '';
-      this.form.external_office_name = '';
-    },
-    unsetFormTriggers: function unsetFormTriggers() {
-      this.external_trigger = false;
-      this.form.is_external = false;
-      this[this.button_loader] = false;
-      this.button_loader = null;
     },
     createNewDocument: function createNewDocument() {
       var _this = this;
@@ -4087,7 +4085,8 @@ __webpack_require__.r(__webpack_exports__);
             color: '#43A047',
             icon: 'mdi-check-bold'
           }).then(function () {
-            _this.unsetFormTriggers();
+            _this[_this.button_loader] = false;
+            _this.button_loader = null;
 
             _this.$refs.form.reset();
 
@@ -4100,17 +4099,15 @@ __webpack_require__.r(__webpack_exports__);
             color: '#D32F2F',
             icon: 'mdi-close-thick'
           }).then(function () {
-            _this.unsetFormTriggers();
+            _this[_this.button_loader] = false;
+            _this.button_loader = null;
           });
         }
       });
     },
-    createAndForward: function createAndForward() {// TODO: Create new document then forward to office
+    debuggerButton: function debuggerButton() {// console.log(this.form);
     },
-    closeAlert: function closeAlert() {
-      this.alert = false;
-      this.alert_type = '';
-      this.alert_message = '';
+    createAndForward: function createAndForward() {// TODO: Create new document then forward to office
     }
   },
   mounted: function mounted() {
@@ -30722,7 +30719,6 @@ var render = function() {
                                       "single-line": "",
                                       required: ""
                                     },
-                                    on: { change: _vm.originOfficeHandler },
                                     model: {
                                       value: _vm.form.is_external,
                                       callback: function($$v) {
@@ -30777,7 +30773,6 @@ var render = function() {
                                               attrs: {
                                                 items: _vm.offices,
                                                 "item-text": "name",
-                                                "item-value": "id",
                                                 clearable: "",
                                                 "hide-selected": "",
                                                 outlined: "",
@@ -30820,8 +30815,8 @@ var render = function() {
                               {
                                 attrs: {
                                   cols: "12",
-                                  xl: "6",
-                                  lg: "6",
+                                  xl: "12",
+                                  lg: "12",
                                   md: "12"
                                 }
                               },
@@ -30838,9 +30833,8 @@ var render = function() {
                                           return [
                                             _c("v-combobox", {
                                               attrs: {
-                                                items: _vm.offices,
-                                                "item-text": "name",
-                                                "item-value": "id",
+                                                items: _vm.all_users,
+                                                "item-text": "full_name",
                                                 clearable: "",
                                                 "hide-selected": "",
                                                 outlined: "",
@@ -31263,8 +31257,8 @@ var render = function() {
                               {
                                 attrs: {
                                   cols: "12",
-                                  xl: "3",
-                                  lg: "3",
+                                  xl: "6",
+                                  lg: "6",
                                   md: "12"
                                 }
                               },
@@ -31322,8 +31316,8 @@ var render = function() {
                               {
                                 attrs: {
                                   cols: "12",
-                                  xl: "3",
-                                  lg: "3",
+                                  xl: "6",
+                                  lg: "6",
                                   md: "12"
                                 }
                               },
@@ -31485,7 +31479,8 @@ var render = function() {
                                       attrs: {
                                         color: "primary",
                                         type: "submit"
-                                      }
+                                      },
+                                      on: { click: _vm.debuggerButton }
                                     },
                                     [
                                       _c(
@@ -93552,6 +93547,7 @@ function buildName(first_name, middle_name, last_name, suffix) {
 var state = {
   user: {},
   all_users: [],
+  all_users_loading: true,
   user_full_name: '',
   form_requests: {
     request_form_type: '',
@@ -93629,7 +93625,10 @@ var actions = {
               commit = _ref3.commit;
               _context3.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/all_users').then(function (response) {
-                console.log(response.data);
+                response.data.forEach(function (element) {
+                  element.full_name = '';
+                  element.full_name = buildName(element.first_name, element.middle_name, element.last_name, element.suffix);
+                });
                 commit('FETCH_ALL_USERS', response.data);
               });
 
@@ -93726,7 +93725,6 @@ var mutations = {
     state.form_requests.status_message = '';
   },
   FETCH_ALL_USERS: function FETCH_ALL_USERS(state, users) {
-    console.log(users);
     state.all_users = users;
   },
   UPDATE_USER_COMPLETE_NAME: function UPDATE_USER_COMPLETE_NAME(state, data) {

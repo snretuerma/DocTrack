@@ -45,7 +45,6 @@
                             label="Origin: "
                             single-line
                             required
-                            @change="originOfficeHandler"
                         >
                             <v-radio
                                 label="Internal"
@@ -63,7 +62,6 @@
                                 v-model="form.originating_office"
                                 :items="offices"
                                 item-text="name"
-                                item-value="id"
                                 clearable
                                 hide-selected
                                 outlined
@@ -76,13 +74,12 @@
                             ></v-combobox>
                         </ValidationProvider>
                     </v-col>
-                    <v-col cols="12" xl="6" lg="6" md="12">
+                    <v-col cols="12" xl="12" lg="12" md="12">
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-combobox
                                 v-model="form.sender_name"
-                                :items="offices"
-                                item-text="name"
-                                item-value="id"
+                                :items="all_users"
+                                item-text="full_name"
                                 clearable
                                 hide-selected
                                 outlined
@@ -188,7 +185,7 @@
                         </v-dialog>
                         </v-col>
 
-                    <v-col cols="12" xl="3" lg="3" md="12">
+                    <v-col cols="12" xl="6" lg="6" md="12">
                         <ValidationProvider rules="required|numeric|min:0" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.page_count"
@@ -204,7 +201,7 @@
                             ></v-text-field>
                         </ValidationProvider>
                     </v-col>
-                    <v-col cols="12" xl="3" lg="3" md="12">
+                    <v-col cols="12" xl="6" lg="6" md="12">
                         <ValidationProvider rules="required|numeric|min:0" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.attachment_page_count"
@@ -265,6 +262,7 @@
                             <v-btn
                                 color="primary"
                                 type="submit"
+                                @click="debuggerButton"
                             >
                                 <v-icon left dark>
                                     mdi-plus
@@ -295,7 +293,6 @@ export default {
     computed: mapGetters(['auth_user', 'document_types', 'offices', 'form_requests', 'all_users']),
     data() {
         return {
-            external_trigger: false,
             current_date: new Date().toISOString().substr(0, 10),
             datepicker_modal: false,
             timepicker_modal: false,
@@ -307,8 +304,6 @@ export default {
                 document_title: '',
                 document_type: '',
                 originating_office: '',
-                originating_office_id: '',
-                external_office_name: '',
                 sender_name: '',
                 page_count: '',
                 attachment_page_count: '',
@@ -343,23 +338,19 @@ export default {
             this.form.is_external = this.form.is_external == 'true' ? true : false;
             this.form.tracking_id = this.generateTrackingCode(this.form);
             this.form.document_title = this.form.document_title.toString();
-            this.form.external_office_name = this.form.external_office_name != null &&
-                typeof this.form.external_office_name != 'undefined' ?
-                this.form.external_office_name.toString() : null;
+            if(typeof this.form.originating_office === 'object' && this.form.originating_office !== null) {
+                this.form.originating_office = this.form.originating_office.id;
+            } else {
+                this.form.originating_office = this.form.originating_office.toString();
+            }
+            if(typeof this.form.sender_name === 'object' && this.form.sender_name !== null) {
+                this.form.sender_name = this.form.sender_name.id;
+            } else {
+                this.form.sender_name = this.form.sender_name.toString();
+            }
             this.form.sender_name = this.form.sender_name.toString();
             this.form.remarks = this.form.remarks != null && typeof this.form.remarks != 'undefined' ?
                 this.form.remarks.toString() : null;
-        },
-        originOfficeHandler() {
-            this.external_trigger = !this.external_trigger;
-            this.form.originating_office_id = '';
-            this.form.external_office_name = '';
-        },
-        unsetFormTriggers() {
-            this.external_trigger = false;
-            this.form.is_external = false;
-            this[this.button_loader] = false
-            this.button_loader = null;
         },
         createNewDocument() {
             this.sanitizeInputs();
@@ -373,7 +364,8 @@ export default {
                         icon: 'mdi-check-bold',
                     })
                     .then(() => {
-                        this.unsetFormTriggers();
+                        this[this.button_loader] = false
+                        this.button_loader = null;
                         this.$refs.form.reset();
                         this.$refs.observer.reset();
                     });
@@ -385,18 +377,17 @@ export default {
                         icon: 'mdi-close-thick',
                     })
                     .then(() => {
-                        this.unsetFormTriggers();
+                        this[this.button_loader] = false
+                        this.button_loader = null;
                     });
                 }
             });
         },
+        debuggerButton() {
+            // console.log(this.form);
+        },
         createAndForward() {
             // TODO: Create new document then forward to office
-        },
-        closeAlert() {
-            this.alert = false;
-            this.alert_type = '';
-            this.alert_message = '';
         },
     },
     mounted() {

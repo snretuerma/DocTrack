@@ -19,8 +19,7 @@ class CreateDocumentsTable extends Migration
             $table->string('title');
             $table->boolean('is_external')->default(false);
             $table->foreignId('document_type_id');
-            $table->foreignId('originating_office_id')->nullable()->constrained('offices');
-            $table->string('external_office_name')->nullable();
+            $table->string('originating_office')->nullable();
             $table->foreignId('current_office_id')->nullable()->constrained('offices');
             $table->string('sender_name')->nullable();
             $table->unsignedInteger('page_count');
@@ -41,9 +40,6 @@ class CreateDocumentsTable extends Migration
     public function down()
     {
         Schema::table('documents', function (Blueprint $table) {
-            $table->dropIndex(['originating_office_id']);
-            $table->dropForeign(['originating_office_id']);
-            $table->dropColumn('originating_office_id');
             $table->dropIndex(['current_office_id']);
             $table->dropForeign(['current_office_id']);
             $table->dropColumn('current_office_id');

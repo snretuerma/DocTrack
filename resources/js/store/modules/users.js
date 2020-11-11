@@ -14,6 +14,7 @@ function buildName(first_name, middle_name, last_name, suffix) {
 const state = {
     user: {},
     all_users: [],
+    all_users_loading: true,
     user_full_name: '',
     form_requests : {
         request_form_type: '',
@@ -40,7 +41,15 @@ const actions = {
     },
     async getAllUsers({ commit }) {
         await axios.get('/api/all_users').then(response => {
-            console.log(response.data);
+            response.data.forEach(element => {
+                element.full_name = '';
+                element.full_name = buildName(
+                    element.first_name,
+                    element.middle_name,
+                    element.last_name,
+                    element.suffix
+                );
+            });
             commit('FETCH_ALL_USERS', response.data);
         });
 
@@ -87,7 +96,6 @@ const mutations = {
         state.form_requests.status_message = '';
     },
     FETCH_ALL_USERS: (state, users) => {
-        console.log(users);
         state.all_users = users;
     },
     UPDATE_USER_COMPLETE_NAME: (state, data) => {
