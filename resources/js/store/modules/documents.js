@@ -49,7 +49,7 @@ const actions = {
 
 const mutations = {
     GET_ALL_DOCUMENTS(state, response) {
-        state.documents = response.data;
+        state.documents = response;
     },
     GET_ALL_DOCUMENT_TYPES(state, document_types) {
         state.document_types = document_types;

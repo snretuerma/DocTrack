@@ -1988,6 +1988,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -2071,7 +2072,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['page_loader']),
   data: function data() {
     return {
       form: {
@@ -2085,6 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
+      this.$store.dispatch('setLoader');
       this.submitStatus = '';
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/api/login', _this.form).then(function (response) {
@@ -2096,6 +2110,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('unsetLoader');
   }
 });
 
@@ -3169,9 +3186,90 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getDocuments', 'unsetLoader'])),
+  data: function data() {
+    return {
+      search: '',
+      headers: [{
+        text: 'Tracking ID',
+        value: 'tracking_code'
+      }, {
+        text: 'Title',
+        value: 'title'
+      }, {
+        text: 'Source',
+        value: 'is_external'
+      }, {
+        text: 'Document Type',
+        value: 'document_type_id'
+      }, {
+        text: 'Originating Office',
+        value: 'originating_office'
+      }, {
+        text: 'Current Office',
+        value: 'current_office_id'
+      }, {
+        text: 'Sender Name',
+        value: 'sender_name'
+      }, {
+        text: 'Page Count',
+        value: 'page_count'
+      }, {
+        text: 'Attachment Page Count',
+        value: 'attachment_page_count'
+      }, {
+        text: 'Date Filed',
+        value: 'date_filed'
+      }, {
+        text: 'Terminal',
+        value: 'is_terminal'
+      }, {
+        text: 'Remarks',
+        value: 'remarks'
+      }]
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['documents'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getDocuments', 'unsetLoader'])), {}, {
+    getAllDocuments: function getAllDocuments() {
+      this.getDocuments();
+    }
+  }),
   mounted: function mounted() {
     this.unsetLoader();
     this.getDocuments();
@@ -3978,31 +4076,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/**
- * TODO: Use combobox instead of using internal or external triggers for offices
- *       Use combobox for typing sender name
-**/
+// TODO: Add preloaders for the select input
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -27332,6 +27406,18 @@ var render = function() {
             [
               _c("v-toolbar-title", [_vm._v("Document Tracking System")]),
               _vm._v(" "),
+              _c("v-progress-linear", {
+                attrs: {
+                  active: _vm.page_loader,
+                  color: "#A83F39",
+                  height: "8",
+                  indeterminate: "",
+                  striped: "",
+                  absolute: "",
+                  bottom: ""
+                }
+              }),
+              _vm._v(" "),
               _c("v-spacer")
             ],
             1
@@ -29533,7 +29619,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("VIEW ALL DOCUMENTS")])
+  return _c(
+    "v-card",
+    { attrs: { flat: "" } },
+    [
+      _c("v-card-title", { attrs: { "primary-title": "" } }, [
+        _vm._v("\r\n        All Documents\r\n    ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        [
+          _c("v-data-table", {
+            staticClass: "elevation-1",
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.documents,
+              "item-key": "id",
+              search: _vm.search
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -31450,50 +31561,6 @@ var render = function() {
                                       ),
                                       _vm._v(
                                         "\r\n                                Create\r\n                            "
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-row",
-                          [
-                            _c("v-col", [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "my-2",
-                                  attrs: { align: "center", justify: "end" }
-                                },
-                                [
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: {
-                                        color: "primary",
-                                        type: "submit"
-                                      },
-                                      on: { click: _vm.debuggerButton }
-                                    },
-                                    [
-                                      _c(
-                                        "v-icon",
-                                        { attrs: { left: "", dark: "" } },
-                                        [
-                                          _vm._v(
-                                            "\r\n                                    mdi-plus\r\n                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(
-                                        "\r\n                                Create Debug\r\n                            "
                                       )
                                     ],
                                     1
@@ -93314,7 +93381,7 @@ var actions = {
 };
 var mutations = {
   GET_ALL_DOCUMENTS: function GET_ALL_DOCUMENTS(state, response) {
-    state.documents = response.data;
+    state.documents = response;
   },
   GET_ALL_DOCUMENT_TYPES: function GET_ALL_DOCUMENT_TYPES(state, document_types) {
     state.document_types = document_types;
@@ -93838,8 +93905,8 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('numeric', _objectSp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

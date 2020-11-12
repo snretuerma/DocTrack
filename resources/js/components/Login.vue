@@ -7,6 +7,15 @@
         dark
     >
         <v-toolbar-title>Document Tracking System</v-toolbar-title>
+        <v-progress-linear
+            :active="page_loader"
+            color="#A83F39"
+            height="8"
+            indeterminate
+            striped
+            absolute
+            bottom
+        />
         <v-spacer></v-spacer>
     </v-app-bar>
     <v-main>
@@ -30,6 +39,7 @@
                         </template>
                     </v-img>
                 </v-row>
+                <!-- TODO: Add VeeValidate and disable button when login is pressed to prevent multiple login request -->
                 <v-form @submit.prevent="login">
                     <v-card>
                         <v-toolbar color="blue darken-3" dark flat>
@@ -82,7 +92,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
+  computed: mapGetters(['page_loader']),
   data() {
       return {
           form: {
@@ -94,6 +106,7 @@ export default {
   },
   methods: {
        login() {
+           this.$store.dispatch('setLoader');
            this.submitStatus = '';
            axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.form)
@@ -108,5 +121,9 @@ export default {
            });
        }
     },
+
+    mounted() {
+        this.$store.dispatch('unsetLoader');
+    }
 };
 </script>

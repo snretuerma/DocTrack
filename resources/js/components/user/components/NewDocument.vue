@@ -252,26 +252,6 @@
                         </div>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col>
-                        <div
-                            class="my-2"
-                            align="center"
-                            justify="end"
-                        >
-                            <v-btn
-                                color="primary"
-                                type="submit"
-                                @click="debuggerButton"
-                            >
-                                <v-icon left dark>
-                                    mdi-plus
-                                </v-icon>
-                                Create Debug
-                            </v-btn>
-                        </div>
-                    </v-col>
-                </v-row>
             </v-form>
         </ValidationObserver>
     </v-card-text>
@@ -279,10 +259,7 @@
 </template>
 
 <script>
-/**
- * TODO: Use combobox instead of using internal or external triggers for offices
- *       Use combobox for typing sender name
-**/
+// TODO: Add preloaders for the select input
 import { mapGetters } from 'vuex';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 export default {
