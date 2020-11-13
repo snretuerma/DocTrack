@@ -3175,7 +3175,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3220,6 +3221,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3264,14 +3290,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['documents'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getDocuments', 'unsetLoader'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['documents', 'document_types'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getDocuments', 'getDocumentTypes', 'unsetLoader'])), {}, {
     getAllDocuments: function getAllDocuments() {
       this.getDocuments();
-    }
+    },
+    getTrackingCodeColor: function getTrackingCodeColor(document_type_id) {
+      return _constants__WEBPACK_IMPORTED_MODULE_0__["colors"][document_type_id];
+    },
+    getDocumentTypeName: function getDocumentTypeName(document_type_id) {
+      var type = this.document_types.find(function (_ref) {
+        var id = _ref.id;
+        return id === document_type_id;
+      });
+      return type.name;
+    } // TODO: Name Getters, Office Getters, Office Getters and Loading Indicators
+
   }),
   mounted: function mounted() {
     this.unsetLoader();
+    this.getDocumentTypes();
     this.getDocuments();
   }
 });
@@ -29637,7 +29675,111 @@ var render = function() {
               items: _vm.documents,
               "item-key": "id",
               search: _vm.search
-            }
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "header.page_count",
+                  fn: function(ref) {
+                    return [_c("v-icon", [_vm._v("mdi-counter")])]
+                  }
+                },
+                {
+                  key: "header.attachment_page_count",
+                  fn: function(ref) {
+                    return [_c("v-icon", [_vm._v("mdi-attachment")])]
+                  }
+                },
+                {
+                  key: "header.is_terminal",
+                  fn: function(ref) {
+                    return [_c("v-icon", [_vm._v("mdi-ray-end")])]
+                  }
+                },
+                {
+                  key: "item.tracking_code",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-chip",
+                        {
+                          attrs: {
+                            label: "",
+                            dark: "",
+                            color: _vm.getTrackingCodeColor(
+                              item.document_type_id
+                            )
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\r\n                            " +
+                              _vm._s(item.tracking_code) +
+                              "\r\n                        "
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.is_external",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      item.is_external
+                        ? _c("span", [
+                            _vm._v(
+                              "\r\n                    External\r\n                "
+                            )
+                          ])
+                        : _c("span", [
+                            _vm._v(
+                              "\r\n                    Internal\r\n                "
+                            )
+                          ])
+                    ]
+                  }
+                },
+                {
+                  key: "item.document_type_id",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\r\n                " +
+                          _vm._s(
+                            _vm.getDocumentTypeName(item.document_type_id)
+                          ) +
+                          "\r\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.is_terminal",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      item.is_terminal
+                        ? _c("span", [
+                            _vm._v(
+                              "\r\n                    Yes\r\n                "
+                            )
+                          ])
+                        : _c("span", [
+                            _vm._v(
+                              "\r\n                    No\r\n                "
+                            )
+                          ])
+                    ]
+                  }
+                }
+              ],
+              null,
+              true
+            )
           })
         ],
         1
@@ -93122,6 +93264,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewDocument_vue_vue_type_template_id_958963ea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/constants.js":
+/*!***********************************!*\
+  !*** ./resources/js/constants.js ***!
+  \***********************************/
+/*! exports provided: actions, status, document_types, colors */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "status", function() { return status; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "document_types", function() { return document_types; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colors", function() { return colors; });
+/**
+ * Application constants for front-end
+**/
+var actions = [{
+  'code': 10,
+  'value': 'create'
+}, {
+  'code': 11,
+  'value': 'receive'
+}, {
+  'code': 12,
+  'value': 'forward'
+}, {
+  'code': 13,
+  'value': 'terminate'
+}];
+var status = [{
+  'code': 20,
+  'value': 'processing'
+}, {
+  'code': 22,
+  'value': 'approved'
+}, {
+  'code': 23,
+  'value': 'on hold'
+}, {
+  'code': 24,
+  'value': 'rejected'
+}]; // Update when db changes
+
+var document_types = ['Executive Order', 'Provincial Ordinance', 'Letter', 'Purchase Order', 'Salary', 'Budget', 'Reports', 'Draft', 'Others'];
+var colors = ['#F06292', '#E53935', '#8E24AA', '#5E35B1', '#3949AB', '#1E88E5', '#039BE5', '#0097A7', '#00897B', '#43A047', '#689F38', '#AFB42B', '#F9A825', '#FFA000', '#FB8C00', '#F4511E', '#6D4C41', '#455A64', '#424242'];
 
 /***/ }),
 
