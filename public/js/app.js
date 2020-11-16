@@ -3289,6 +3289,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -3297,6 +3299,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       search: '',
       expanded: [],
+      footerProps: {
+        'items-per-page-options': [10, 30, 50, 100, -1]
+      },
       headers: [{
         text: 'Tracking ID',
         value: 'tracking_code'
@@ -3395,7 +3400,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.$store.dispatch('unsetLoader');
-    this.$store.dispatch('getDocuments').then(function () {
+    this.$store.dispatch('getActiveDocuments').then(function () {
       if (_this.offices && _this.document_types) {
         _this.$store.dispatch('unsetDataTableLoader');
       }
@@ -29764,6 +29769,8 @@ var render = function() {
                   headers: _vm.headers,
                   items: _vm.documents,
                   "item-key": "id",
+                  "items-per-page": 10,
+                  "footer-props": _vm.footerProps,
                   loading: _vm.datatable_loader,
                   "loading-text": "Loading... Please wait",
                   search: _vm.search,
@@ -29778,6 +29785,25 @@ var render = function() {
                 },
                 scopedSlots: _vm._u(
                   [
+                    {
+                      key: "top",
+                      fn: function() {
+                        return [
+                          _c("v-text-field", {
+                            staticClass: "mx-4",
+                            attrs: { label: "Search" },
+                            model: {
+                              value: _vm.search,
+                              callback: function($$v) {
+                                _vm.search = $$v
+                              },
+                              expression: "search"
+                            }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    },
                     {
                       key: "header.page_count",
                       fn: function(ref) {
@@ -93694,7 +93720,7 @@ var getters = {
   }
 };
 var actions = {
-  getDocuments: function getDocuments(_ref) {
+  getActiveDocuments: function getActiveDocuments(_ref) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -93703,11 +93729,11 @@ var actions = {
             case 0:
               commit = _ref.commit;
               _context.next = 3;
-              return axios.get("/api/get_all_documents");
+              return axios.get("/api/get_active_documents");
 
             case 3:
               response = _context.sent;
-              commit('GET_ALL_DOCUMENTS', response.data);
+              commit('GET_ALL_ACTIVE_DOCUMENTS', response.data);
 
             case 5:
             case "end":
@@ -93776,7 +93802,7 @@ var actions = {
   }
 };
 var mutations = {
-  GET_ALL_DOCUMENTS: function GET_ALL_DOCUMENTS(state, response) {
+  GET_ALL_ACTIVE_DOCUMENTS: function GET_ALL_ACTIVE_DOCUMENTS(state, response) {
     state.documents = response;
   },
   GET_ALL_DOCUMENT_TYPES: function GET_ALL_DOCUMENT_TYPES(state, document_types) {

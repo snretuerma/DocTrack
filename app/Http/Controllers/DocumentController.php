@@ -24,9 +24,12 @@ class DocumentController extends Controller
         return DocumentType::get();
     }
 
-    public function getAllDocuments(): Collection
+    public function getAllActiveDocuments(): Collection
     {
-        return Document::where('current_office_id', Auth::user()->office_id)->get();
+        return Document::where('current_office_id', Auth::user()->office_id)
+            ->where('is_terminal', false)
+            ->orderBy('date_filed', 'desc')
+            ->get();
     }
 
     public function addNewDocument(Request $request): Array

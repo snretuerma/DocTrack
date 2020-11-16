@@ -9,6 +9,8 @@
             :headers="headers"
             :items="documents"
             item-key="id"
+            :items-per-page="10"
+            :footer-props="footerProps"
             :loading="datatable_loader"
             loading-text="Loading... Please wait"
             class="elevation-1"
@@ -17,13 +19,13 @@
             :expanded.sync="expanded"
             show-expand
         >
-            <!-- <template v-slot:top>
+            <template v-slot:top>
                 <v-text-field
-                v-model="search"
-                label="Search (UPPER CASE ONLY)"
-                class="mx-4"
-                ></v-text-field>
-            </template> -->
+                    v-model="search"
+                    label="Search"
+                    class="mx-4"
+                />
+            </template>
             <template v-slot:[`header.page_count`] = "{  }">
                 <v-icon>mdi-counter</v-icon>
             </template>
@@ -108,6 +110,7 @@ export default {
         return {
             search: '',
             expanded: [],
+            footerProps: {'items-per-page-options': [10, 30, 50, 100, -1]},
             headers: [
                 { text: 'Tracking ID', value: 'tracking_code' },
                 { text: 'Title', value: 'title' },
@@ -170,7 +173,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('unsetLoader');
-        this.$store.dispatch('getDocuments').then(() => {
+        this.$store.dispatch('getActiveDocuments').then(() => {
             if (this.offices && this.document_types) {
                 this.$store.dispatch('unsetDataTableLoader');
             }

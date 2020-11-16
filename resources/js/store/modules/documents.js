@@ -17,9 +17,9 @@ const getters = {
 }
 
 const actions = {
-    async getDocuments({ commit }) {
-        const response = await axios.get(`/api/get_all_documents`);
-        commit('GET_ALL_DOCUMENTS', response.data);
+    async getActiveDocuments({ commit }) {
+        const response = await axios.get(`/api/get_active_documents`);
+        commit('GET_ALL_ACTIVE_DOCUMENTS', response.data);
     },
     async getDocumentTypes({ commit }) {
         const response = await axios.get('document_type_list');
@@ -48,7 +48,7 @@ const actions = {
 }
 
 const mutations = {
-    GET_ALL_DOCUMENTS(state, response) {
+    GET_ALL_ACTIVE_DOCUMENTS(state, response) {
         state.documents = response;
     },
     GET_ALL_DOCUMENT_TYPES(state, document_types) {
