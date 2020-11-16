@@ -2933,7 +2933,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.$route.name !== 'All Documents') {
         this.$store.dispatch('setLoader');
-        axios.get('all_documents').then(function () {
+        axios.get('all_active_document').then(function () {
           _this3.$router.push({
             name: "All Documents"
           });
@@ -3180,8 +3180,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3291,7 +3289,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+/**
+ * TODO:
+ *  Add Modal for View more to reduce the data in the datatable
+ *  Add actions for the buttons to redirect to another page
+**/
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3337,6 +3392,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'date_filed'
       }, {
         text: 'Remarks',
+        value: 'remarks'
+      }, {
+        text: 'View',
+        value: 'view_more',
+        sortable: false
+      }, {
+        text: 'Actions',
         value: 'data-table-expand'
       }]
     };
@@ -29756,7 +29818,7 @@ var render = function() {
     { attrs: { flat: "" } },
     [
       _c("v-card-title", { attrs: { "primary-title": "" } }, [
-        _vm._v("\r\n        All Documents\r\n    ")
+        _vm._v("\r\n        All Active Documents\r\n    ")
       ]),
       _vm._v(" "),
       _c(
@@ -29984,26 +30046,172 @@ var render = function() {
                       }
                     },
                     {
+                      key: "item.view_more",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-icon",
+                            { staticClass: "mr-2", attrs: { small: "" } },
+                            [
+                              _vm._v(
+                                "\r\n                    mdi-more\r\n                "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    },
+                    {
                       key: "expanded-item",
                       fn: function(ref) {
                         var headers = ref.headers
                         var item = ref.item
                         return [
-                          _c("td", { attrs: { colspan: headers.length } }, [
-                            item.remarks != null
-                              ? _c("div", { staticClass: "text-center" }, [
-                                  _vm._v(
-                                    "\r\n                        " +
-                                      _vm._s(item.remarks) +
-                                      "\r\n                    "
+                          _c(
+                            "td",
+                            { attrs: { colspan: headers.length } },
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            text: "",
+                                            color: "#26A69A",
+                                            block: ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { left: "" } },
+                                            [
+                                              _vm._v(
+                                                "\r\n                                    mdi-pencil\r\n                                "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\r\n                                Edit\r\n                            "
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            text: "",
+                                            color: "#FFCA28",
+                                            block: ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { left: "" } },
+                                            [
+                                              _vm._v(
+                                                "\r\n                                    mdi-email-send-outline\r\n                                "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\r\n                                Receive\r\n                            "
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            text: "",
+                                            color: "#9575CD",
+                                            block: ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { left: "" } },
+                                            [
+                                              _vm._v(
+                                                "\r\n                                    mdi-email-receive-outline\r\n                                "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\r\n                                Forward\r\n                            "
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "3" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            text: "",
+                                            color: "#F06292",
+                                            block: ""
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { left: "" } },
+                                            [
+                                              _vm._v(
+                                                "\r\n                                    mdi-email-off-outline\r\n                                "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(
+                                            "\r\n                                Terminal\r\n                            "
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
                                   )
-                                ])
-                              : _c("div", { staticClass: "text-center" }, [
-                                  _vm._v(
-                                    "\r\n                        No remarks for this document\r\n                    "
-                                  )
-                                ])
-                          ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
                         ]
                       }
                     }
@@ -93620,9 +93828,9 @@ __webpack_require__.r(__webpack_exports__);
       component: _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_5__["default"],
       name: 'New Document'
     }, {
-      path: 'all_document',
+      path: 'all_active_document',
       component: _components_user_components_AllDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
-      name: 'All Documents'
+      name: 'All Active Documents'
     }, {
       path: 'receive_document/:routing_number',
       component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__["default"],

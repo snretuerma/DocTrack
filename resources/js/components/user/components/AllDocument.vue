@@ -1,7 +1,7 @@
 <template>
 <v-card flat>
     <v-card-title primary-title>
-        All Documents
+        All Active Documents
     </v-card-title>
         <v-card-text>
             <v-data-table
@@ -86,14 +86,66 @@
                     No
                 </td>
             </template>
+            <template v-slot:[`item.view_more`]="{ item }">
+                <v-icon
+                    small
+                    class="mr-2"
+                >
+                    mdi-more
+                </v-icon>
+            </template>
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
-                    <div class="text-center" v-if="item.remarks != null">
-                        {{ item.remarks }}
-                    </div>
-                    <div class="text-center" v-else>
-                        No remarks for this document
-                    </div>
+                    <v-row>
+                        <v-col cols="12" sm="3">
+                            <v-btn
+                                text
+                                color="#26A69A"
+                                block
+                            >
+                                <v-icon left>
+                                    mdi-pencil
+                                </v-icon>
+                                Edit
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="3">
+                            <v-btn
+                                text
+                                color="#FFCA28"
+                                block
+                            >
+                                <v-icon left>
+                                    mdi-email-send-outline
+                                </v-icon>
+                                Receive
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="3">
+                            <v-btn
+                                text
+                                color="#9575CD"
+                                block
+                            >
+                                <v-icon left>
+                                    mdi-email-receive-outline
+                                </v-icon>
+                                Forward
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="3">
+                            <v-btn
+                                text
+                                color="#F06292"
+                                block
+                            >
+                                <v-icon left>
+                                    mdi-email-off-outline
+                                </v-icon>
+                                Terminal
+                            </v-btn>
+                        </v-col>
+                    </v-row>
                 </td>
             </template>
         </v-data-table>
@@ -102,9 +154,13 @@
 </template>
 
 <script>
+/**
+ * TODO:
+ *  Add Modal for View more to reduce the data in the datatable
+ *  Add actions for the buttons to redirect to another page
+**/
 import { colors } from '../../../constants';
 import { mapGetters, mapActions } from "vuex";
-import _ from 'lodash'
 export default {
     data() {
         return {
@@ -123,7 +179,9 @@ export default {
                 { text: 'Attachment Page Count', value: 'attachment_page_count' },
                 { text: 'Terminal', value: 'is_terminal' },
                 { text: 'Date Filed', value: 'date_filed' },
-                { text: 'Remarks', value: 'data-table-expand' },
+                { text: 'Remarks', value: 'remarks' },
+                { text: 'View', value: 'view_more', sortable: false },
+                { text: 'Actions', value: 'data-table-expand' },
             ],
         }
     },

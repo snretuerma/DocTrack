@@ -59,9 +59,9 @@ export default {
                     name: 'New Document'
                 },
                 {
-                    path: 'all_document',
+                    path: 'all_active_document',
                     component: AllDocument,
-                    name: 'All Documents'
+                    name: 'All Active Documents'
                 },
                 {
                     path: 'receive_document/:routing_number',
