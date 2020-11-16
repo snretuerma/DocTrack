@@ -5,11 +5,17 @@
     </v-card-title>
         <v-card-text>
             <v-data-table
+            v-if="documents"
             :headers="headers"
             :items="documents"
             item-key="id"
+            :loading="datatable_loader"
+            loading-text="Loading... Please wait"
             class="elevation-1"
             :search="search"
+            :single-expand="false"
+            :expanded.sync="expanded"
+            show-expand
         >
             <!-- <template v-slot:top>
                 <v-text-field
@@ -37,23 +43,56 @@
                         </v-chip>
             </template>
             <template v-slot:[`item.is_external`] = "{ item }">
-                <span v-if="item.is_external">
+                <td v-if="item.is_external">
                     External
-                </span>
-                <span v-else>
+                </td>
+                <td v-else>
                     Internal
-                </span>
+                </td>
             </template>
             <template v-slot:[`item.document_type_id`] = "{ item }">
-                {{getDocumentTypeName(item.document_type_id)}}
+                <div v-if="item">
+                    {{ findDocumentTypeName(item.document_type_id) }}
+                </div>
+            </template>
+            <template v-slot:[`item.originating_office`] = "{ item }">
+                <div v-if="item && checkIfID(item.originating_office)">
+                    {{ findDocumentOriginatingOfficeName(item.originating_office) }}
+                </div>
+                <div v-else>
+                    {{ item.originating_office }}
+                </div>
+            </template>
+            <template v-slot:[`item.current_office_id`] = "{ item }">
+                <div v-if="item">
+                    {{ findDocumentCurrentOfficeName(item.current_office_id) }}
+                </div>
+            </template>
+            <template v-slot:[`item.sender_name`] = "{ item }">
+                <div v-if="item && checkIfID(item.sender_name)">
+                    {{ findDocumentSenderName(item.sender_name) }}
+                </div>
+                <div v-else>
+                    {{ item.sender_name }}
+                </div>
             </template>
             <template v-slot:[`item.is_terminal`] = "{ item }">
-                <span v-if="item.is_terminal">
+                <td v-if="item.is_terminal">
                     Yes
-                </span>
-                <span v-else>
+                </td>
+                <td v-else>
                     No
-                </span>
+                </td>
+            </template>
+            <template v-slot:expanded-item="{ headers, item }">
+                <td :colspan="headers.length">
+                    <div class="text-center" v-if="item.remarks != null">
+                        {{ item.remarks }}
+                    </div>
+                    <div class="text-center" v-else>
+                        No remarks for this document
+                    </div>
+                </td>
             </template>
         </v-data-table>
     </v-card-text>
@@ -61,49 +100,81 @@
 </template>
 
 <script>
-import { colors, document_types } from '../../../constants';
+import { colors } from '../../../constants';
 import { mapGetters, mapActions } from "vuex";
+import _ from 'lodash'
 export default {
     data() {
         return {
             search: '',
+            expanded: [],
             headers: [
                 { text: 'Tracking ID', value: 'tracking_code' },
                 { text: 'Title', value: 'title' },
                 { text: 'Source', value: 'is_external' },
-                { text: 'Document Type', value: 'document_type_id' },
+                { text: 'Type', value: 'document_type_id' },
                 { text: 'Originating Office', value: 'originating_office' },
                 { text: 'Current Office', value: 'current_office_id' },
-                { text: 'Sender Name', value: 'sender_name' },
+                { text: 'Sender', value: 'sender_name' },
                 { text: 'Page Count', value: 'page_count' },
                 { text: 'Attachment Page Count', value: 'attachment_page_count' },
-                { text: 'Date Filed', value: 'date_filed' },
                 { text: 'Terminal', value: 'is_terminal' },
-                { text: 'Remarks', value: 'remarks' },
+                { text: 'Date Filed', value: 'date_filed' },
+                { text: 'Remarks', value: 'data-table-expand' },
             ],
         }
     },
     computed: {
-        ...mapGetters(['documents', 'document_types'])
+        offices() {
+            return this.$store.state.offices.offices;
+        },
+        document_types() {
+            return this.$store.state.documents.document_types;
+        },
+        users() {
+            return this.$store.state.users.all_users;
+        },
+        ...mapGetters(['documents', 'datatable_loader'])
     },
     methods: {
-        ...mapActions(['getDocuments', 'getDocumentTypes','unsetLoader']),
-        getAllDocuments() {
-            this.getDocuments();
+        checkIfID(string) {
+            return /^-?\d+$/.test(string);
         },
         getTrackingCodeColor(document_type_id) {
-            return colors[document_type_id]
+            return colors[document_type_id];
         },
-        getDocumentTypeName(document_type_id) {
-            var type = this.document_types.find(({ id }) => id === document_type_id);
-            return type.name;
+        findDocumentTypeName(document_type_id) {
+            var document_type = this.document_types.find(element => element.id == document_type_id);
+            if (document_type != null) {
+                return document_type.name;
+            }
         },
-        // TODO: Name Getters, Office Getters, Office Getters and Loading Indicators
+        findDocumentOriginatingOfficeName(originating_office) {
+            var office = this.offices.find(element => element.id == originating_office);
+            if (office != null) {
+                return office.name;
+            }
+        },
+        findDocumentCurrentOfficeName(current_office) {
+            var office = this.offices.find(element => element.id == current_office);
+            if (office != null) {
+                return office.name;
+            }
+        },
+        findDocumentSenderName(sender_id) {
+            var sender = this.users.find(element => element.id == sender_id);
+            if (sender != null) {
+                return sender.full_name;
+            }
+        }
     },
     mounted() {
-        this.unsetLoader();
-        this.getDocumentTypes();
-        this.getDocuments();
+        this.$store.dispatch('unsetLoader');
+        this.$store.dispatch('getDocuments').then(() => {
+            if (this.offices && this.document_types) {
+                this.$store.dispatch('unsetDataTableLoader');
+            }
+        });
     }
 }
 </script>

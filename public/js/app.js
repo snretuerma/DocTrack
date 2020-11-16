@@ -1971,9 +1971,8 @@ __webpack_require__.r(__webpack_exports__);
     UserHomeComponent: _user_Home__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["auth_user", "snackbar"]),
-  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["getAuthUser"]),
   mounted: function mounted() {
-    this.getAuthUser();
+    this.$store.dispatch('getAuthUser');
   }
 });
 
@@ -2986,7 +2985,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return Math.floor(Math.random() * (max - min) + min);
     }
   }),
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.$store.dispatch('getOffices');
+    this.$store.dispatch('getDocumentTypes');
+    this.$store.dispatch('getAllUsers');
+  }
 });
 
 /***/ }),
@@ -3177,6 +3180,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3245,12 +3250,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       search: '',
+      expanded: [],
       headers: [{
         text: 'Tracking ID',
         value: 'tracking_code'
@@ -3261,7 +3307,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Source',
         value: 'is_external'
       }, {
-        text: 'Document Type',
+        text: 'Type',
         value: 'document_type_id'
       }, {
         text: 'Originating Office',
@@ -3270,7 +3316,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Current Office',
         value: 'current_office_id'
       }, {
-        text: 'Sender Name',
+        text: 'Sender',
         value: 'sender_name'
       }, {
         text: 'Page Count',
@@ -3279,38 +3325,81 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Attachment Page Count',
         value: 'attachment_page_count'
       }, {
-        text: 'Date Filed',
-        value: 'date_filed'
-      }, {
         text: 'Terminal',
         value: 'is_terminal'
       }, {
+        text: 'Date Filed',
+        value: 'date_filed'
+      }, {
         text: 'Remarks',
-        value: 'remarks'
+        value: 'data-table-expand'
       }]
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['documents', 'document_types'])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getDocuments', 'getDocumentTypes', 'unsetLoader'])), {}, {
-    getAllDocuments: function getAllDocuments() {
-      this.getDocuments();
+  computed: _objectSpread({
+    offices: function offices() {
+      return this.$store.state.offices.offices;
+    },
+    document_types: function document_types() {
+      return this.$store.state.documents.document_types;
+    },
+    users: function users() {
+      return this.$store.state.users.all_users;
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['documents', 'datatable_loader'])),
+  methods: {
+    checkIfID: function checkIfID(string) {
+      return /^-?\d+$/.test(string);
     },
     getTrackingCodeColor: function getTrackingCodeColor(document_type_id) {
       return _constants__WEBPACK_IMPORTED_MODULE_0__["colors"][document_type_id];
     },
-    getDocumentTypeName: function getDocumentTypeName(document_type_id) {
-      var type = this.document_types.find(function (_ref) {
-        var id = _ref.id;
-        return id === document_type_id;
+    findDocumentTypeName: function findDocumentTypeName(document_type_id) {
+      var document_type = this.document_types.find(function (element) {
+        return element.id == document_type_id;
       });
-      return type.name;
-    } // TODO: Name Getters, Office Getters, Office Getters and Loading Indicators
 
-  }),
+      if (document_type != null) {
+        return document_type.name;
+      }
+    },
+    findDocumentOriginatingOfficeName: function findDocumentOriginatingOfficeName(originating_office) {
+      var office = this.offices.find(function (element) {
+        return element.id == originating_office;
+      });
+
+      if (office != null) {
+        return office.name;
+      }
+    },
+    findDocumentCurrentOfficeName: function findDocumentCurrentOfficeName(current_office) {
+      var office = this.offices.find(function (element) {
+        return element.id == current_office;
+      });
+
+      if (office != null) {
+        return office.name;
+      }
+    },
+    findDocumentSenderName: function findDocumentSenderName(sender_id) {
+      var sender = this.users.find(function (element) {
+        return element.id == sender_id;
+      });
+
+      if (sender != null) {
+        return sender.full_name;
+      }
+    }
+  },
   mounted: function mounted() {
-    this.unsetLoader();
-    this.getDocumentTypes();
-    this.getDocuments();
+    var _this = this;
+
+    this.$store.dispatch('unsetLoader');
+    this.$store.dispatch('getDocuments').then(function () {
+      if (_this.offices && _this.document_types) {
+        _this.$store.dispatch('unsetDataTableLoader');
+      }
+    });
   }
 });
 
@@ -29668,119 +29757,236 @@ var render = function() {
       _c(
         "v-card-text",
         [
-          _c("v-data-table", {
-            staticClass: "elevation-1",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.documents,
-              "item-key": "id",
-              search: _vm.search
-            },
-            scopedSlots: _vm._u(
-              [
-                {
-                  key: "header.page_count",
-                  fn: function(ref) {
-                    return [_c("v-icon", [_vm._v("mdi-counter")])]
+          _vm.documents
+            ? _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.documents,
+                  "item-key": "id",
+                  loading: _vm.datatable_loader,
+                  "loading-text": "Loading... Please wait",
+                  search: _vm.search,
+                  "single-expand": false,
+                  expanded: _vm.expanded,
+                  "show-expand": ""
+                },
+                on: {
+                  "update:expanded": function($event) {
+                    _vm.expanded = $event
                   }
                 },
-                {
-                  key: "header.attachment_page_count",
-                  fn: function(ref) {
-                    return [_c("v-icon", [_vm._v("mdi-attachment")])]
-                  }
-                },
-                {
-                  key: "header.is_terminal",
-                  fn: function(ref) {
-                    return [_c("v-icon", [_vm._v("mdi-ray-end")])]
-                  }
-                },
-                {
-                  key: "item.tracking_code",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _c(
-                        "v-chip",
-                        {
-                          attrs: {
-                            label: "",
-                            dark: "",
-                            color: _vm.getTrackingCodeColor(
-                              item.document_type_id
-                            )
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\r\n                            " +
-                              _vm._s(item.tracking_code) +
-                              "\r\n                        "
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "header.page_count",
+                      fn: function(ref) {
+                        return [_c("v-icon", [_vm._v("mdi-counter")])]
+                      }
+                    },
+                    {
+                      key: "header.attachment_page_count",
+                      fn: function(ref) {
+                        return [_c("v-icon", [_vm._v("mdi-attachment")])]
+                      }
+                    },
+                    {
+                      key: "header.is_terminal",
+                      fn: function(ref) {
+                        return [_c("v-icon", [_vm._v("mdi-ray-end")])]
+                      }
+                    },
+                    {
+                      key: "item.tracking_code",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-chip",
+                            {
+                              attrs: {
+                                label: "",
+                                dark: "",
+                                color: _vm.getTrackingCodeColor(
+                                  item.document_type_id
+                                )
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                            " +
+                                  _vm._s(item.tracking_code) +
+                                  "\r\n                        "
+                              )
+                            ]
                           )
                         ]
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.is_external",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      item.is_external
-                        ? _c("span", [
-                            _vm._v(
-                              "\r\n                    External\r\n                "
-                            )
+                      }
+                    },
+                    {
+                      key: "item.is_external",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item.is_external
+                            ? _c("td", [
+                                _vm._v(
+                                  "\r\n                    External\r\n                "
+                                )
+                              ])
+                            : _c("td", [
+                                _vm._v(
+                                  "\r\n                    Internal\r\n                "
+                                )
+                              ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.document_type_id",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item
+                            ? _c("div", [
+                                _vm._v(
+                                  "\r\n                    " +
+                                    _vm._s(
+                                      _vm.findDocumentTypeName(
+                                        item.document_type_id
+                                      )
+                                    ) +
+                                    "\r\n                "
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.originating_office",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item && _vm.checkIfID(item.originating_office)
+                            ? _c("div", [
+                                _vm._v(
+                                  "\r\n                    " +
+                                    _vm._s(
+                                      _vm.findDocumentOriginatingOfficeName(
+                                        item.originating_office
+                                      )
+                                    ) +
+                                    "\r\n                "
+                                )
+                              ])
+                            : _c("div", [
+                                _vm._v(
+                                  "\r\n                    " +
+                                    _vm._s(item.originating_office) +
+                                    "\r\n                "
+                                )
+                              ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.current_office_id",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item
+                            ? _c("div", [
+                                _vm._v(
+                                  "\r\n                    " +
+                                    _vm._s(
+                                      _vm.findDocumentCurrentOfficeName(
+                                        item.current_office_id
+                                      )
+                                    ) +
+                                    "\r\n                "
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.sender_name",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item && _vm.checkIfID(item.sender_name)
+                            ? _c("div", [
+                                _vm._v(
+                                  "\r\n                    " +
+                                    _vm._s(
+                                      _vm.findDocumentSenderName(
+                                        item.sender_name
+                                      )
+                                    ) +
+                                    "\r\n                "
+                                )
+                              ])
+                            : _c("div", [
+                                _vm._v(
+                                  "\r\n                    " +
+                                    _vm._s(item.sender_name) +
+                                    "\r\n                "
+                                )
+                              ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.is_terminal",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item.is_terminal
+                            ? _c("td", [
+                                _vm._v(
+                                  "\r\n                    Yes\r\n                "
+                                )
+                              ])
+                            : _c("td", [
+                                _vm._v(
+                                  "\r\n                    No\r\n                "
+                                )
+                              ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "expanded-item",
+                      fn: function(ref) {
+                        var headers = ref.headers
+                        var item = ref.item
+                        return [
+                          _c("td", { attrs: { colspan: headers.length } }, [
+                            item.remarks != null
+                              ? _c("div", { staticClass: "text-center" }, [
+                                  _vm._v(
+                                    "\r\n                        " +
+                                      _vm._s(item.remarks) +
+                                      "\r\n                    "
+                                  )
+                                ])
+                              : _c("div", { staticClass: "text-center" }, [
+                                  _vm._v(
+                                    "\r\n                        No remarks for this document\r\n                    "
+                                  )
+                                ])
                           ])
-                        : _c("span", [
-                            _vm._v(
-                              "\r\n                    Internal\r\n                "
-                            )
-                          ])
-                    ]
-                  }
-                },
-                {
-                  key: "item.document_type_id",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\r\n                " +
-                          _vm._s(
-                            _vm.getDocumentTypeName(item.document_type_id)
-                          ) +
-                          "\r\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.is_terminal",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      item.is_terminal
-                        ? _c("span", [
-                            _vm._v(
-                              "\r\n                    Yes\r\n                "
-                            )
-                          ])
-                        : _c("span", [
-                            _vm._v(
-                              "\r\n                    No\r\n                "
-                            )
-                          ])
-                    ]
-                  }
-                }
-              ],
-              null,
-              true
-            )
-          })
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            : _vm._e()
         ],
         1
       )
@@ -93282,6 +93488,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colors", function() { return colors; });
 /**
  * Application constants for front-end
+ * Update this everytime for each database update
 **/
 var actions = [{
   'code': 10,
@@ -93308,8 +93515,7 @@ var status = [{
 }, {
   'code': 24,
   'value': 'rejected'
-}]; // Update when db changes
-
+}];
 var document_types = ['Executive Order', 'Provincial Ordinance', 'Letter', 'Purchase Order', 'Salary', 'Budget', 'Reports', 'Draft', 'Others'];
 var colors = ['#F06292', '#E53935', '#8E24AA', '#5E35B1', '#3949AB', '#1E88E5', '#039BE5', '#0097A7', '#00897B', '#43A047', '#689F38', '#AFB42B', '#F9A825', '#FFA000', '#FB8C00', '#F4511E', '#6D4C41', '#455A64', '#424242'];
 
@@ -93607,11 +93813,15 @@ var mutations = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  page_loader: true
+  page_loader: true,
+  datatable_loader: true
 };
 var getters = {
   page_loader: function page_loader(state) {
     return state.page_loader;
+  },
+  datatable_loader: function datatable_loader(state) {
+    return state.datatable_loader;
   }
 };
 var actions = {
@@ -93622,6 +93832,14 @@ var actions = {
   unsetLoader: function unsetLoader(_ref2) {
     var commit = _ref2.commit;
     commit('UNSET_PAGE_LOADER');
+  },
+  setDataTableLoader: function setDataTableLoader(_ref3) {
+    var commit = _ref3.commit;
+    commit('SET_DATATABLE_LOADER');
+  },
+  unsetDataTableLoader: function unsetDataTableLoader(_ref4) {
+    var commit = _ref4.commit;
+    commit('UNSET_DATATABLE_LOADER');
   }
 };
 var mutations = {
@@ -93630,6 +93848,12 @@ var mutations = {
   },
   UNSET_PAGE_LOADER: function UNSET_PAGE_LOADER(state) {
     state.page_loader = false;
+  },
+  SET_DATATABLE_LOADER: function SET_DATATABLE_LOADER(state) {
+    state.datatable_loader = true;
+  },
+  UNSET_DATATABLE_LOADER: function UNSET_DATATABLE_LOADER(state) {
+    state.datatable_loader = false;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -93659,8 +93883,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var state = {
-  offices: [],
-  office_list_loading: true
+  offices: []
 };
 var getters = {
   offices: function offices(state) {
@@ -93697,7 +93920,6 @@ var actions = {
 };
 var mutations = {
   GET_ALL_OFFICES: function GET_ALL_OFFICES(state, offices) {
-    state.office_list_loading = false;
     state.offices = offices;
   },
   EDIT_OFFICE: function EDIT_OFFICE() {}

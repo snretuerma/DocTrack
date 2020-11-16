@@ -1,9 +1,11 @@
 const state = {
     page_loader: true,
+    datatable_loader: true,
 }
 
 const getters = {
     page_loader: state => state.page_loader,
+    datatable_loader: state => state.datatable_loader,
 }
 
 const actions = {
@@ -12,6 +14,12 @@ const actions = {
     },
     unsetLoader({ commit }) {
         commit('UNSET_PAGE_LOADER');
+    },
+    setDataTableLoader({ commit }) {
+        commit('SET_DATATABLE_LOADER');
+    },
+    unsetDataTableLoader({ commit }) {
+        commit('UNSET_DATATABLE_LOADER');
     }
 }
 
@@ -22,6 +30,12 @@ const mutations = {
     UNSET_PAGE_LOADER(state) {
         state.page_loader = false;
     },
+    SET_DATATABLE_LOADER(state) {
+        state.datatable_loader = true;
+    },
+    UNSET_DATATABLE_LOADER(state) {
+        state.datatable_loader = false;
+    }
 }
 
 export default {

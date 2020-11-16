@@ -1,6 +1,7 @@
 
 /**
  * Application constants for front-end
+ * Update this everytime for each database update
 **/
 
 export const actions = [
@@ -17,7 +18,6 @@ export const status = [
     {'code': 24, 'value': 'rejected'},
 ];
 
-// Update when db changes
 export const document_types = [
     'Executive Order',
     'Provincial Ordinance',

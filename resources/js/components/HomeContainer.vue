@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import UserHomeComponent from './user/Home';
 export default {
     name: "HomeContainer",
@@ -48,9 +48,8 @@ export default {
         UserHomeComponent
     },
     computed: mapGetters(["auth_user", "snackbar"]),
-    methods: mapActions(["getAuthUser"]),
     mounted() {
-        this.getAuthUser();
+        this.$store.dispatch('getAuthUser');
     }
 }
 </script>

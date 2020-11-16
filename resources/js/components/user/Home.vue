@@ -248,6 +248,9 @@ export default {
         }
     },
     mounted() {
+        this.$store.dispatch('getOffices');
+        this.$store.dispatch('getDocumentTypes');
+        this.$store.dispatch('getAllUsers');
     }
 }
 </script>
