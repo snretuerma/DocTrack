@@ -11,7 +11,7 @@
                         <ValidationProvider rules="required" v-slot="{ errors, valid }">
                             <v-text-field
                                 v-model="form.document_title"
-                                label="Document Title"
+                                label="Document Title/Subject"
                                 prepend-inner-icon="mdi-format-title"
                                 outlined
                                 :error-messages="errors"

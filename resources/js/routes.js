@@ -1,9 +1,9 @@
 import Dashboard from './components/user/Dashboard';
 import DocumentRecords from './components/user/DocumentRecords';
-import Reports from './components/user/Reports';
 import AccountSettings from './components/user/AccountSettings';
 
 import AllDocument from './components/user/components/AllDocument'
+import DocumentDetails from './components/user/components/DocumentDetails';
 import NewDocument from './components/user/components/NewDocument';
 import DocumentAction from './components/user/DocumentAction';
 import ReportAging from './components/user/ReportAging';
@@ -61,7 +61,12 @@ export default {
                 {
                     path: 'all_active_document',
                     component: AllDocument,
-                    name: 'All Active Documents'
+                    name: 'All Active Documents',
+                },
+                {
+                    path: 'all_active_document/document_details/:id',
+                    component: DocumentDetails,
+                    name: 'Document Details'
                 },
                 {
                     path: 'receive_document/:routing_number',

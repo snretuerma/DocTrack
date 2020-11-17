@@ -23,6 +23,7 @@ Route::put('update_user/{id}', 'App\Http\Controllers\UserController@updateUser')
 Route::get('document_type_list', 'App\Http\Controllers\DocumentController@getDocumentTypes');
 Route::get('office_list', 'App\Http\Controllers\OfficeController@getOfficeList');
 Route::get('get_active_documents', 'App\Http\Controllers\DocumentController@getAllActiveDocuments');
+Route::get('get_non_page_active_documents', 'App\Http\Controllers\DocumentController@getNonPaginatedActiveDocuments');
 Route::post('add_new_document', 'App\Http\Controllers\DocumentController@addNewDocument');
 
 Route::middleware(['auth:sanctum'])->group(function () {

@@ -17,9 +17,13 @@ const getters = {
 }
 
 const actions = {
-    async getActiveDocuments({ commit }) {
-        const response = await axios.get(`/api/get_active_documents`);
+    async getActiveDocuments({ commit }, page_number) {
+        const response = await axios.get(`/api/get_active_documents?page=${page_number}`);
         commit('GET_ALL_ACTIVE_DOCUMENTS', response.data);
+    },
+    async getNonPaginatedActiveDocuments({ commit }) {
+        const response = await axios.get(`/api/get_non_page_active_documents`);
+        commit('GET_NON_PAGINATED_ACTIVE_DOCUMENTS', response.data);
     },
     async getDocumentTypes({ commit }) {
         const response = await axios.get('document_type_list');
@@ -49,6 +53,12 @@ const actions = {
 
 const mutations = {
     GET_ALL_ACTIVE_DOCUMENTS(state, response) {
+        state.documents = response;
+    },
+    SET_CURRENT_PAGE(state, data) {
+        state.documents.current_page = data;
+    },
+    GET_NON_PAGINATED_ACTIVE_DOCUMENTS(state, response) {
         state.documents = response;
     },
     GET_ALL_DOCUMENT_TYPES(state, document_types) {

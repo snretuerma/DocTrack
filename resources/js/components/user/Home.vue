@@ -210,10 +210,10 @@ export default {
         },
 
         getAllDocuments() {
-            if(this.$route.name !== 'All Documents') {
+            if(this.$route.name !== 'All Active Documents') {
                 this.$store.dispatch('setLoader');
                 axios.get('all_active_document').then(() => {
-                    this.$router.push({ name: "All Documents"});
+                    this.$router.push({ name: "All Active Documents"});
                 });
             }
         },

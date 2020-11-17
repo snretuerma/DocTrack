@@ -7,10 +7,9 @@
             <v-data-table
             v-if="documents"
             :headers="headers"
-            :items="documents"
+            :items="documents.data"
             item-key="id"
-            :items-per-page="10"
-            :footer-props="footerProps"
+            hide-default-footer
             :loading="datatable_loader"
             loading-text="Loading... Please wait"
             class="elevation-1"
@@ -87,12 +86,15 @@
                 </td>
             </template>
             <template v-slot:[`item.view_more`]="{ item }">
-                <v-icon
-                    small
-                    class="mr-2"
-                >
-                    mdi-more
-                </v-icon>
+                <td>
+                    <v-btn
+                        icon
+                        color="primary"
+                        @click="routerDocumentDetails(item.id)"
+                    >
+                        <v-icon>mdi-more</v-icon>
+                    </v-btn>
+                </td>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
@@ -149,6 +151,13 @@
                 </td>
             </template>
         </v-data-table>
+        <div class="text-center pt-2">
+            <v-pagination
+                v-model="current_page"
+                :length="last_page"
+                :total-visible="10"
+            ></v-pagination>
+        </div>
     </v-card-text>
 </v-card>
 </template>
@@ -157,7 +166,7 @@
 /**
  * TODO:
  *  Add Modal for View more to reduce the data in the datatable
- *  Add actions for the buttons to redirect to another page
+ *  FIXME: Search only
 **/
 import { colors } from '../../../constants';
 import { mapGetters, mapActions } from "vuex";
@@ -166,26 +175,31 @@ export default {
         return {
             search: '',
             expanded: [],
-            footerProps: {'items-per-page-options': [10, 30, 50, 100, -1]},
             headers: [
-                { text: 'Tracking ID', value: 'tracking_code' },
-                { text: 'Title', value: 'title' },
-                { text: 'Source', value: 'is_external' },
-                { text: 'Type', value: 'document_type_id' },
-                { text: 'Originating Office', value: 'originating_office' },
-                { text: 'Current Office', value: 'current_office_id' },
-                { text: 'Sender', value: 'sender_name' },
-                { text: 'Page Count', value: 'page_count' },
-                { text: 'Attachment Page Count', value: 'attachment_page_count' },
-                { text: 'Terminal', value: 'is_terminal' },
-                { text: 'Date Filed', value: 'date_filed' },
-                { text: 'Remarks', value: 'remarks' },
-                { text: 'View', value: 'view_more', sortable: false },
-                { text: 'Actions', value: 'data-table-expand' },
+                { text: 'Tracking ID', value: 'tracking_code', sortable: false },
+                { text: 'Subject', value: 'subject', sortable: false },
+                { text: 'Source', value: 'is_external', sortable: false },
+                { text: 'Type', value: 'document_type_id', sortable: false },
+                { text: 'Originating Office', value: 'originating_office', sortable: false },
+                { text: 'Current Office', value: 'current_office_id', sortable: false },
+                { text: 'Sender', value: 'sender_name', sortable: false },
+                // { text: 'Page Count', value: 'page_count' },
+                // { text: 'Attachment Page Count', value: 'attachment_page_count' },
+                // { text: 'Terminal', value: 'is_terminal' },
+                { text: 'Date Filed', value: 'date_filed', sortable: false },
+                // { text: 'Remarks', value: 'remarks' },
+                { text: 'View More', value: 'view_more', sortable: false },
+                { text: 'Actions', value: 'data-table-expand', sortable: false },
             ],
         }
     },
+    watch: {
+        current_page(new_value, old_value) {
+            this.paginateDocuments(new_value);
+        }
+    },
     computed: {
+        ...mapGetters(['documents', 'datatable_loader']),
         offices() {
             return this.$store.state.offices.offices;
         },
@@ -195,7 +209,20 @@ export default {
         users() {
             return this.$store.state.users.all_users;
         },
-        ...mapGetters(['documents', 'datatable_loader'])
+        current_page: {
+            get() {
+                return this.$store.state.documents.documents.current_page;
+            },
+            set(value) {
+                return this.$store.commit('SET_CURRENT_PAGE', value);
+            }
+        },
+        last_page: {
+            get() {
+                return this.$store.state.documents.documents.last_page;
+            },
+        },
+
     },
     methods: {
         checkIfID(string) {
@@ -227,6 +254,20 @@ export default {
             if (sender != null) {
                 return sender.full_name;
             }
+        },
+        routerDocumentDetails(id) {
+            if(this.$route.name !== 'Document Details') {
+                this.$store.dispatch('setLoader');
+                axios.get(`all_active_document/document_details/${id}`).then(() => {
+                    this.$router.push({ name: "Document Details", params: { id: id } });
+                });
+            }
+        },
+        paginateDocuments(page_number) {
+            this.$store.dispatch('setDataTableLoader');
+            this.$store.dispatch('getActiveDocuments', page_number).then(() => {
+                this.$store.dispatch('unsetDataTableLoader');
+            });
         }
     },
     mounted() {

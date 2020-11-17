@@ -11,6 +11,7 @@ use App\Models\DocumentType;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\TrackingRecord;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DocumentController extends Controller
 {
@@ -24,12 +25,21 @@ class DocumentController extends Controller
         return DocumentType::get();
     }
 
-    public function getAllActiveDocuments(): Collection
+    public function getAllActiveDocuments(): LengthAwarePaginator
     {
-        return Document::where('current_office_id', Auth::user()->office_id)
-            ->where('is_terminal', false)
-            ->orderBy('date_filed', 'desc')
-            ->get();
+        $documents = Document::where('current_office_id', Auth::user()->office_id)
+                    ->where('is_terminal', false)
+                    ->orderBy('date_filed', 'desc')
+                    ->paginate(10);
+        return $documents;
+    }
+
+    public function getNonPaginatedActiveDocuments() {
+        $documents = Document::where('current_office_id', Auth::user()->office_id)
+                    ->where('is_terminal', false)
+                    ->orderBy('date_filed', 'desc')
+                    ->get();
+        return $documents;
     }
 
     public function addNewDocument(Request $request): Array
@@ -38,7 +48,7 @@ class DocumentController extends Controller
         try {
             $document = new Document;
             $document->tracking_code = $request->tracking_id;
-            $document->title = strtoupper($request->document_title);
+            $document->subject = strtoupper($request->document_title);
             $document->is_external = $request->is_external;
             $document->document_type_id = $request->document_type;
             $document->originating_office = $request->originating_office;

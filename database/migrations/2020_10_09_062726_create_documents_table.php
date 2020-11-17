@@ -16,7 +16,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('tracking_code', 120);
-            $table->string('title');
+            $table->string('subject');
             $table->boolean('is_external')->default(false);
             $table->foreignId('document_type_id');
             $table->string('originating_office')->nullable();
