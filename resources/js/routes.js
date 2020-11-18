@@ -1,9 +1,9 @@
 import Dashboard from './components/user/Dashboard';
 import DocumentRecords from './components/user/DocumentRecords';
-import Reports from './components/user/Reports';
 import AccountSettings from './components/user/AccountSettings';
 
-import NewDocument from './components/user/NewDocument';
+import AllDocument from './components/user/components/AllDocument'
+import NewDocument from './components/user/components/NewDocument';
 import DocumentAction from './components/user/DocumentAction';
 import ReportAging from './components/user/ReportAging';
 import ReportMasterList from './components/user/ReportMasterList';
@@ -14,12 +14,13 @@ import NotFound from './components/NotFound';
 
 // TODO: Fix routes structure
 export default {
-    base: '/api',
+    base: '/',
     mode: 'history',
     routes: [
         {
             path: '*',
             component: NotFound,
+            name: 'Not Found'
         },
         {
             path: '/',
@@ -29,8 +30,8 @@ export default {
         {
             path: '/',
             component: HomeContainer,
-            beforeEnter: (to, form, next) => {
-                axios.get('/api/authenticated').then((response) => {
+            beforeEnter: (to, from, next) => {
+                axios.get('/authenticated').then((response) => {
                     next()
                 }).catch(() => {
                     return next({ name: 'Login'})
@@ -38,7 +39,7 @@ export default {
             },
             children: [
                 {
-                    path: '/',
+                    path: 'dashboard',
                     component: Dashboard,
                     name: 'Dashboard',
                 },
@@ -57,6 +58,31 @@ export default {
                     component: NewDocument,
                     name: 'New Document'
                 },
+                {
+                    path: 'all_active_document',
+                    component: AllDocument,
+                    name: 'All Active Documents',
+                },
+                // {
+                //     path: 'document_details/:id',
+                //     component: DocumentDetails,
+                //     name: 'Document Details',
+                //     beforeEnter: (to, from, next) => {
+                //         if (to.params.id) {
+                //             axios.get(`get_document_details/${to.params.id}`).then((response) => {
+                //                 next()
+                //             }).catch(() => {
+                //                 return next('All Active Documents');
+                //             });
+                //         }else {
+                //             return next(
+                //                 vm => {
+                //                     vm.prevRoute = from;
+                //                 }
+                //             );
+                //         }
+                //     },
+                // },
                 {
                     path: 'receive_document/:routing_number',
                     component: DocumentAction,

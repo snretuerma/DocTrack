@@ -1,5 +1,5 @@
 import { extend } from 'vee-validate';
-import { required, email, max, min, confirmed, alpha_spaces } from 'vee-validate/dist/rules';
+import { required, email, max, min, confirmed, alpha_spaces, numeric } from 'vee-validate/dist/rules';
 
 extend ('required', {
   ...required,
@@ -40,3 +40,8 @@ extend ('alpha_spaces', {
   ...alpha_spaces,
   message: 'Suffix may only contain alphabetic characters'
 })
+
+extend ('numeric', {
+  ...numeric,
+  message: 'This field must only contain numerical values'
+});

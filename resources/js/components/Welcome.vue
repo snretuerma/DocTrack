@@ -1,6 +1,8 @@
 <template>
 <v-app>
-    <router-view></router-view>
+    <v-scroll-x-transition :hide-on-leave="Boolean(true)">
+        <router-view/>
+    </v-scroll-x-transition>
 </v-app>
 </template>
 

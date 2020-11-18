@@ -3,75 +3,32 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        return Auth::user();
+        $this->middleware('auth:sanctum');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getAuthUser(): User
     {
-        //
+        return User::with('office', 'division', 'unit', 'sector')->find(Auth::id());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getAllUsers(): Collection
     {
-        //
+        return User::where('role_id', 2)->get();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+    public function updateUser(Request $request, string $userId)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $userId)
-    {
+        // TODO: Add Log entry for each change
         if($request->form_type == 'account_details') {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|max:255',
@@ -83,21 +40,21 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'message' => 'Form validation error',
-                    'code' => 'Failed'
+                    'code' => 'FAILED'
                 ]);
             }
 
             $user = User::where('id', $userId)->first();
-            $user->first_name = ucfirst($request->first_name);
-            $user->middle_name = ucfirst($request->middle_name);
-            $user->last_name = ucfirst($request->last_name);
+            $user->first_name = ucfirst(trim($request->first_name));
+            $user->middle_name = ucfirst(trim($request->middle_name));
+            $user->last_name = ucfirst(trim($request->last_name));
             if($request->name_suffix) {
-                $user->suffix = ucfirst($request->name_suffix);
+                $user->suffix = ucfirst(trim($request->name_suffix));
             }
             $user->save();
             return response()->json([
                 'message' => 'Account details successfully updated',
-                'code' => 'Success',
+                'code' => 'SUCCESS',
             ]);
         } else if($request->form_type == 'account_username') {
             $validator = Validator::make($request->all(), [
@@ -108,7 +65,7 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'message' => 'Form validation error',
-                    'code' => 'Failed'
+                    'code' => 'FAILED'
                 ]);
             }
 
@@ -118,12 +75,12 @@ class UserController extends Controller
                 $user->save();
                 return response()->json([
                     'message' => 'Username successfully updated',
-                    'code' => 'Success'
+                    'code' => 'SUCCESS'
                 ]);
             } else {
                 return response()->json([
                     'message' => 'Username update failed',
-                    'code' => 'Failed',
+                    'code' => 'FAILED',
                 ]);
             }
 
@@ -137,14 +94,14 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'message' => 'Form validation error',
-                    'code' => 'Failed'
+                    'code' => 'FAILED'
                 ]);
             }
 
             if($request->confirm_password != $request->new_password) {
                 return response()->json([
                     'message' => 'Password update failed, password confirmation and new password do not match',
-                    'code' => 'Failed'
+                    'code' => 'FAILED'
                 ]);
             }
 
@@ -154,27 +111,14 @@ class UserController extends Controller
                 $user->save();
                 return response()->json([
                     'message' => 'Password successfully updated',
-                    'code' => 'Success'
+                    'code' => 'SUCCESS'
                 ]);
             }else {
                 return response()->json([
                     'message' => 'Password update failed',
-                    'code' => 'Failed'
+                    'code' => 'FAILED'
                 ]);
             }
         }
-
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

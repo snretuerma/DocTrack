@@ -1,5 +1,5 @@
 <template>
-<div v-if="user">
+<div v-if="auth_user">
     <v-navigation-drawer app v-model="drawer">
         <template v-slot:prepend>
             <v-list-item two-line>
@@ -14,12 +14,12 @@
                                 v-bind="attrs"
                                 v-on="on"
                             >
-                                {{fullName}}
+                                {{auth_user_full_name}}
                             </v-list-item-title>
                         </template>
-                        <span>{{fullName}}</span>
+                        <span>{{auth_user_full_name}}</span>
                     </v-tooltip>
-                    <v-list-item-subtitle>{{username}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{auth_user.username}}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </template>
@@ -38,15 +38,46 @@
             </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click.prevent="getDocumentRecords">
-                <v-list-item-icon>
-                    <v-icon>mdi-file-document-multiple-outline</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                    <v-list-item-title>Document Records</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
+            <v-list-group
+                prepend-icon="mdi-file-document-multiple-outline"
+                no-action
+            >
+                <template v-slot:activator>
+                    <v-list-item-content>
+                        <v-list-item-title>Document</v-list-item-title>
+                    </v-list-item-content>
+                </template>
+                <v-list-item link @click.prevent="getAllDocuments" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-book-search-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>View</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getNewDocumentRecordForm" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-file-document-edit-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Create</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-email-receive-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Receive</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-email-send-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Forward</v-list-item-title>
+                </v-list-item>
+                <v-list-item link @click.prevent="getMasterListReport" v-ripple="{ class: 'primary--text' }">
+                    <v-list-item-icon>
+                    <v-icon>mdi-check-underline-circle-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>Terminal</v-list-item-title>
+                </v-list-item>
+            </v-list-group>
 
             <v-list-group
                 prepend-icon="mdi-timeline-check-outline"
@@ -70,7 +101,6 @@
                     <v-list-item-title>Master List</v-list-item-title>
                 </v-list-item>
             </v-list-group>
-
 
             <v-list-item link @click.prevent="getAccountSettings">
                 <v-list-item-icon>
@@ -114,123 +144,114 @@
             <v-icon>mdi-menu</v-icon>
         </v-app-bar-nav-icon>
         <v-toolbar-title>{{currentRouteName}}</v-toolbar-title>
+        <v-progress-linear
+            :active="page_loader"
+            color="#A83F39"
+            height="8"
+            indeterminate
+            striped
+            absolute
+            bottom
+        />
     </v-app-bar>
-    <v-main>
-        <router-view
-            :user="user"
-            @update-parent-username="updateUsername"
-            @update-parent-name="updateName"
-        ></router-view>
+    <v-main fluid>
+        <v-container>
+            <v-scroll-x-transition mode="out-in" :hide-on-leave="Boolean(true)">
+                <router-view/>
+            </v-scroll-x-transition>
+        </v-container>
     </v-main>
 </div>
 </template>
 
 <script>
+// TODO: Migrate to Vuex
+import { mapGetters, mapActions } from "vuex";
 export default {
-    props: [
-        'user'
-    ],
     computed: {
-        username: {
-            get () {
-                return this.user.username;
-            },
-            set (new_username) {
-                this.user.username = new_username;
-            }
-        },
-        fullName: {
-            get() {
-                return this.buildName(
-                    this.user.first_name,
-                    this.user.middle_name,
-                    this.user.last_name,
-                    this.user.suffix
-                );
-            },
-            set(new_value) {
-                this.user.first_name = new_value.first_name;
-                this.user.middle_name = new_value.middle_name;
-                this.user.last_name = new_value.last_name;
-                this.user.suffix = new_value.suffix;
-            }
-        },
+        ...mapGetters(['auth_user', 'auth_user_full_name', 'page_loader']),
         currentRouteName() {
             return this.$route.name;
         },
         placeholderImage() {
-            return 'https://randomuser.me/api/portraits/' +
-                (Math.floor(Math.random() * 2)+ 1 == 1 ? 'men' : 'women') + '/' +
-                Math.floor(Math.random() * 10)+ 1 + '.jpg';
+            return `${this.image_source+(this.getRandomInt(0,2) == 1 ? 'men':'women')}/${this.getRandomInt(1, 100)}.jpg`;
         }
     },
     data() {
         return {
             drawer: true,
             group: null,
+            image_source: 'https://randomuser.me/api/portraits/'
         }
     },
     methods: {
+        ...mapActions(['removeAuthUser', 'unsetLoader']),
         logout(){
-            axios.post('/api/logout').then(()=>{
-                this.$router.push({ name: "Login"})
-            })
-        },
-        buildName(first_name, middle_name, last_name, suffix) {
-            var name =  this.capitalize(this.user.first_name.trim()) + ' '
-                + this.capitalize(this.user.middle_name.trim()) + ' '
-                + this.capitalize(this.user.last_name.trim())
-            if(this.user.suffix != null && typeof this.user.suffix !== 'undefined') {
-                name = name + ' ' + this.capitalize(this.user.suffix.trim());
-            }
-            return name.trim();
+            this.removeAuthUser();
+            this.$store.dispatch('unsetSnackbar');
+            this.$store.dispatch('setLoader');
+            sessionStorage.clear();
+            this.$router.push({ name: "Login"});
         },
         getDashboard() {
-            axios.get('/').then(()=>{
-                if(this.$route.name !== 'Dashboard') {
-                    this.$router.push({ name: "Dashboard"})
-                }
-            })
+            if(this.$route.name !== 'Dashboard') {
+                this.$store.dispatch('setLoader');
+                axios.get('/').then(()=>{
+                    this.$router.push({ name: "Dashboard"});
+                })
+            }
         },
-        getDocumentRecords() {
-            axios.get('document_records').then(()=>{
-                if(this.$route.name !== 'Document Records') {
-                    this.$router.push({ name: "Document Records"})
-                }
-            })
+        getNewDocumentRecordForm() {
+            if(this.$route.name !== 'New Document') {
+                this.$store.dispatch('setLoader');
+                axios.get('new_document').then(() => {
+                    this.$router.push({ name: "New Document"});
+                });
+            }
+        },
+
+        getAllDocuments() {
+            if(this.$route.name !== 'All Active Documents') {
+                this.$store.dispatch('setLoader');
+                axios.get('all_active_document').then(() => {
+                    this.$router.push({ name: "All Active Documents"});
+                });
+            }
         },
         getAgingReport() {
-            axios.get('reports/aging').then(()=>{
-                if(this.$route.name !== 'Document Aging Report') {
+            if(this.$route.name !== 'Document Aging Report') {
+                this.$store.dispatch('setLoader');
+                axios.get('reports/aging').then(()=>{
                     this.$router.push({ name: "Document Aging Report"});
-                }
-            });
+                });
+            }
         },
         getMasterListReport() {
-            axios.get('reports/master_list').then(()=>{
-                if(this.$route.name !== 'Document Master List') {
-                    this.$router.push({ name: "Document Master List"})
-                }
-            });
+            if(this.$route.name !== 'Document Master List') {
+                this.$store.dispatch('setLoader');
+                axios.get('reports/master_list').then(()=>{
+                    this.$router.push({ name: "Document Master List"});
+                });
+            }
         },
         getAccountSettings() {
-            axios.get('account_settings').then(()=>{
-                if(this.$route.name !== 'Account Settings') {
-                    this.$router.push({ name: "Account Settings",  params: { user: this.user }})
-                }
-            })
+            if(this.$route.name !== 'Account Settings') {
+                this.$store.dispatch('setLoader');
+                axios.get('account_settings').then(()=>{
+                    this.$router.push({ name: "Account Settings",  params: { user: this.user }});
+                })
+            }
         },
-        updateUsername(response) {
-            this.username = response;
-        },
-        updateName(response) {
-            this.fullName = response;
-        },
-        capitalize(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
+        getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min);
         }
     },
     mounted() {
+        this.$store.dispatch('getOffices');
+        this.$store.dispatch('getDocumentTypes');
+        this.$store.dispatch('getAllUsers');
     }
 }
 </script>

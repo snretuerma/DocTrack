@@ -1,9 +1,5 @@
 <template>
-    <v-card
-        class="mx-auto"
-        flat
-        v-if="user"
-    >
+    <v-card class="mx-auto" flat>
         <v-card-title>
             <v-icon
             left
@@ -30,10 +26,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <change-account-details-form
-                            :user="user"
-                            @update-details="updateAccountDetailView"
-                        ></change-account-details-form>
+                        <change-account-details-form/>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
@@ -46,7 +39,7 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        <change-username-form :user="user" @update-username="updateUsernameView"></change-username-form>
+                        <change-username-form/>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
@@ -59,30 +52,11 @@
                         </template>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-
-                        <change-password-form :user="user" @update-password="updatePasswordView"></change-password-form>
+                        <change-password-form/>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-card-text>
-        <v-snackbar
-            v-model="snackbar"
-            :timeout="snackbar_timeout"
-            :multi-line="true"
-            :color="snackbar_color"
-        >
-        {{ snackbar_text }}
-        <template v-slot:action="{ attrs }">
-            <v-btn
-                color="white"
-                text
-                v-bind="attrs"
-                @click="snackbar = false; snackbar_text=''"
-            >
-                Close
-            </v-btn>
-        </template>
-        </v-snackbar>
     </v-card>
 </template>
 
@@ -91,7 +65,6 @@ import ChangeUsernameForm from './components/ChangeUsernameForm';
 import ChangeAccountDetailsForm from './components/ChangeAccountDetailsForm';
 import ChangePasswordForm from './components/ChangePasswordForm';
 export default {
-    props: ['user'],
     components: {
         ChangeUsernameForm,
         ChangeAccountDetailsForm,
@@ -100,42 +73,10 @@ export default {
     data () {
         return {
             panel: [0],
-            snackbar: false,
-            snackbar_text: '',
-            snackbar_timeout: 2000,
-            snackbar_color: '',
-            loader: null,
-            loading_edit_details: false,
-            loading_edit_password: false,
-            clicked: '',
         }
     },
-    methods: {
-        updateAccountDetailView(response) {
-            this.snackbar = response.snackbar;
-            this.snackbar_text = response.snackbar_text;
-            this.snackbar_color = response.snackbar_color;
-            if(response.snackbar) {
-                this.$emit('update-parent-name', response);
-            }
-        },
-        updateUsernameView(response) {
-            this.snackbar = response.snackbar;
-            this.snackbar_text = response.snackbar_text;
-            this.snackbar_color = response.snackbar_color;
-            if(response.snackbar) {
-                this.$emit('update-parent-username', response.username);
-            }
-        },
-        updatePasswordView(response) {
-            this.snackbar = response.snackbar;
-            this.snackbar_text = response.snackbar_text;
-            this.snackbar_color = response.snackbar_color;
-        },
-    },
     mounted() {
-
+        this.$store.dispatch('unsetLoader');
     }
-
 }
 </script>
