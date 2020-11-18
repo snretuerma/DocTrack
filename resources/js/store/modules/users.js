@@ -32,15 +32,15 @@ const getters = {
 
 const actions = {
     async getAuthUser({ commit }) {
-        const response = await axios.get('/api/auth_user');
+        const response = await axios.get('auth_user');
         commit('SET_AUTH_USER', response.data);
     },
     async removeAuthUser({ commit }) {
-        await axios.post('/api/logout');
+        await axios.post('logout');
         commit('UNSET_AUTH_USER');
     },
     async getAllUsers({ commit }) {
-        await axios.get('/api/all_users').then(response => {
+        await axios.get('all_users').then(response => {
             response.data.forEach(element => {
                 element.full_name = '';
                 element.full_name = buildName(
@@ -55,7 +55,7 @@ const actions = {
 
     },
     async editUserCredentials({ commit }, updates) {
-        const response = await axios.put(`/api/update_user/${updates.id}`, updates.form);
+        const response = await axios.put(`update_user/${updates.id}`, updates.form);
         if(updates.form.form_type == 'account_details') {
             commit('UPDATE_USER_COMPLETE_NAME', {response: response.data, form: updates.form});
         } else if(updates.form.form_type == 'account_username') {

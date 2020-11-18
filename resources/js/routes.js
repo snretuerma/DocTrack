@@ -3,7 +3,6 @@ import DocumentRecords from './components/user/DocumentRecords';
 import AccountSettings from './components/user/AccountSettings';
 
 import AllDocument from './components/user/components/AllDocument'
-import DocumentDetails from './components/user/components/DocumentDetails';
 import NewDocument from './components/user/components/NewDocument';
 import DocumentAction from './components/user/DocumentAction';
 import ReportAging from './components/user/ReportAging';
@@ -15,12 +14,13 @@ import NotFound from './components/NotFound';
 
 // TODO: Fix routes structure
 export default {
-    base: '/api',
+    base: '/',
     mode: 'history',
     routes: [
         {
             path: '*',
             component: NotFound,
+            name: 'Not Found'
         },
         {
             path: '/',
@@ -30,8 +30,8 @@ export default {
         {
             path: '/',
             component: HomeContainer,
-            beforeEnter: (to, form, next) => {
-                axios.get('/api/authenticated').then((response) => {
+            beforeEnter: (to, from, next) => {
+                axios.get('/authenticated').then((response) => {
                     next()
                 }).catch(() => {
                     return next({ name: 'Login'})
@@ -63,11 +63,26 @@ export default {
                     component: AllDocument,
                     name: 'All Active Documents',
                 },
-                {
-                    path: 'all_active_document/document_details/:id',
-                    component: DocumentDetails,
-                    name: 'Document Details'
-                },
+                // {
+                //     path: 'document_details/:id',
+                //     component: DocumentDetails,
+                //     name: 'Document Details',
+                //     beforeEnter: (to, from, next) => {
+                //         if (to.params.id) {
+                //             axios.get(`get_document_details/${to.params.id}`).then((response) => {
+                //                 next()
+                //             }).catch(() => {
+                //                 return next('All Active Documents');
+                //             });
+                //         }else {
+                //             return next(
+                //                 vm => {
+                //                     vm.prevRoute = from;
+                //                 }
+                //             );
+                //         }
+                //     },
+                // },
                 {
                     path: 'receive_document/:routing_number',
                     component: DocumentAction,

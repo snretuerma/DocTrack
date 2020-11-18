@@ -8,6 +8,7 @@ const state = {
     },
     document_loading: false,
     document_type_loading: false,
+    selected_document: {},
 }
 
 const getters = {
@@ -18,11 +19,11 @@ const getters = {
 
 const actions = {
     async getActiveDocuments({ commit }, page_number) {
-        const response = await axios.get(`/api/get_active_documents?page=${page_number}`);
+        const response = await axios.get(`get_active_documents?page=${page_number}`);
         commit('GET_ALL_ACTIVE_DOCUMENTS', response.data);
     },
     async getNonPaginatedActiveDocuments({ commit }) {
-        const response = await axios.get(`/api/get_non_page_active_documents`);
+        const response = await axios.get(`get_non_page_active_documents`);
         commit('GET_NON_PAGINATED_ACTIVE_DOCUMENTS', response.data);
     },
     async getDocumentTypes({ commit }) {
@@ -48,6 +49,12 @@ const actions = {
             }
             commit('THROW_SERVER_ERROR', error_data)
         });
+    },
+    async setDocument({ commit }, document) {
+        commit('SET_SELECTED_DOCUMENT', document);
+    },
+    async unsetDocument({ commit }) {
+        commit('UNSET_SELECTED_DOCUMENT');
     }
 }
 
@@ -74,6 +81,12 @@ const mutations = {
         state.form_requests.request_form_type = error.form_type;
         state.form_requests.request_status = error.code;
         state.form_requests.status_message = error.message;
+    },
+    SET_SELECTED_DOCUMENT(state, document) {
+        state.selected_document = document;
+    },
+    UNSET_SELECTED_DOCUMENT() {
+        state.selected_document = {};
     }
 }
 

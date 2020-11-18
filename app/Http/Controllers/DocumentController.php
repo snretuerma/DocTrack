@@ -34,12 +34,18 @@ class DocumentController extends Controller
         return $documents;
     }
 
-    public function getNonPaginatedActiveDocuments() {
+    public function getNonPaginatedActiveDocuments()
+    {
         $documents = Document::where('current_office_id', Auth::user()->office_id)
                     ->where('is_terminal', false)
                     ->orderBy('date_filed', 'desc')
                     ->get();
         return $documents;
+    }
+
+    public function getSelectedDocument($id)
+    {
+        $document= Document::find($id);
     }
 
     public function addNewDocument(Request $request): Array

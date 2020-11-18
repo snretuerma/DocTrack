@@ -190,6 +190,7 @@ export default {
             this.removeAuthUser();
             this.$store.dispatch('unsetSnackbar');
             this.$store.dispatch('setLoader');
+            sessionStorage.clear();
             this.$router.push({ name: "Login"});
         },
         getDashboard() {

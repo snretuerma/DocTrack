@@ -25,20 +25,11 @@
                     class="mx-4"
                 />
             </template>
-            <template v-slot:[`header.page_count`] = "{  }">
-                <v-icon>mdi-counter</v-icon>
-            </template>
-            <template v-slot:[`header.attachment_page_count`] = "{  }">
-                <v-icon>mdi-attachment</v-icon>
-            </template>
-            <template v-slot:[`header.is_terminal`] = "{  }">
-                <v-icon>mdi-ray-end</v-icon>
-            </template>
             <template v-slot:[`item.tracking_code`] = "{ item }">
                         <v-chip
                             label
                             dark
-                            :color="getTrackingCodeColor(item.document_type_id)"
+                            :color="getTrackingCodeColor(item, item.document_type_id)"
                         >
                             {{ item.tracking_code }}
                         </v-chip>
@@ -53,12 +44,12 @@
             </template>
             <template v-slot:[`item.document_type_id`] = "{ item }">
                 <div v-if="item">
-                    {{ findDocumentTypeName(item.document_type_id) }}
+                    {{ findDocumentTypeName(item, item.document_type_id) }}
                 </div>
             </template>
             <template v-slot:[`item.originating_office`] = "{ item }">
                 <div v-if="item && checkIfID(item.originating_office)">
-                    {{ findDocumentOriginatingOfficeName(item.originating_office) }}
+                    {{ findDocumentOriginatingOfficeName(item, item.originating_office) }}
                 </div>
                 <div v-else>
                     {{ item.originating_office }}
@@ -66,12 +57,12 @@
             </template>
             <template v-slot:[`item.current_office_id`] = "{ item }">
                 <div v-if="item">
-                    {{ findDocumentCurrentOfficeName(item.current_office_id) }}
+                    {{ findDocumentCurrentOfficeName(item, item.current_office_id) }}
                 </div>
             </template>
             <template v-slot:[`item.sender_name`] = "{ item }">
                 <div v-if="item && checkIfID(item.sender_name)">
-                    {{ findDocumentSenderName(item.sender_name) }}
+                    {{ findDocumentSenderName(item, item.sender_name) }}
                 </div>
                 <div v-else>
                     {{ item.sender_name }}
@@ -88,9 +79,9 @@
             <template v-slot:[`item.view_more`]="{ item }">
                 <td>
                     <v-btn
-                        icon
                         color="primary"
-                        @click="routerDocumentDetails(item.id)"
+                        icon
+                        @click="seeDocumentDetails(item)"
                     >
                         <v-icon>mdi-more</v-icon>
                     </v-btn>
@@ -159,14 +150,98 @@
             ></v-pagination>
         </div>
     </v-card-text>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="1200px"
+    >
+        <v-card v-if="selected_document">
+            <v-card-title primary-title>
+                Document Details : {{selected_document[0].tracking_code}}
+            </v-card-title>
+            <v-card-text>
+                <v-data-table
+                    id="inverse_table"
+                    :headers="inner_table_header"
+                    :items="selected_document"
+                    hide-default-footer
+                    disable-filtering
+                    disable-pagination
+                    disable-sort
+                >
+                    <template v-slot:[`item.tracking_code`] = "{ item }">
+                            <v-chip
+                                label
+                                dark
+                                :color="item.color"
+                            >
+                                {{ item.tracking_code }}
+                            </v-chip>
+                    </template>
+                    <template v-slot:[`item.is_external`] = "{ item }">
+                        <div v-if="item.is_external">
+                            External
+                        </div>
+                        <div v-else>
+                            Internal
+                        </div>
+                    </template>
+                    <template v-slot:[`item.document_type_id`] = "{ item }">
+                        <div v-if="item">
+                            {{ item.type_name}}
+                        </div>
+                    </template>
+                    <template v-slot:[`item.originating_office`] = "{ item }">
+                        <div v-if="item && checkIfID(item.originating_office)">
+                            {{ item.originating_office_name}}
+                        </div>
+                        <div v-else>
+                            {{ item.originating_office }}
+                        </div>
+                    </template>
+                    <template v-slot:[`item.current_office_id`] = "{ item }">
+                        <div v-if="item">
+                            {{ item.current_office_name }}
+                        </div>
+                    </template>
+                    <template v-slot:[`item.sender_name`] = "{ item }">
+                        <div v-if="item && checkIfID(item.sender_name)">
+                            {{ item.sender_fullname }}
+                        </div>
+                        <div v-else>
+                            {{ item.sender_name }}
+                        </div>
+                    </template>
+                    <template v-slot:[`item.is_terminal`] = "{ item }">
+                        <div v-if="item.is_terminal">
+                            Yes
+                        </div>
+                        <div v-else>
+                            No
+                        </div>
+                    </template>
+                </v-data-table>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    text
+                    @click="dialog = false"
+                >
+                    Close
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </v-card>
 </template>
 
 <script>
 /**
  * TODO:
- *  Add Modal for View more to reduce the data in the datatable
- *  FIXME: Search only
+ * Build documents before inserting to table
+ * FIXME: Search only displays rows from the current page
 **/
 import { colors } from '../../../constants';
 import { mapGetters, mapActions } from "vuex";
@@ -183,14 +258,26 @@ export default {
                 { text: 'Originating Office', value: 'originating_office', sortable: false },
                 { text: 'Current Office', value: 'current_office_id', sortable: false },
                 { text: 'Sender', value: 'sender_name', sortable: false },
-                // { text: 'Page Count', value: 'page_count' },
-                // { text: 'Attachment Page Count', value: 'attachment_page_count' },
-                // { text: 'Terminal', value: 'is_terminal' },
                 { text: 'Date Filed', value: 'date_filed', sortable: false },
-                // { text: 'Remarks', value: 'remarks' },
                 { text: 'View More', value: 'view_more', sortable: false },
                 { text: 'Actions', value: 'data-table-expand', sortable: false },
             ],
+            inner_table_header: [
+                { text: 'Tracking ID', value: 'tracking_code', sortable: false },
+                { text: 'Subject', value: 'subject', sortable: false },
+                { text: 'Source', value: 'is_external', sortable: false },
+                { text: 'Type', value: 'document_type_id', sortable: false },
+                { text: 'Originating Office', value: 'originating_office', sortable: false },
+                { text: 'Current Office', value: 'current_office_id', sortable: false },
+                { text: 'Sender', value: 'sender_name', sortable: false },
+                { text: 'Page Count', value: 'page_count', sortable: false },
+                { text: 'Attachment Page Count', value: 'attachment_page_count' },
+                { text: 'Terminal', value: 'is_terminal', sortable: false },
+                { text: 'Date Filed', value: 'date_filed', sortable: false },
+                { text: 'Remarks', value: 'remarks', sortable: false },
+            ],
+            dialog: false,
+            selected_document: '',
         }
     },
     watch: {
@@ -228,40 +315,47 @@ export default {
         checkIfID(string) {
             return /^-?\d+$/.test(string);
         },
-        getTrackingCodeColor(document_type_id) {
+        getTrackingCodeColor(document, document_type_id) {
+            document.color = '';
+            document.color = colors[document_type_id];
             return colors[document_type_id];
         },
-        findDocumentTypeName(document_type_id) {
+        findDocumentTypeName(document, document_type_id) {
             var document_type = this.document_types.find(element => element.id == document_type_id);
             if (document_type != null) {
+                document.type_name = document_type.name;
                 return document_type.name;
             }
         },
-        findDocumentOriginatingOfficeName(originating_office) {
+        findDocumentOriginatingOfficeName(document, originating_office) {
             var office = this.offices.find(element => element.id == originating_office);
+            document.originating_office_name = '';
             if (office != null) {
+                document.originating_office_name = office.name;
                 return office.name;
             }
         },
-        findDocumentCurrentOfficeName(current_office) {
+        findDocumentCurrentOfficeName(document, current_office) {
             var office = this.offices.find(element => element.id == current_office);
+            document.current_office_name = '';
             if (office != null) {
+                document.current_office_name = office.name;
                 return office.name;
             }
         },
-        findDocumentSenderName(sender_id) {
+        findDocumentSenderName(document, sender_id) {
             var sender = this.users.find(element => element.id == sender_id);
+            document.sender_fullname = '';
             if (sender != null) {
+                document.sender_fullname = sender.full_name;
                 return sender.full_name;
             }
         },
-        routerDocumentDetails(id) {
-            if(this.$route.name !== 'Document Details') {
-                this.$store.dispatch('setLoader');
-                axios.get(`all_active_document/document_details/${id}`).then(() => {
-                    this.$router.push({ name: "Document Details", params: { id: id } });
-                });
-            }
+        seeDocumentDetails(document) {
+            var document_array = [];
+            document_array.push(document);
+            this.selected_document = document_array;
+            this.dialog = true;
         },
         paginateDocuments(page_number) {
             this.$store.dispatch('setDataTableLoader');
@@ -280,3 +374,40 @@ export default {
     }
 }
 </script>
+
+<style>
+    #inverse_table {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #inverse_table table tr {
+        display:flex;
+        flex-direction: column;
+        float: left;
+    }
+
+    #inverse_table thead, #inverse_table tbody {
+        float: left;
+    }
+
+    /* fix for the missing border on last column*/
+    #inverse_table tbody tr td {
+        border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+
+    #inverse_table tbody tr:hover {
+        background-color: transparent !important;
+    }
+    #inverse_table th {
+        width: 300px;
+        display: flex;
+        align-items: center;
+    }
+    #inverse_table td {
+        display: flex;
+        align-items: center;
+    }
+</style>
