@@ -376,6 +376,7 @@ export default {
 </script>
 
 <style>
+    /* TODO: Add media queries for tablet sized devices */
     #inverse_table {
         width: 100%;
         display: flex;
@@ -401,8 +402,15 @@ export default {
     #inverse_table tbody tr:hover {
         background-color: transparent !important;
     }
+    @media screen and (max-width: 768px){
+        #inverse_table th {
+            width: 100px;
+            display: flex;
+            align-items: center;
+        }
+    }
     #inverse_table th {
-        width: 300px;
+        max-width: 300px;
         display: flex;
         align-items: center;
     }

@@ -4587,7 +4587,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n#inverse_table {\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n#inverse_table table tr {\n    display:flex;\n    flex-direction: column;\n    float: left;\n}\n#inverse_table thead, #inverse_table tbody {\n    float: left;\n}\n\n/* fix for the missing border on last column*/\n#inverse_table tbody tr td {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n#inverse_table tbody tr:hover {\n    background-color: transparent !important;\n}\n#inverse_table th {\n    width: 300px;\n    display: flex;\n    align-items: center;\n}\n#inverse_table td {\n    display: flex;\n    align-items: center;\n}\n", ""]);
+exports.push([module.i, "\n#inverse_table {\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n#inverse_table table tr {\n    display:flex;\n    flex-direction: column;\n    float: left;\n}\n#inverse_table thead, #inverse_table tbody {\n    float: left;\n}\n\n/* fix for the missing border on last column*/\n#inverse_table tbody tr td {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n#inverse_table tbody tr:hover {\n    background-color: transparent !important;\n}\n@media screen and (max-width: 768px){\n#inverse_table th {\n        width: 100px;\n        display: flex;\n        align-items: center;\n}\n}\n#inverse_table th {\n    max-width: 300px;\n    display: flex;\n    align-items: center;\n}\n#inverse_table td {\n    display: flex;\n    align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -95048,8 +95048,8 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('numeric', _objectSp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
