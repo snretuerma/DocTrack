@@ -3405,6 +3405,178 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /**
  * TODO:
@@ -3457,54 +3629,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Actions',
         value: 'data-table-expand',
-        sortable: false
-      }],
-      inner_table_header: [{
-        text: 'Tracking ID',
-        value: 'tracking_code',
-        sortable: false
-      }, {
-        text: 'Subject',
-        value: 'subject',
-        sortable: false
-      }, {
-        text: 'Source',
-        value: 'is_external',
-        sortable: false
-      }, {
-        text: 'Type',
-        value: 'document_type_id',
-        sortable: false
-      }, {
-        text: 'Originating Office',
-        value: 'originating_office',
-        sortable: false
-      }, {
-        text: 'Current Office',
-        value: 'current_office_id',
-        sortable: false
-      }, {
-        text: 'Sender',
-        value: 'sender_name',
-        sortable: false
-      }, {
-        text: 'Page Count',
-        value: 'page_count',
-        sortable: false
-      }, {
-        text: 'Attachment Page Count',
-        value: 'attachment_page_count'
-      }, {
-        text: 'Terminal',
-        value: 'is_terminal',
-        sortable: false
-      }, {
-        text: 'Date Filed',
-        value: 'date_filed',
-        sortable: false
-      }, {
-        text: 'Remarks',
-        value: 'remarks',
         sortable: false
       }],
       dialog: false,
@@ -3593,9 +3717,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     seeDocumentDetails: function seeDocumentDetails(document) {
-      var document_array = [];
-      document_array.push(document);
-      this.selected_document = document_array;
+      this.selected_document = document;
       this.dialog = true;
     },
     paginateDocuments: function paginateDocuments(page_number) {
@@ -4587,7 +4709,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n#inverse_table {\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n#inverse_table table tr {\n    display:flex;\n    flex-direction: column;\n    float: left;\n}\n#inverse_table thead, #inverse_table tbody {\n    float: left;\n}\n\n/* fix for the missing border on last column*/\n#inverse_table tbody tr td {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n#inverse_table tbody tr:hover {\n    background-color: transparent !important;\n}\n@media screen and (max-width: 768px){\n#inverse_table th {\n        width: 100px;\n        display: flex;\n        align-items: center;\n}\n}\n#inverse_table th {\n    max-width: 300px;\n    display: flex;\n    align-items: center;\n}\n#inverse_table td {\n    display: flex;\n    align-items: center;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* TODO: Add media queries for tablet sized devices */\n@media screen and (max-width: 600px) {\n#document_label {\n        font-size: 0.8em;\n}\n}\n@media screen and (min-width: 600px) and (max-width: 960px) {\n}\n@media screen and (min-width: 960px) and (max-width: 1264px) {\n}\n@media screen and (min-width: 1264px ) and (max-width: 1904px) {\n}\n@media screen and (min-width: 1904px ) {\n}\n#inverse_table {\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n#inverse_table table tr {\n    display:flex;\n    flex-direction: column;\n    float: left;\n}\n#inverse_table thead, #inverse_table tbody {\n    float: left;\n}\n\n/* fix for the missing border on last column*/\n#inverse_table tbody tr td {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n#inverse_table tbody tr:hover {\n    background-color: transparent !important;\n}\n@media screen and (max-width: 768px) {\n#inverse_table {\n        overflow: auto;\n}\n#inverse_table th {\n        width: 100px;\n        display: flex;\n        align-items: center;\n}\n}\n#inverse_table th {\n    max-width: 300px;\n    display: flex;\n    align-items: center;\n}\n#inverse_table td {\n    display: flex;\n    align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -30416,7 +30538,7 @@ var render = function() {
       _c(
         "v-dialog",
         {
-          attrs: { persistent: "", "max-width": "1200px" },
+          attrs: { persistent: "", "max-width": "1000px" },
           model: {
             value: _vm.dialog,
             callback: function($$v) {
@@ -30432,177 +30554,685 @@ var render = function() {
                 [
                   _c("v-card-title", { attrs: { "primary-title": "" } }, [
                     _vm._v(
-                      "\r\n                Document Details : " +
-                        _vm._s(_vm.selected_document[0].tracking_code) +
-                        "\r\n            "
+                      "\r\n                Document Details\r\n            "
                     )
                   ]),
                   _vm._v(" "),
                   _c(
                     "v-card-text",
                     [
-                      _c("v-data-table", {
-                        attrs: {
-                          id: "inverse_table",
-                          headers: _vm.inner_table_header,
-                          items: _vm.selected_document,
-                          "hide-default-footer": "",
-                          "disable-filtering": "",
-                          "disable-pagination": "",
-                          "disable-sort": ""
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "item.tracking_code",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Tracking ID")]),
+                                  _vm._v(" "),
                                   _c(
-                                    "v-chip",
-                                    {
-                                      attrs: {
-                                        label: "",
-                                        dark: "",
-                                        color: item.color
-                                      }
-                                    },
+                                    "v-list-item",
                                     [
-                                      _vm._v(
-                                        "\r\n                                " +
-                                          _vm._s(item.tracking_code) +
-                                          "\r\n                            "
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c(
+                                            "v-list-item-title",
+                                            [
+                                              _c(
+                                                "v-chip",
+                                                {
+                                                  attrs: {
+                                                    label: "",
+                                                    dark: "",
+                                                    color:
+                                                      _vm.selected_document
+                                                        .color,
+                                                    id: "document_label"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\r\n                                            " +
+                                                      _vm._s(
+                                                        _vm.selected_document
+                                                          .tracking_code
+                                                      ) +
+                                                      "\r\n                                        "
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
                                       )
-                                    ]
+                                    ],
+                                    1
                                   )
-                                ]
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Subject")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document.subject
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Source")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _vm.selected_document.is_external
+                                            ? _c("v-list-item-title", [
+                                                _vm._v("External")
+                                              ])
+                                            : _c("v-list-item-title", [
+                                                _vm._v("Internal")
+                                              ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Type")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document.type_name
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [
+                                    _vm._v("Originating Office")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document
+                                                  .originating_office_name
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Current Office")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document
+                                                  .current_office_name
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Sender")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document
+                                                  .sender_fullname
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Date Filed")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document.date_filed
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            {
+                              attrs: {
+                                cols: "12",
+                                xl: "4",
+                                lg: "4",
+                                md: "4",
+                                sm: "12"
                               }
                             },
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Page Count")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document.page_count
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
                             {
-                              key: "item.is_external",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  item.is_external
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\r\n                            External\r\n                        "
-                                        )
-                                      ])
-                                    : _c("div", [
-                                        _vm._v(
-                                          "\r\n                            Internal\r\n                        "
-                                        )
-                                      ])
-                                ]
+                              attrs: {
+                                cols: "12",
+                                xl: "4",
+                                lg: "4",
+                                md: "4",
+                                sm: "12"
                               }
                             },
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [
+                                    _vm._v("Attachment Page Count")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document
+                                                  .attachment_page_count
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
                             {
-                              key: "item.document_type_id",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  item
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\r\n                            " +
-                                            _vm._s(item.type_name) +
-                                            "\r\n                        "
-                                        )
-                                      ])
-                                    : _vm._e()
-                                ]
+                              attrs: {
+                                cols: "12",
+                                xl: "4",
+                                lg: "4",
+                                md: "4",
+                                sm: "12"
                               }
                             },
-                            {
-                              key: "item.originating_office",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  item && _vm.checkIfID(item.originating_office)
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\r\n                            " +
-                                            _vm._s(
-                                              item.originating_office_name
-                                            ) +
-                                            "\r\n                        "
-                                        )
-                                      ])
-                                    : _c("div", [
-                                        _vm._v(
-                                          "\r\n                            " +
-                                            _vm._s(item.originating_office) +
-                                            "\r\n                        "
-                                        )
-                                      ])
-                                ]
-                              }
-                            },
-                            {
-                              key: "item.current_office_id",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  item
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\r\n                            " +
-                                            _vm._s(item.current_office_name) +
-                                            "\r\n                        "
-                                        )
-                                      ])
-                                    : _vm._e()
-                                ]
-                              }
-                            },
-                            {
-                              key: "item.sender_name",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  item && _vm.checkIfID(item.sender_name)
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\r\n                            " +
-                                            _vm._s(item.sender_fullname) +
-                                            "\r\n                        "
-                                        )
-                                      ])
-                                    : _c("div", [
-                                        _vm._v(
-                                          "\r\n                            " +
-                                            _vm._s(item.sender_name) +
-                                            "\r\n                        "
-                                        )
-                                      ])
-                                ]
-                              }
-                            },
-                            {
-                              key: "item.is_terminal",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  item.is_terminal
-                                    ? _c("div", [
-                                        _vm._v(
-                                          "\r\n                            Yes\r\n                        "
-                                        )
-                                      ])
-                                    : _c("div", [
-                                        _vm._v(
-                                          "\r\n                            No\r\n                        "
-                                        )
-                                      ])
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          true
-                        )
-                      })
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Terminal")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _vm.selected_document.is_terminal
+                                            ? _c("v-list-item-title", [
+                                                _vm._v("Yes")
+                                              ])
+                                            : _c("v-list-item-title", [
+                                                _vm._v("No")
+                                              ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider", { attrs: { inset: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            [
+                              _c(
+                                "v-list",
+                                { attrs: { flat: "", subheader: "" } },
+                                [
+                                  _c("v-subheader", [_vm._v("Remarks")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item",
+                                    [
+                                      _c(
+                                        "v-list-item-action",
+                                        [
+                                          _c("v-icon", [
+                                            _vm._v("mdi-square-medium")
+                                          ])
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-list-item-content",
+                                        [
+                                          _c("v-list-item-title", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.selected_document.remarks
+                                              )
+                                            )
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
                     ],
                     1
                   ),
