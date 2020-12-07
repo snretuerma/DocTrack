@@ -116,6 +116,7 @@
                         </v-col>
                         <v-col cols="12" sm="3">
                             <v-btn
+                                link @click.prevent="redirectToForwardPage(item.id)"
                                 text
                                 color="#9575CD"
                                 block
@@ -153,6 +154,7 @@
     <v-dialog
       v-model="dialog"
       persistent
+      scrollable
       max-width="1000px"
     >
         <v-card v-if="selected_document">
@@ -518,7 +520,11 @@ export default {
             this.$store.dispatch('getActiveDocuments', page_number).then(() => {
                 this.$store.dispatch('unsetDataTableLoader');
             });
-        }
+        },
+        redirectToForwardPage(id) {
+            console.log(`Document ID : ${id}`);
+            this.$router.push(`/receive_document/${id}`);
+        },
     },
     mounted() {
         this.$store.dispatch('unsetLoader');
@@ -553,54 +559,5 @@ export default {
 
     @media screen and (min-width: 1904px ) {
 
-    }
-
-    #inverse_table {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #inverse_table table tr {
-        display:flex;
-        flex-direction: column;
-        float: left;
-    }
-
-    #inverse_table thead, #inverse_table tbody {
-        float: left;
-    }
-
-    /* fix for the missing border on last column*/
-    #inverse_table tbody tr td {
-        border-bottom: 1px solid rgba(0,0,0,.12);
-    }
-
-    #inverse_table tbody tr:hover {
-        background-color: transparent !important;
-    }
-
-    @media screen and (max-width: 768px) {
-        #inverse_table {
-            overflow: auto;
-        }
-
-        #inverse_table th {
-            width: 100px;
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    #inverse_table th {
-        max-width: 300px;
-        display: flex;
-        align-items: center;
-    }
-
-    #inverse_table td {
-        display: flex;
-        align-items: center;
     }
 </style>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// TODO: Remove this function and build name in another way
 function buildName(first_name, middle_name, last_name, suffix) {
     var f_name = '', m_name = '',l_name = '',s_name = '';
     f_name = (first_name.trim()).charAt(0).toUpperCase() + (first_name.trim()).slice(1);
@@ -33,6 +34,7 @@ const getters = {
 const actions = {
     async getAuthUser({ commit }) {
         const response = await axios.get('auth_user');
+        console.log(response.data);
         commit('SET_AUTH_USER', response.data);
     },
     async removeAuthUser({ commit }) {
@@ -52,7 +54,6 @@ const actions = {
             });
             commit('FETCH_ALL_USERS', response.data);
         });
-
     },
     async editUserCredentials({ commit }, updates) {
         const response = await axios.put(`update_user/${updates.id}`, updates.form);
@@ -64,19 +65,6 @@ const actions = {
             commit('UPDATE_PASSWORD', {response: response.data, form_type: updates.form_type});
         }
     },
-    // TODO: Clean, remove if no problems occur
-    // async editUserCompleteName({ commit }, updates) {
-    //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
-    //     commit('UPDATE_USER_COMPLETE_NAME', {response: response.data, form: updates.form});
-    // },
-    // async editUsername({ commit }, updates) {
-    //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
-    //     commit('UPDATE_USERNAME', {response: response.data, form: updates.form});
-    // },
-    // async editPassword({ commit }, updates) {
-    //     const response = await axios.put(`/api/users/${updates.id}`, updates.form);
-    //     commit('UPDATE_PASSWORD', {response: response.data, form_type: updates.form_type});
-    // },
     async removeRequestStatus({commit}) {
         commit('UNSET_REQUEST_STATUS');
     }
@@ -85,7 +73,7 @@ const actions = {
 const mutations = {
     SET_AUTH_USER: (state, user) => {
         state.user = user
-        state.user_full_name = buildName(user.first_name, user.middle_name, user.last_name, user.suffix);
+        // state.user_full_name = buildName(user.first_name, user.middle_name, user.last_name, user.suffix);
         state.username = user.username;
     },
     UNSET_AUTH_USER: (state) => {

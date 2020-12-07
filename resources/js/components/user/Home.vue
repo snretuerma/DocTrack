@@ -14,10 +14,10 @@
                                 v-bind="attrs"
                                 v-on="on"
                             >
-                                {{auth_user_full_name}}
+                                {{authUserFullName}}
                             </v-list-item-title>
                         </template>
-                        <span>{{auth_user_full_name}}</span>
+                        <span>{{authUserFullName}}</span>
                     </v-tooltip>
                     <v-list-item-subtitle>{{auth_user.username}}</v-list-item-subtitle>
                 </v-list-item-content>
@@ -169,12 +169,26 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
     computed: {
-        ...mapGetters(['auth_user', 'auth_user_full_name', 'page_loader']),
+        ...mapGetters(['auth_user', 'page_loader']),
         currentRouteName() {
             return this.$route.name;
         },
         placeholderImage() {
             return `${this.image_source+(this.getRandomInt(0,2) == 1 ? 'men':'women')}/${this.getRandomInt(1, 100)}.jpg`;
+        },
+        authUserFullName() {
+            var f_name = '', m_name = '',l_name = '',s_name = '';
+            f_name = (this.auth_user.first_name.trim()).charAt(0).toUpperCase() +
+                (this.auth_user.first_name.trim()).slice(1);
+            m_name = (this.auth_user.middle_name.trim()).charAt(0).toUpperCase() +
+                (this.auth_user.middle_name.trim()).slice(1);
+            l_name = (this.auth_user.last_name.trim()).charAt(0).toUpperCase() +
+                (this.auth_user.last_name.trim()).slice(1);
+            if(this.auth_user.suffix != null && typeof suffix !== 'undefined') {
+                s_name = (this.auth_user.suffix.trim()).charAt(0).toUpperCase() +
+                    (this.auth_user.suffix.trim()).slice(1);
+            }
+            return `${f_name} ${m_name} ${l_name} ${s_name}`;
         }
     },
     data() {

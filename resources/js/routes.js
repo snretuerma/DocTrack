@@ -4,6 +4,7 @@ import AccountSettings from './components/user/AccountSettings';
 
 import AllDocument from './components/user/components/AllDocument'
 import NewDocument from './components/user/components/NewDocument';
+import ReceiveDocument from './components/user/components/ReceiveDocument'
 import DocumentAction from './components/user/DocumentAction';
 import ReportAging from './components/user/ReportAging';
 import ReportMasterList from './components/user/ReportMasterList';
@@ -12,7 +13,7 @@ import Login from './components/Login';
 import HomeContainer from './components/HomeContainer';
 import NotFound from './components/NotFound';
 
-// TODO: Fix routes structure
+// TODO: Fix navigation guards
 export default {
     base: '/',
     mode: 'history',
@@ -42,6 +43,15 @@ export default {
                     path: 'dashboard',
                     component: Dashboard,
                     name: 'Dashboard',
+                    // beforeEach: (to, from, next) => {
+                    //     const reqSession = to.matched.some(route => route.meta.requiresSession)
+                    //     if (!reqSession) next()
+                    //     if (router.app.$session.exists()) {
+                    //         next()
+                    //     } else {
+                    //         next({ name: 'Login' })
+                    //     }
+                    // }
                 },
                 {
                     path: 'document_records',
@@ -64,37 +74,37 @@ export default {
                     name: 'All Active Documents',
                 },
                 // {
-                //     path: 'document_details/:id',
-                //     component: DocumentDetails,
-                //     name: 'Document Details',
-                //     beforeEnter: (to, from, next) => {
-                //         if (to.params.id) {
-                //             axios.get(`get_document_details/${to.params.id}`).then((response) => {
-                //                 next()
-                //             }).catch(() => {
-                //                 return next('All Active Documents');
-                //             });
-                //         }else {
-                //             return next(
-                //                 vm => {
-                //                     vm.prevRoute = from;
-                //                 }
-                //             );
-                //         }
-                //     },
+                //     path: 'document_forward/:id',
+                //     component: DocumentForward,
+                //     name: 'Document Forward',
+                //     // beforeEnter: (to, from, next) => {
+                //     //     if (to.params.id) {
+                //     //         axios.get(`get_document_details/${to.params.id}`).then((response) => {
+                //     //             next()
+                //     //         }).catch(() => {
+                //     //             return next('All Active Documents');
+                //     //         });
+                //     //     }else {
+                //     //         return next(
+                //     //             vm => {
+                //     //                 vm.prevRoute = from;
+                //     //             }
+                //     //         );
+                //     //     }
+                //     // },
                 // },
                 {
-                    path: 'receive_document/:routing_number',
-                    component: DocumentAction,
+                    path: 'receive_document/:id',
+                    component: ReceiveDocument,
                     name: 'Receive Document'
                 },
                 {
-                    path: 'forward_document/:routing_number',
+                    path: 'forward_document/:id',
                     component: DocumentAction,
                     name: 'Forward Document'
                 },
                 {
-                    path: 'terminal_document/:routing_number',
+                    path: 'terminal_document/:id',
                     component: DocumentAction,
                     name: 'Terminal Document'
                 },
