@@ -116,7 +116,7 @@
                         </v-col>
                         <v-col cols="12" sm="3">
                             <v-btn
-                                link @click.prevent="redirectToForwardPage(item.id)"
+                                link @click.prevent="redirectToReceivePage(item)"
                                 text
                                 color="#9575CD"
                                 block
@@ -521,8 +521,7 @@ export default {
                 this.$store.dispatch('unsetDataTableLoader');
             });
         },
-        redirectToForwardPage(id) {
-            console.log(`Document ID : ${id}`);
+        redirectToReceivePage(document) {
             /**
             * TODO:
             * Save the document id or the document object to Vuex instead because the dynamic routing is messing
