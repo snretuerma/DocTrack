@@ -1,6 +1,8 @@
 <template>
-    <v-card>
-        Page for form of document receiving
+    <v-card flat>
+        <v-card-title primary-title>
+            Receive Document : {document id here}
+        </v-card-title>
     </v-card>
 </template>
 
