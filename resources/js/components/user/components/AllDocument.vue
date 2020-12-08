@@ -523,7 +523,12 @@ export default {
         },
         redirectToForwardPage(id) {
             console.log(`Document ID : ${id}`);
-            this.$router.push(`/receive_document/${id}`);
+            /**
+            * TODO:
+            * Save the document id or the document object to Vuex instead because the dynamic routing is messing
+            * up the Vuex getter for auth_user creating a call for receive_document/auth_user which is non-existent
+            **/
+            this.$router.push(`receive_document`);
         },
     },
     mounted() {

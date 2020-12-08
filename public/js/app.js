@@ -2877,7 +2877,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-// TODO: Migrate to Vuex
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['auth_user', 'page_loader'])), {}, {
@@ -2921,77 +2920,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getDashboard: function getDashboard() {
-      var _this = this;
-
       if (this.$route.name !== 'Dashboard') {
         this.$store.dispatch('setLoader');
-        axios.get('/').then(function () {
-          _this.$router.push({
-            name: "Dashboard"
-          });
+        this.$router.push({
+          name: "Dashboard"
         });
       }
     },
     getNewDocumentRecordForm: function getNewDocumentRecordForm() {
-      var _this2 = this;
-
       if (this.$route.name !== 'New Document') {
         this.$store.dispatch('setLoader');
-        axios.get('new_document').then(function () {
-          _this2.$router.push({
-            name: "New Document"
-          });
+        this.$router.push({
+          name: "New Document"
         });
       }
     },
     getAllDocuments: function getAllDocuments() {
-      var _this3 = this;
-
       if (this.$route.name !== 'All Active Documents') {
         this.$store.dispatch('setLoader');
-        axios.get('all_active_document').then(function () {
-          _this3.$router.push({
-            name: "All Active Documents"
-          });
+        this.$router.push({
+          name: "All Active Documents"
         });
       }
     },
     getAgingReport: function getAgingReport() {
-      var _this4 = this;
-
       if (this.$route.name !== 'Document Aging Report') {
         this.$store.dispatch('setLoader');
-        axios.get('reports/aging').then(function () {
-          _this4.$router.push({
-            name: "Document Aging Report"
-          });
+        this.$router.push({
+          name: "Document Aging Report"
         });
       }
     },
     getMasterListReport: function getMasterListReport() {
-      var _this5 = this;
-
       if (this.$route.name !== 'Document Master List') {
         this.$store.dispatch('setLoader');
-        axios.get('reports/master_list').then(function () {
-          _this5.$router.push({
-            name: "Document Master List"
-          });
+        this.$router.push({
+          name: "Document Master List"
         });
       }
     },
     getAccountSettings: function getAccountSettings() {
-      var _this6 = this;
-
       if (this.$route.name !== 'Account Settings') {
         this.$store.dispatch('setLoader');
-        axios.get('account_settings').then(function () {
-          _this6.$router.push({
-            name: "Account Settings",
-            params: {
-              user: _this6.user
-            }
-          });
+        this.$router.push({
+          name: "Account Settings",
+          params: {
+            user: this.user
+          }
         });
       }
     },
@@ -3747,7 +3722,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     redirectToForwardPage: function redirectToForwardPage(id) {
       console.log("Document ID : ".concat(id));
-      this.$router.push("/receive_document/".concat(id));
+      /**
+      * TODO:
+      * Save the document id or the document object to Vuex instead because the dynamic routing is messing
+      * up the Vuex getter for auth_user creating a call for receive_document/auth_user which is non-existent
+      **/
+
+      this.$router.push("receive_document");
     }
   },
   mounted: function mounted() {
@@ -4695,7 +4676,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {},
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {}
+});
 
 /***/ }),
 
@@ -4749,7 +4736,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* TODO: Add media queries for tablet sized devices */\n@media screen and (max-width: 600px) {\n#document_label {\n        font-size: 0.8em;\n}\n}\n@media screen and (min-width: 600px) and (max-width: 960px) {\n}\n@media screen and (min-width: 960px) and (max-width: 1264px) {\n}\n@media screen and (min-width: 1264px ) and (max-width: 1904px) {\n}\n@media screen and (min-width: 1904px ) {\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* TODO: Add media queries for tablet sized devices */\n@media screen and (max-width: 600px) {\n#document_label {\n        font-size: 0.8em;\n}\n}\n@media screen and (min-width: 600px) and (max-width: 960px) {\n}\n@media screen and (min-width: 960px) and (max-width: 1264px) {\n}\n@media screen and (min-width: 1264px ) and (max-width: 1904px) {\n}\n@media screen and (min-width: 1904px ) {\n}\n", ""]);
 
 // exports
 
@@ -33284,7 +33271,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-card", [_vm._v("\n    asdasdasdasdasdasdas\n")])
+  return _c("v-card", [_vm._v("\n    Page for form of document receiving\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -94965,16 +94952,7 @@ __webpack_require__.r(__webpack_exports__);
     children: [{
       path: 'dashboard',
       component: _components_user_Dashboard__WEBPACK_IMPORTED_MODULE_0__["default"],
-      name: 'Dashboard' // beforeEach: (to, from, next) => {
-      //     const reqSession = to.matched.some(route => route.meta.requiresSession)
-      //     if (!reqSession) next()
-      //     if (router.app.$session.exists()) {
-      //         next()
-      //     } else {
-      //         next({ name: 'Login' })
-      //     }
-      // }
-
+      name: 'Dashboard'
     }, {
       path: 'document_records',
       component: _components_user_DocumentRecords__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -94988,39 +94966,20 @@ __webpack_require__.r(__webpack_exports__);
       component: _components_user_components_NewDocument__WEBPACK_IMPORTED_MODULE_4__["default"],
       name: 'New Document'
     }, {
-      path: 'all_active_document',
+      path: '/all_active_document',
       component: _components_user_components_AllDocument__WEBPACK_IMPORTED_MODULE_3__["default"],
       name: 'All Active Documents'
-    }, // {
-    //     path: 'document_forward/:id',
-    //     component: DocumentForward,
-    //     name: 'Document Forward',
-    //     // beforeEnter: (to, from, next) => {
-    //     //     if (to.params.id) {
-    //     //         axios.get(`get_document_details/${to.params.id}`).then((response) => {
-    //     //             next()
-    //     //         }).catch(() => {
-    //     //             return next('All Active Documents');
-    //     //         });
-    //     //     }else {
-    //     //         return next(
-    //     //             vm => {
-    //     //                 vm.prevRoute = from;
-    //     //             }
-    //     //         );
-    //     //     }
-    //     // },
-    // },
-    {
-      path: 'receive_document/:id',
+    }, {
+      path: 'receive_document',
       component: _components_user_components_ReceiveDocument__WEBPACK_IMPORTED_MODULE_5__["default"],
       name: 'Receive Document'
     }, {
-      path: 'forward_document/:id',
+      path: 'forward_document',
       component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__["default"],
-      name: 'Forward Document'
+      name: 'Forward Document',
+      props: true
     }, {
-      path: 'terminal_document/:id',
+      path: 'terminal_document',
       component: _components_user_DocumentAction__WEBPACK_IMPORTED_MODULE_6__["default"],
       name: 'Terminal Document'
     }, {
@@ -95051,48 +95010,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/snackbars */ "./resources/js/store/modules/snackbars.js");
 /* harmony import */ var _modules_loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/loader */ "./resources/js/store/modules/loader.js");
 /* harmony import */ var _modules_offices__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/offices */ "./resources/js/store/modules/offices.js");
-/* harmony import */ var _modules_datastorage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/datastorage */ "./resources/js/store/modules/datastorage.js");
-/* harmony import */ var vuex_persistedstate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex-persistedstate */ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js");
+/* harmony import */ var vuex_persistedstate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex-persistedstate */ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js");
 
 
 
 
 
 
-
-var dataState = Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_6__["default"])({
-  paths: ['data'],
-  storage: window.sessionStorage
-});
 /* harmony default export */ __webpack_exports__["default"] = ({
   modules: {
-    datastorage: _modules_datastorage__WEBPACK_IMPORTED_MODULE_5__["datastorage"],
     users: _modules_users__WEBPACK_IMPORTED_MODULE_1__["default"],
     documents: _modules_documents__WEBPACK_IMPORTED_MODULE_0__["default"],
     offices: _modules_offices__WEBPACK_IMPORTED_MODULE_4__["default"],
     snackbars: _modules_snackbars__WEBPACK_IMPORTED_MODULE_2__["default"],
     loader: _modules_loader__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  plugins: [dataState]
+  plugins: [Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_5__["default"])({
+    key: 'keyname',
+    storage: window.sessionStorage
+  })]
 });
-
-/***/ }),
-
-/***/ "./resources/js/store/modules/datastorage.js":
-/*!***************************************************!*\
-  !*** ./resources/js/store/modules/datastorage.js ***!
-  \***************************************************/
-/*! exports provided: datastorage */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "datastorage", function() { return datastorage; });
-var datastorage = {
-  state: {
-    data: []
-  }
-};
 
 /***/ }),
 
@@ -95576,10 +95513,9 @@ var actions = {
 
             case 3:
               response = _context.sent;
-              console.log(response.data);
               commit('SET_AUTH_USER', response.data);
 
-            case 6:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -95819,8 +95755,8 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_0__["extend"])('numeric', _objectSp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\SystemAnalyst\Desktop\Git\Document Tracking v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\snret\Desktop\Git\DocTrack\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

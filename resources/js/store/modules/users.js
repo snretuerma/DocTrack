@@ -34,7 +34,6 @@ const getters = {
 const actions = {
     async getAuthUser({ commit }) {
         const response = await axios.get('auth_user');
-        console.log(response.data);
         commit('SET_AUTH_USER', response.data);
     },
     async removeAuthUser({ commit }) {

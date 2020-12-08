@@ -165,7 +165,6 @@
 </template>
 
 <script>
-// TODO: Migrate to Vuex
 import { mapGetters, mapActions } from "vuex";
 export default {
     computed: {
@@ -210,50 +209,38 @@ export default {
         getDashboard() {
             if(this.$route.name !== 'Dashboard') {
                 this.$store.dispatch('setLoader');
-                axios.get('/').then(()=>{
-                    this.$router.push({ name: "Dashboard"});
-                })
+                this.$router.push({ name: "Dashboard"});
             }
         },
         getNewDocumentRecordForm() {
             if(this.$route.name !== 'New Document') {
                 this.$store.dispatch('setLoader');
-                axios.get('new_document').then(() => {
-                    this.$router.push({ name: "New Document"});
-                });
+                this.$router.push({ name: "New Document"});
             }
         },
 
         getAllDocuments() {
             if(this.$route.name !== 'All Active Documents') {
                 this.$store.dispatch('setLoader');
-                axios.get('all_active_document').then(() => {
-                    this.$router.push({ name: "All Active Documents"});
-                });
+                this.$router.push({ name: "All Active Documents"});
             }
         },
         getAgingReport() {
             if(this.$route.name !== 'Document Aging Report') {
                 this.$store.dispatch('setLoader');
-                axios.get('reports/aging').then(()=>{
-                    this.$router.push({ name: "Document Aging Report"});
-                });
+                this.$router.push({ name: "Document Aging Report"});
             }
         },
         getMasterListReport() {
             if(this.$route.name !== 'Document Master List') {
                 this.$store.dispatch('setLoader');
-                axios.get('reports/master_list').then(()=>{
-                    this.$router.push({ name: "Document Master List"});
-                });
+                this.$router.push({ name: "Document Master List"});
             }
         },
         getAccountSettings() {
             if(this.$route.name !== 'Account Settings') {
                 this.$store.dispatch('setLoader');
-                axios.get('account_settings').then(()=>{
-                    this.$router.push({ name: "Account Settings",  params: { user: this.user }});
-                })
+                this.$router.push({ name: "Account Settings",  params: { user: this.user }});
             }
         },
         getRandomInt(min, max) {

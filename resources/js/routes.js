@@ -43,15 +43,6 @@ export default {
                     path: 'dashboard',
                     component: Dashboard,
                     name: 'Dashboard',
-                    // beforeEach: (to, from, next) => {
-                    //     const reqSession = to.matched.some(route => route.meta.requiresSession)
-                    //     if (!reqSession) next()
-                    //     if (router.app.$session.exists()) {
-                    //         next()
-                    //     } else {
-                    //         next({ name: 'Login' })
-                    //     }
-                    // }
                 },
                 {
                     path: 'document_records',
@@ -69,42 +60,23 @@ export default {
                     name: 'New Document'
                 },
                 {
-                    path: 'all_active_document',
+                    path: '/all_active_document',
                     component: AllDocument,
                     name: 'All Active Documents',
                 },
-                // {
-                //     path: 'document_forward/:id',
-                //     component: DocumentForward,
-                //     name: 'Document Forward',
-                //     // beforeEnter: (to, from, next) => {
-                //     //     if (to.params.id) {
-                //     //         axios.get(`get_document_details/${to.params.id}`).then((response) => {
-                //     //             next()
-                //     //         }).catch(() => {
-                //     //             return next('All Active Documents');
-                //     //         });
-                //     //     }else {
-                //     //         return next(
-                //     //             vm => {
-                //     //                 vm.prevRoute = from;
-                //     //             }
-                //     //         );
-                //     //     }
-                //     // },
-                // },
                 {
-                    path: 'receive_document/:id',
+                    path: 'receive_document',
                     component: ReceiveDocument,
-                    name: 'Receive Document'
+                    name: 'Receive Document',
                 },
                 {
-                    path: 'forward_document/:id',
+                    path: 'forward_document',
                     component: DocumentAction,
-                    name: 'Forward Document'
+                    name: 'Forward Document',
+                    props: true,
                 },
                 {
-                    path: 'terminal_document/:id',
+                    path: 'terminal_document',
                     component: DocumentAction,
                     name: 'Terminal Document'
                 },
