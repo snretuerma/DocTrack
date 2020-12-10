@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// TODO: Remove this function and build name in another way
 function buildName(first_name, middle_name, last_name, suffix) {
     var f_name = '', m_name = '',l_name = '',s_name = '';
     f_name = (first_name.trim()).charAt(0).toUpperCase() + (first_name.trim()).slice(1);

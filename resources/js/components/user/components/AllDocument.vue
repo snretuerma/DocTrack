@@ -3,8 +3,8 @@
     <v-card-title primary-title>
         All Active Documents
     </v-card-title>
-        <v-card-text>
-            <v-data-table
+    <v-card-text>
+        <v-data-table
             v-if="documents"
             :headers="headers"
             :items="documents.data"
@@ -527,6 +527,7 @@ export default {
             * Save the document id or the document object to Vuex instead because the dynamic routing is messing
             * up the Vuex getter for auth_user creating a call for receive_document/auth_user which is non-existent
             **/
+            this.$store.dispatch('setDocument', document);
             this.$router.push(`receive_document`);
         },
     },

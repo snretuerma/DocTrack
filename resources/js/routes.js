@@ -60,7 +60,7 @@ export default {
                     name: 'New Document'
                 },
                 {
-                    path: '/all_active_document',
+                    path: 'all_active_document',
                     component: AllDocument,
                     name: 'All Active Documents',
                 },
