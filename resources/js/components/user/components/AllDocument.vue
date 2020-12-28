@@ -104,6 +104,7 @@
                         </v-col>
                         <v-col cols="12" sm="3">
                             <v-btn
+                                @click.prevent="redirectToReceivePage(item)"
                                 text
                                 color="#FFCA28"
                                 block
@@ -548,21 +549,5 @@ export default {
         #document_label {
             font-size: 0.8em;
         }
-    }
-
-    @media screen and (min-width: 600px) and (max-width: 960px) {
-
-    }
-
-    @media screen and (min-width: 960px) and (max-width: 1264px) {
-
-    }
-
-    @media screen and (min-width: 1264px ) and (max-width: 1904px) {
-
-    }
-
-    @media screen and (min-width: 1904px ) {
-
     }
 </style>
