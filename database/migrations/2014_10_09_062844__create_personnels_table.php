@@ -28,6 +28,10 @@ class CreatePersonnelsTable extends Migration
      */
     public function down()
     {
+        Schema::create('personnels', function (Blueprint $table) {
+            $table->dropIndex(['office_id']);
+            $table->dropForeign(['office_id']);
+        });
         Schema::dropIfExists('personnels');
     }
 }
