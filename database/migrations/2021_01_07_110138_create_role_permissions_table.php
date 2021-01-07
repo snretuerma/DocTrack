@@ -28,6 +28,13 @@ class CreateRolePermissionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('tracking_records', function (Blueprint $table) {
+            $table->dropIndex(['role_id']);
+            $table->dropForeign(['role_id']);
+            $table->dropIndex(['permission_id']);
+            $table->dropForeign(['permission_id']);
+            $table->dropSoftDeletes();
+        });
         Schema::dropIfExists('role_permissions');
     }
 }
