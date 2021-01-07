@@ -60,12 +60,14 @@ class User extends Authenticatable
 
     public function tracking_records()
     {
-        return $this->hasMany('App\Models\TrackingRecord');
+        return $this->belongsTo('App\Models\TrackingRecord');
     }
 
     public function logs()
     {
         return $this->hasMany('App\Models\Log');
     }
+
+
 
 }
