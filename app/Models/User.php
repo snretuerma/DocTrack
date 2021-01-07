@@ -63,6 +63,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\TrackingRecord');
     }
 
+
     public function logs()
     {
         return $this->hasMany('App\Models\Log');
