@@ -19,7 +19,4 @@ class Role extends Model
         return $this->hasMany('App\Models\User');
     }
 
-    public function role_permission() {
-        return $this->hasMany('App\Models\RolePermission');
-    }
 }

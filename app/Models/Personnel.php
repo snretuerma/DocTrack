@@ -19,6 +19,6 @@ class Personnel extends Model
     }
 
     public function office() {
-        return $this->hasOne('App\Models\Office');
+        return $this->belongsTo('App\Models\Office');
     }
 }
