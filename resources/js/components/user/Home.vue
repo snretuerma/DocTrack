@@ -29,13 +29,13 @@
         <v-list>
 
             <v-list-item link @click.prevent="getDashboard">
-            <v-list-item-icon>
-                <v-icon>mdi-view-dashboard-outline</v-icon>
-            </v-list-item-icon>
+                <v-list-item-icon>
+                    <v-icon>mdi-view-dashboard-outline</v-icon>
+                </v-list-item-icon>
 
-            <v-list-item-content>
-                <v-list-item-title>Dashboard</v-list-item-title>
-            </v-list-item-content>
+                <v-list-item-content>
+                    <v-list-item-title>Dashboard</v-list-item-title>
+                </v-list-item-content>
             </v-list-item>
 
             <v-list-group
@@ -112,6 +112,16 @@
                 </v-list-item-content>
             </v-list-item>
 
+            <v-list-item link @click.prevent="getUserManagement">
+                <v-list-item-icon>
+                    <v-icon>mdi-account-supervisor-circle</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                    <v-list-item-title>User Management</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
             <v-list-item link @click.prevent="logout">
                 <v-list-item-icon>
                     <v-icon>mdi-logout-variant</v-icon>
@@ -165,6 +175,7 @@
 </template>
 
 <script>
+// TODO: Directly modify State through Mutation in Setting and Unsetting loaders instead of adding Actions
 import { mapGetters, mapActions } from "vuex";
 export default {
     computed: {
@@ -192,7 +203,7 @@ export default {
     },
     data() {
         return {
-            drawer: true,
+            drawer: null,
             group: null,
             image_source: 'https://randomuser.me/api/portraits/'
         }
@@ -241,6 +252,12 @@ export default {
             if(this.$route.name !== 'Account Settings') {
                 this.$store.dispatch('setLoader');
                 this.$router.push({ name: "Account Settings",  params: { user: this.user }});
+            }
+        },
+        getUserManagement() {
+            if(this.$route.name !== 'User Management') {
+                this.$store.dispatch('setLoader');
+                this.$router.push({ name: "User Management",  params: { user: this.user }});
             }
         },
         getRandomInt(min, max) {

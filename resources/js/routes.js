@@ -1,6 +1,7 @@
 import Dashboard from './components/user/Dashboard';
 import DocumentRecords from './components/user/DocumentRecords';
 import AccountSettings from './components/user/AccountSettings';
+import UserManagement from './components/user/UserManagement';
 
 import AllDocument from './components/user/components/AllDocument'
 import NewDocument from './components/user/components/NewDocument';
@@ -89,6 +90,11 @@ export default {
                     path: 'reports/master_list',
                     component: ReportMasterList,
                     name: 'Document Master List'
+                },
+                {
+                    path: 'user_management',
+                    component: UserManagement,
+                    name: 'User Management'
                 }
             ]
         },
