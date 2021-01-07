@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class RolePermission extends Model
 {
     use HasFactory;
-
     public $timestamp = false;
 
     protected $guarded = [
         'name'
     ];
 
-    public function users() {
-        return $this->hasMany('App\Models\User');
+
+    public function permission() {
+        return $this->hasOne('App\Models\Permission');
     }
 
-    public function role_permission() {
-        return $this->hasMany('App\Models\RolePermission');
+    public function role() {
+        return $this->hasOne('App\Models\Role');
     }
 }
