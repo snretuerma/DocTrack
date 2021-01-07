@@ -18,7 +18,7 @@ class CreateDocumentsTable extends Migration
             $table->string('tracking_code', 120);
             $table->string('subject');
             $table->boolean('is_external')->default(false);
-            $table->foreignId('document_type_id');
+            $table->foreignId('document_type_id')->constrained('document_types');
             $table->string('originating_office')->nullable();
             $table->foreignId('current_office_id')->nullable()->constrained('offices');
             $table->string('sender_name')->nullable();
